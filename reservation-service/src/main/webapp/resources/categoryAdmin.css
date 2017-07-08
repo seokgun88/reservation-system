@@ -33,6 +33,10 @@ button:disabled{
 	background-color: #008CBA;
 	display: none;
 }
+.modifyCancleBtn{
+	background-color: #ffbf00;
+	display: none;	
+}
 #main_div{
 	margin: auto;
 	width: 50%;

@@ -16,10 +16,11 @@
 	</form>
 	<ul id="category_list">
 		<c:forEach items="${categories}" var="category">
-			<li data-id=${category.id}>
+			<li class="category" data-id=${category.id}>
 				<input class="categoryName" type="text" value="${category.name}" readonly>
 				<button type="button" class="modifyBtn">수정</button>
 				<button type="button" class="modifyConfirmBtn">확인</button>
+				<button type="button" class="modifyCancleBtn">취소</button>
 				<button type="button" class="removeBtn">삭제</button>
 			</li>
 		</c:forEach>
