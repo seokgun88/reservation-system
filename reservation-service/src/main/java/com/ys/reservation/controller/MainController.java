@@ -31,7 +31,9 @@ public class MainController {
 	// post 방식으로 category 생성 요청이 들어오면 생성 후 관리페이지로 리다이렉트
 	@PostMapping("/create")
 	public String create(@ModelAttribute Category category) {
-		categoryService.create(category);
+		if(category.getName() != null && category.getName().trim().length() != 0){
+			categoryService.create(category);
+		}
 		return "redirect:/category/admin";
 	}
 	

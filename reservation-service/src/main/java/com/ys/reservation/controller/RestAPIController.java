@@ -32,12 +32,13 @@ public class RestAPIController {
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void update(@PathVariable Integer id, @RequestBody Map<String, Object> payload) {
-		//service.update(id, (Integer)payload.get("completed"));
 		String name = (String)payload.get("name");
-		Category category = new Category();
-		category.setId(id);
-		category.setName(name);
-		categoryService.update(category);
+		if(name != null && name.trim().length() != 0){
+			Category category = new Category();
+			category.setId(id);
+			category.setName(name);
+			categoryService.update(category);			
+		}
 	}
 	
 }
