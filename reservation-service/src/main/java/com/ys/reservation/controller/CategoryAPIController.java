@@ -17,8 +17,7 @@ import com.ys.reservation.service.CategoryService;
 
 @RestController
 @RequestMapping("/api/categories")
-public class RestAPIController {
-	
+public class CategoryAPIController {
 	@Autowired
 	private CategoryService categoryService;
 	

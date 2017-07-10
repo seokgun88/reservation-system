@@ -15,7 +15,7 @@ import com.ys.reservation.service.CategoryService;
 
 @Controller
 @RequestMapping("/category/admin")
-public class MainController {
+public class CategoryController {
 	
 	@Autowired
 	private CategoryService categoryService;
