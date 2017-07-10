@@ -12,7 +12,7 @@
 <div id="main_div">
 	<h1>카테고리 관리</h1>
 	<form method="post" action="/category/admin/create">
-	    <input type="text" name="name" id="name" placeholder="새로운 카테고리를 입력하세요." size="30">
+	    <input type="text" name="name" id="name" placeholder="새로운 카테고리를 입력하세요." size="30" autofocus>
 	</form>
 	<ul id="category_list">
 		<c:forEach items="${categories}" var="category">
