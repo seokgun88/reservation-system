@@ -1,0 +1,46 @@
+h1, li, form{
+	text-align: center;
+}
+h1{
+	margin: 30px
+}
+ul{
+	list-style: none;
+}
+input, button{
+	padding: 5px;
+}
+button{
+	color: #ffffff;
+   	font-weight: bold;
+	border-radius: 8px;
+	border-style: none;
+	margin: 3px;
+}
+button:disabled{
+	background-color: #e7e7e7;'
+}
+.categoryName{
+   	border: none;
+}
+.removeBtn{
+	background-color: #f44336;
+}
+.modifyBtn{
+	background-color: #4CAF50;
+}
+.modifyConfirmBtn{
+	background-color: #008CBA;
+	display: none;
+}
+.modifyCancleBtn{
+	background-color: #ffbf00;
+	display: none;	
+}
+#main_div{
+	margin: auto;
+	width: 50%;
+	height: 50%;
+	text-align: center;
+	vertical-align: middle;
+}
