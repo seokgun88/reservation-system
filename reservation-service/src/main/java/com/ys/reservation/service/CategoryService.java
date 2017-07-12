@@ -8,21 +8,24 @@ import org.springframework.stereotype.Service;
 import com.ys.reservation.dao.CategoryDao;
 import com.ys.reservation.domain.Category;
 
-@Service
+@Service //여기서 변수 검증해야함
 public class CategoryService {
 	
 	@Autowired
 	private CategoryDao categoryDao;
 	
-	public List<Category> getAllCategory(){
+	public List<Category> getAll(){
 		return categoryDao.selectAll();
 	}
 	
-	public Integer create(Category category){
-		return categoryDao.insert(category);
+	public int create(Category category){
+		if(category.getName() != null && ! category.getName().trim().isEmpty()){ 
+			return categoryDao.insert(category);
+		}
+		return -1;
 	}
 	
-	public int remove(Integer id){
+	public int remove(int id){
 		return categoryDao.delete(id);
 	}
 	
