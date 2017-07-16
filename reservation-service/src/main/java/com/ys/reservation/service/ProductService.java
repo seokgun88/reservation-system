@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ys.reservation.dao.ProductDao;
 import com.ys.reservation.domain.Product;
+import com.ys.reservation.vo.ProductDetailVo;
 import com.ys.reservation.vo.ProductVo;
 
 @Service
@@ -42,5 +43,9 @@ public class ProductService {
 	
 	public int getCountByCategoryId(int categoryId) {
 		return productDao.countByCategoryId(categoryId);
+	}
+	
+	public ProductDetailVo getDetailById(int id) {
+		return productDao.selectDetail(id);
 	}
 }
