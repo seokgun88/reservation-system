@@ -2,14 +2,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="description"
-	content="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
-<meta name="viewport"
-	content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
-<title>네이버 예약</title>
-<link href="/resources/css/style.css" rel="stylesheet">
-<script src="/resources/js/handlebars-v4.0.10.js"></script>
+	<meta charset="utf-8">
+	<meta name="description"
+		content="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+	<title>네이버 예약</title>
+	<link href="/resources/css/style.css" rel="stylesheet">
 </head>
 <body>
 	<div id="container">
@@ -48,10 +47,10 @@
 							<div class="container_visual">
 								<!-- [D] 이전,다음 버튼을 클릭할때마다 캐러셀 형태로 순환 됨 --->
 								<ul class="visual_img"></ul>
-									<script id="promotions-template" type="text/x-handlebars-template">
-									{{#promotions}}
+									<script id="rolling-template" type="text/x-handlebars-template">
+									{{#items}}
 									<li class="item" data-id={{id}} style="background-image: url(http://naverbooking.phinf.naver.net/20170119_48/1484802596907hmVDm_JPEG/image.jpg); width: 338px;">
-										<a href="/resources/html/detail.html">
+										<a href="/detail">
 											<span class="img_btm_border"></span>
 											<span class="img_right_border"></span>
 											<span class="img_bg_gra"></span>
@@ -62,7 +61,7 @@
 											</div>
 										</a>
 									</li>
-									{{/promotions}}
+									{{/items}}
 									</script>
 							</div>
 							<span class="nxt_fix"></span>
@@ -93,7 +92,7 @@
 						<script id="product-template" type="text/x-handlebars-template">
 						{{#product}}
 						<li class="item">
-							<a href="/resources/html/detail.html" class="item_book">
+							<a href="/detail" class="item_book">
 								<div class="item_preview">
 									<img alt="뮤지컬 드림걸즈(DREAMGIRLS) 최초 내한" class="img_thumb"
 										src="https://ssl.phinf.net/naverbooking/20170303_271/1488514705030TuUK4_JPEG/17%B5%E5%B8%B2%B0%C9%C1%EE_%B8%DE%C0%CE%C6%F7%BD%BA%C5%CD_%C3%D6%C1%BE.jpg?type=l591_945">
@@ -102,7 +101,7 @@
 								<div class="event_txt">
 									<h4 class="event_txt_tit">
 										<span>{{name}}</span>
-										<small class="sm">{{place}}</small>
+										<small class="sm">{{placeName}}</small>
 									</h4>
 									<p class="event_txt_dsc">{{description}}</p>
 								</div>
@@ -131,6 +130,8 @@
 	</div>
 	</footer>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+	<script src="/resources/js/rolling.js"></script>
 	<script src="/resources/js/mainPage.js"></script>
 </body>
 </html>

@@ -1,7 +1,6 @@
 "use strict";
 
 var mainPage = (function() {
-	var $promotionList = $('#container ul.visual_img');
 	var $categoryList = $('#container ul.event_tab_lst');
 	var $productList = $('#container ul.lst_event_box');
 	var $productsCnt = $('#container p.event_lst_txt span.pink');
@@ -9,28 +8,9 @@ var mainPage = (function() {
 	var $nextBtn = $('#container .btn_nxt_e, #container .nxt_fix');
 	var $moreBtn = $('#container .more button.btn');
 
-	var promotionIntervalVar;
-	var promotionTimeoutVar;
-
 	var productPage = 0;
 	var productListCnt = 0;
 	var loading = false;
-
-	var promotionListInit = function(){
-		var $head = $promotionList.children().last().clone();
-		var $tail = $promotionList.children().first().clone();
-		$promotionList.append($tail);
-		$promotionList.prepend($head);
-		$promotionList.css('left', '-338px');
-	};
-
-	var drawPromotions = function(data) {
-		var source = $('#promotions-template').html();
-		var template = Handlebars.compile(source);
-		var promotions = { promotions: data };
-		var html = template(promotions);
-		$promotionList.append(html);
-	};
 
 	var drawCategories = function(data) {
 		var source = $('#categories-template').html();
@@ -53,54 +33,6 @@ var mainPage = (function() {
 
 	var drawProductsCnt = function(cnt) {
 		$productsCnt.text(cnt + '개');
-	};
-
-	var leftRollup = function(){
-		var endIdx = $promotionList.children().length - 2;
-		var curPromotion = $promotionList.data('curPromotion');
-		if(curPromotion == endIdx) {
-			$promotionList.css('left', '0px');
-			curPromotion = 0;
-		}
-		$promotionList.animate({
-			left: '-=338px'
-		});
-		$promotionList.data('curPromotion', curPromotion+1);
-	};
-
-	var rightRollup = function(){
-		var startIdx = 1;
-		var promotionListSize = $promotionList.children().length;
-		var leftInitial = (promotionListSize - 1) * -338;
-		var curPromotion = $promotionList.data('curPromotion');
-		if(curPromotion == startIdx) {
-			$promotionList.css('left',  + leftInitial+'px');
-			curPromotion = promotionListSize - 1;
-		}
-		$promotionList.animate({
-			left: '+=338px'
-		});
-		$promotionList.data('curPromotion', curPromotion-1);
-	};
-
-	var setPromotionInterval = function() {
-		promotionIntervalVar = setInterval(leftRollup, 2000);
-	};
-
-	var getPromotionsAjax = function() {
-			$.ajax({
-				url: '/api/products',
-				type: 'GET'
-			})
-			.done(function(data) {
-				drawPromotions(data);
-				promotionListInit();
-				setPromotionInterval();
-			})
-			.fail(function(error){
-				console.log(error.responseJSON);
-				alert('Promotion list load를 실패했습니다.');
-			});
 	};
 
 	var getProductsAjax = function() {
@@ -160,8 +92,6 @@ var mainPage = (function() {
 		});
 	};
 
-	var promotionBtnClicked = false;
-
 	return {
 		getCategoryList: function() {
 			return $categoryList;
@@ -216,24 +146,11 @@ var mainPage = (function() {
 			});
 		},
 		documentInit: function() {
-			$promotionList.data('curPromotion', 1);
-			getPromotionsAjax();
+			rolling.setRollingSpace(338);
+			rolling.getRollingAjax('/api/products');
 			getProductsAjax();
 			getCategoriesAjax();
 			getProductsCountAjax();
-		},
-		leftRollup,
-		rightRollup,
-		promotionBtnHandler: function(rollUpFn, e) {
-			e.preventDefault();
-			if(!promotionBtnClicked) {
-				promotionBtnClicked = true;
-				setTimeout(function(){promotionBtnClicked=false}, 1000);
-				clearInterval(promotionIntervalVar);
-				clearTimeout(promotionTimeoutVar);
-				rollUpFn();
-				promotionTimeoutVar = setTimeout(setPromotionInterval, 4000);
-			}
 		},
 		getMoreProductsAjax: function(){
 			if($moreBtn.css('display') !== 'none'){
@@ -247,8 +164,8 @@ $(document).ready(mainPage.documentInit);
 
 mainPage.getCategoryList().on('click', 'a', mainPage.categoryClickListener);
 
-mainPage.getPrevBtn().on('click', mainPage.promotionBtnHandler.bind(this, mainPage.rightRollup));
-mainPage.getNextBtn().on('click', mainPage.promotionBtnHandler.bind(this, mainPage.leftRollup));
+mainPage.getPrevBtn().on('click', rolling.btnHandler.bind(this, 0));
+mainPage.getNextBtn().on('click', rolling.btnHandler.bind(this, 1));
 
 mainPage.getMoreBtn().on('click', mainPage.getMoreProductsAjax);
 
