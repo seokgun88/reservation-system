@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ys.reservation.domain.Product;
+import com.ys.reservation.vo.ProductDetailVo;
 import com.ys.reservation.vo.ProductVo;
 
 @Repository
@@ -21,6 +22,7 @@ public class ProductDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<Product> rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
 	private RowMapper<ProductVo> dtoRowMapper = BeanPropertyRowMapper.newInstance(ProductVo.class);
+	private RowMapper<ProductDetailVo> detailRowMapper = BeanPropertyRowMapper.newInstance(ProductDetailVo.class);
 	
 	public ProductDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -65,6 +67,11 @@ public class ProductDao {
 	public int countByCategoryId(int categoryId) {
 		Map<String, ?> params = Collections.singletonMap("categoryId", categoryId);
 		return jdbc.queryForObject(ProductSqls.COUNT_BY_CATEGORY_ID, params, Integer.class);
+	}
+	
+	public ProductDetailVo selectDetail(int id) {
+		Map<String, ?> params = Collections.singletonMap("id", id);
+		return jdbc.queryForObject(ProductJoinSqls.SELECT_DETAIL, params, detailRowMapper);
 	}
 	
 }

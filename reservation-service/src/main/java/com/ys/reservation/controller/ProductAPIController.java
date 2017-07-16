@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ys.reservation.domain.Product;
 import com.ys.reservation.service.ProductService;
+import com.ys.reservation.vo.ProductDetailVo;
 import com.ys.reservation.vo.ProductVo;
 
 @RestController
@@ -30,7 +31,7 @@ public class ProductAPIController {
 	
 	@GetMapping
 	@RequestMapping("/{id}")
-	public Product getById(@PathVariable Integer id) {
+	public Product getById(@PathVariable int id) {
 		return productService.getById(id);
 	}
 	
@@ -50,5 +51,11 @@ public class ProductAPIController {
 	@RequestMapping("/categories/{categoryId}/count")
 	public int getCountByCategoryId(@PathVariable int categoryId) {
 		return productService.getCountByCategoryId(categoryId);
+	}
+	
+	@GetMapping
+	@RequestMapping("/{id}/detail")
+	public ProductDetailVo getDetailById(@PathVariable int id) {
+		return productService.getDetailById(id);
 	}
 }
