@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ys.reservation.dao.ProductDao;
+import com.ys.reservation.domain.FileDomain;
 import com.ys.reservation.domain.Product;
 import com.ys.reservation.vo.ProductDetailVo;
 import com.ys.reservation.vo.ProductVo;
@@ -47,5 +48,9 @@ public class ProductService {
 	
 	public ProductDetailVo getDetailById(int id) {
 		return productDao.selectDetail(id);
+	}
+	
+	public List<FileDomain> getFiles(int id, int type) {
+		return productDao.selectFiles(id, type);
 	}
 }

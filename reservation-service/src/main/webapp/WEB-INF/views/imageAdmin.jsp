@@ -12,7 +12,7 @@
 		<input type="radio" name="relation" value="production_sub">상품 부가이미지
 		<input type="radio" name="relation" value="review">리뷰 이미지
 		<br>
-		<input type="text" name="id" placeholder="id" value="0">
+		<input type="number" name="id" placeholder="id" value="1">
 		<br>
 		<input type="file" name="file">
 		<br>
