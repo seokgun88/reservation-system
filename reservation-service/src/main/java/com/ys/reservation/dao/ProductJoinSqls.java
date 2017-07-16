@@ -23,12 +23,12 @@ public class ProductJoinSqls {
 			"SELECT p.id, p.name, p.description, p.event, p.sales_end, p.sales_flag, d.content "
 			+ "FROM product p, product_detail d "
 			+ "WHERE p.id = :id AND p.id = d.product_id;";
-	public final static String SELECT_IMG = 
+	public final static String SELECT_FILES = 
 			"SELECT file_name, save_file_name, file_length, content_type "
 			+ "FROM product_image p, file f "
-			+ "WHERE p.id = :id AND p.type = :type AND p.file_id = f.id";
+			+ "WHERE p.product_id = :id AND p.type = :type AND p.file_id = f.id";
 	public final static String SELECT_DISPLAY_INFO = 
-			"SELECT place_name, place_lot, place_street, tel, homepage, email"
-			+ "FROM display_info"
+			"SELECT place_name, place_lot, place_street, tel, homepage, email "
+			+ "FROM display_info "
 			+ "WHERE product_id = :id";
 }
