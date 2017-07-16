@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,8 +26,8 @@ public class MainController {
 	}
 	
 	// 카테고리 관리페이지 요청시 전체 카테고리를 이름순으로 정렬한 리스트 반환
-	@GetMapping("/category/admin")
-	public String mainPage(Model model) {
+	@GetMapping("/admin/category")
+	public String categoryAdmin(Model model) {
 		List<Category> categories = categoryService.getAll();
 		model.addAttribute("categories", categories);
 		return "categoryAdmin";
@@ -37,6 +38,12 @@ public class MainController {
 	public String create(@ModelAttribute Category category) {
 		categoryService.create(category);
 		return "redirect:/category/admin";
+	}
+	
+	@GetMapping("/product/{id}")
+	public String productDetailById(@PathVariable int id, Model model) {
+		model.addAttribute("id", id);
+		return "detail";
 	}
 	
 }
