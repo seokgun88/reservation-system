@@ -16,6 +16,8 @@ import com.ys.reservation.service.ProductService;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
 import com.ys.reservation.vo.ProductVo;
+import com.ys.reservation.vo.UserCommentVo;
+import com.ys.reservation.vo.CommentsSummaryVo;
 
 @RestController
 @RequestMapping("/api/products")
@@ -72,5 +74,15 @@ public class ProductAPIController {
 	@GetMapping("/{id}/subImage")
 	public int getSubImageId(@PathVariable int id) {
 		return productService.getSubImageId(id);
+	}
+	
+	@GetMapping("{id}/comments")
+	public List<UserCommentVo> getUserComment(@PathVariable int id) {
+		return productService.getUserComment(id);
+	}
+	
+	@GetMapping("{id}/comments/summary")
+	public CommentsSummaryVo getAvgCommentScore(@PathVariable int id) {
+		return productService.getAvgCommentScore(id);
 	}
 }

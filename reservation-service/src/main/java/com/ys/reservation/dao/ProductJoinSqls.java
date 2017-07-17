@@ -15,10 +15,6 @@ public class ProductJoinSqls {
 			+ "FROM product p, display_info d "
 			+ "WHERE p.category_id = :categoryId AND p.id = d.product_id "
 			+ "LIMIT :offset, 10";
-//	public final static String SELECT_DETAIL = 
-//			"SELECT p.id, p.name, p.event, p.sales_end, p.sales_flag, f.file_name, f.save_file_name, f.file_length, f.content_type"
-//			+ "FROM product p, product_image i, file f"
-//			+ "WHERE p.id = :id AND p.id = i.product_id AND f.id = i.file_id";
 	public final static String SELECT_DETAIL = 
 			"SELECT p.id, p.name, p.description, p.event, p.sales_end, p.sales_flag, d.content "
 			+ "FROM product p, product_detail d "

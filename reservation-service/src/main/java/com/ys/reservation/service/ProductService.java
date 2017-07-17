@@ -13,6 +13,8 @@ import com.ys.reservation.domain.Product;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
 import com.ys.reservation.vo.ProductVo;
+import com.ys.reservation.vo.UserCommentVo;
+import com.ys.reservation.vo.CommentsSummaryVo;
 
 @Service
 public class ProductService {
@@ -69,5 +71,17 @@ public class ProductService {
 	
 	public int getSubImageId(int id) {
 		return fileDao.selectSubImage(id).getId();
+	}
+	
+	public List<UserCommentVo> getUserComment(int id) {
+		List<UserCommentVo> comments = productDao.selectUserComment(id);
+		if(comments.size() > 3) {
+			return comments.subList(0, 3);
+		}
+		return comments;
+	}
+	
+	public CommentsSummaryVo getAvgCommentScore(int id) {
+		return productDao.selectAvgCommentScore(id);
 	}
 }

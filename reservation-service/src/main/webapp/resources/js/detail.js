@@ -3,8 +3,13 @@ var productName;
 var productDesc;
 
 var $curImgIdx = $('span[class=num]');
+var $prevBtn = $('.btn_prev');
+var $nextBtn = $('.btn_nxt');
 var $moreOpen = $('.bk_more._open');
 var $moreClose = $('.bk_more._close');
+var $bookingBtn = $('.bk_btn');
+var $avgScore = $('.grade_area .text_value span');
+var $commentsNum = $('.grade_area .join_count em');
 var $detailBtn = $('.item._detail');
 var $pathBtn = $('.item._path');
 var $detail = $('.detail_area_wrap');
@@ -69,6 +74,44 @@ var getProductDetailAjax = function() {
   });
 };
 
+var getCommentsSummaryAjax = function() {
+  $.ajax({
+    url: '/api/products/' + productId + '/comments/summary',
+    type: 'GET'
+  })
+  .done(function(data){
+    $avgScore.html(data.avgScore);
+    $commentsNum.html(data.num + '건');
+  })
+  .fail(function(error){
+    console.log(error.responseJSON);
+    alert('Comment summary load를 실패했습니다.');
+  });
+};
+
+var getCommentAjax = function() {
+  $.ajax({
+    url: '/api/products/' + productId + '/comments',
+    type: 'GET'
+  })
+  .done(function(data){
+    $.each(data, function(index, value){
+      value.productName = productName;
+      var d = new Date(value.createDate);
+      var date = d.getFullYear() + '.' + (d.getMonth()+1) + '.' + d.getDate();
+      value.date = date;
+  		var source = $('#comment-template').html();
+  		var template = Handlebars.compile(source);
+  		var html = template(value);
+      $('.list_short_review').append(html);
+    });
+  })
+  .fail(function(error){
+    console.log(error.responseJSON);
+    alert('Comments load를 실패했습니다.');
+  });
+};
+
 var getDetailImageAjax = function() {
   $.ajax({
     url: '/api/products/' + productId + '/subImage',
@@ -119,13 +162,15 @@ $(document).ready(function(){
   });
   getDetailImageAjax();
   getDisplayInfoAjax();
+  getCommentsSummaryAjax();
+  getCommentAjax();
 });
 
-$('.btn_prev').on('click', rolling.btnHandler.bind(this, 0, function(){
+$prevBtn.on('click', rolling.btnHandler.bind(this, 0, function(){
   $curImgIdx.html($('#container ul.visual_img').data('curItem'));
 }));
 
-$('.btn_nxt').on('click', rolling.btnHandler.bind(this, 1, function(){
+$nextBtn.on('click', rolling.btnHandler.bind(this, 1, function(){
   $curImgIdx.html($('#container ul.visual_img').data('curItem'));
 }));
 
