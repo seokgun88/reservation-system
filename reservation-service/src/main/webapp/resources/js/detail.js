@@ -80,8 +80,10 @@ var getCommentsSummaryAjax = function() {
     type: 'GET'
   })
   .done(function(data){
-    $avgScore.html(data.avgScore);
+    $avgScore.html(data.avgScore.toFixed(1));
     $commentsNum.html(data.num + '건');
+    var starPercentage = data.avgScore / 5 * 100;
+    $('.graph_value').css('width', starPercentage+'%');
   })
   .fail(function(error){
     console.log(error.responseJSON);
@@ -95,14 +97,17 @@ var getCommentAjax = function() {
     type: 'GET'
   })
   .done(function(data){
+    if(data.length <= 3) {
+      $('.btn_review_more').hide();
+    }
     $.each(data, function(index, value){
       value.productName = productName;
       var d = new Date(value.createDate);
       var date = d.getFullYear() + '.' + (d.getMonth()+1) + '.' + d.getDate();
       value.date = date;
-  		var source = $('#comment-template').html();
-  		var template = Handlebars.compile(source);
-  		var html = template(value);
+      var source = $('#comment-template').html();
+      var template = Handlebars.compile(source);
+      var html = template(value);
       $('.list_short_review').append(html);
     });
   })
@@ -127,7 +132,7 @@ var getDetailImageAjax = function() {
   })
   .fail(function(error){
     console.log(error.responseJSON);
-    alert('Detail image load를 실패했습니다.');
+    //alert('Detail image load를 실패했습니다.');
   });
 }
 

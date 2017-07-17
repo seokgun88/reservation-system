@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.ys.reservation.dao.FileDao;
 import com.ys.reservation.dao.ProductDao;
+import com.ys.reservation.dao.UserCommentDao;
 import com.ys.reservation.domain.FileDomain;
 import com.ys.reservation.domain.Product;
+import com.ys.reservation.vo.CommentsSummaryVo;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
 import com.ys.reservation.vo.ProductVo;
 import com.ys.reservation.vo.UserCommentVo;
-import com.ys.reservation.vo.CommentsSummaryVo;
 
 @Service
 public class ProductService {
@@ -22,6 +23,8 @@ public class ProductService {
 	private ProductDao productDao;
 	@Autowired
 	private FileDao fileDao;
+	@Autowired
+	private UserCommentDao userCommentDao;
 	
 	public List<ProductVo> getAllProducts() {
 		return productDao.selectAll();
@@ -75,6 +78,14 @@ public class ProductService {
 	
 	public List<UserCommentVo> getUserComment(int id) {
 		List<UserCommentVo> comments = productDao.selectUserComment(id);
+		for(UserCommentVo comment : comments) {
+			List<FileDomain> files = userCommentDao.selectFiles(comment.getId());
+			if(files.size() > 0) {
+				comment.setFileId(files.get(0).getId());
+				comment.setFilesNum(files.size());
+			}
+			
+		}
 		if(comments.size() > 3) {
 			return comments.subList(0, 3);
 		}

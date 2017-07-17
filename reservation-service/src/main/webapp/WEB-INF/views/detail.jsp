@@ -144,13 +144,13 @@
 								<li class="list_item">
 									<div>
 										<div class="review_area">
-											{{#if img}}
+											{{#if fileId}}
 											<div class="thumb_area">
 												<a href="#" class="thumb" title="이미지 크게 보기">
 													<img width="90" height="90" class="img_vertical_top"
-													src="{{this}}"
+													src="/api/files/{{fileId}}"
 													alt="리뷰이미지">
-												</a> <span class="img_count">1</span>
+												</a> <span class="img_count">{{filesNum}}</span>
 											</div>
 											{{/if}}
 											<h4 class="resoc_name">{{productName}}</h4>
