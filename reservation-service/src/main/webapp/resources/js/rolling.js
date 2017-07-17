@@ -6,9 +6,12 @@ var rolling = (function() {
 	var intervalVar;
 	var timeoutVar;
   var rollingSpace;
+  var intervalFlag = true;
 
 	var setRollingInterval = function() {
-		intervalVar = setInterval(leftRollup, 2000);
+    if(intervalFlag) {
+  		intervalVar = setInterval(leftRollup, 2000);
+    }
 	};
 
 	var listInit = function(){
@@ -64,19 +67,27 @@ var rolling = (function() {
     setRollingSpace: function(space) {
       rollingSpace = space;
     },
-		getRollingAjax: function(url) {
+    setIntervalFlag: function(flag) {
+      intervalFlag = flag;
+    },
+		getRollingAjax: function(url, callback) {
 				$list.data('curItem', 1);
 				$.ajax({
 					url: url,
 					type: 'GET'
 				})
-				.done(draw)
+				.done(function(data){
+          draw(data);
+          if(callback) {
+            callback(data);
+          }
+        })
 				.fail(function(error){
 					console.log(error.responseJSON);
 					alert('Rolling list load를 실패했습니다.');
 				});
 		},
-		btnHandler: function(btnFlag, e) {
+		btnHandler: function(btnFlag, callback, e) {
 			//e.preventDefault();
 			var rollUpFn = btnFlag === 0 ? rightRollup : leftRollup;
 			if(!rollingBtnClicked) {
@@ -86,6 +97,9 @@ var rolling = (function() {
 				clearTimeout(timeoutVar);
 				rollUpFn();
 				timeoutVar = setTimeout(setRollingInterval, 4000);
+        if(callback) {
+          callback();
+        }
 			}
 		}
 	};

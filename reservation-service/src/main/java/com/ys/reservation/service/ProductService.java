@@ -1,13 +1,16 @@
 package com.ys.reservation.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ys.reservation.dao.FileDao;
 import com.ys.reservation.dao.ProductDao;
 import com.ys.reservation.domain.FileDomain;
 import com.ys.reservation.domain.Product;
+import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
 import com.ys.reservation.vo.ProductVo;
 
@@ -15,6 +18,8 @@ import com.ys.reservation.vo.ProductVo;
 public class ProductService {
 	@Autowired
 	private ProductDao productDao;
+	@Autowired
+	private FileDao fileDao;
 	
 	public List<ProductVo> getAllProducts() {
 		return productDao.selectAll();
@@ -50,7 +55,19 @@ public class ProductService {
 		return productDao.selectDetail(id);
 	}
 	
-	public List<FileDomain> getFiles(int id, int type) {
-		return productDao.selectFiles(id, type);
+	public List<Integer> getFileIds(int id, int type) {
+		List<Integer> ids = new ArrayList<>();
+		for(FileDomain fileDomain : productDao.selectFiles(id, type)) {
+			ids.add(fileDomain.getId());
+		}
+		return ids;
+	}
+	
+	public DisplayInfoVo getDisplayInfo(int id){ 
+		return productDao.selectDisplayInfo(id);
+	}
+	
+	public int getSubImageId(int id) {
+		return fileDao.selectSubImage(id).getId();
 	}
 }

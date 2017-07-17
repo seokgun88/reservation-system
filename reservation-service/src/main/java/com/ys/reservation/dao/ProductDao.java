@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ys.reservation.domain.FileDomain;
 import com.ys.reservation.domain.Product;
+import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
 import com.ys.reservation.vo.ProductVo;
 
@@ -25,6 +26,7 @@ public class ProductDao {
 	private RowMapper<ProductVo> dtoRowMapper = BeanPropertyRowMapper.newInstance(ProductVo.class);
 	private RowMapper<ProductDetailVo> detailRowMapper = BeanPropertyRowMapper.newInstance(ProductDetailVo.class);
 	private RowMapper<FileDomain> fileRowMapper = BeanPropertyRowMapper.newInstance(FileDomain.class);
+	private RowMapper<DisplayInfoVo> placeInfoRowMapper = BeanPropertyRowMapper.newInstance(DisplayInfoVo.class);
 	
 	public ProductDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -83,4 +85,8 @@ public class ProductDao {
 		return jdbc.query(ProductJoinSqls.SELECT_FILES, params, fileRowMapper);
 	}
 	
+	public DisplayInfoVo selectDisplayInfo(int id) {
+		Map<String, ?> params = Collections.singletonMap("id", id);
+		return jdbc.queryForObject(ProductJoinSqls.SELECT_DISPLAY_INFO, params, placeInfoRowMapper);
+	}
 }

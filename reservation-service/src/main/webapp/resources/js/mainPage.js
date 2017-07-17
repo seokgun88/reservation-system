@@ -146,7 +146,7 @@ var mainPage = (function() {
 			});
 		},
 		documentInit: function() {
-			rolling.setRollingSpace(338);
+			rolling.setRollingSpace(338)
 			rolling.getRollingAjax('/api/products');
 			getProductsAjax();
 			getCategoriesAjax();
@@ -164,8 +164,8 @@ $(document).ready(mainPage.documentInit);
 
 mainPage.getCategoryList().on('click', 'a', mainPage.categoryClickListener);
 
-mainPage.getPrevBtn().on('click', rolling.btnHandler.bind(this, 0));
-mainPage.getNextBtn().on('click', rolling.btnHandler.bind(this, 1));
+mainPage.getPrevBtn().on('click', rolling.btnHandler.bind(this, 0, null));
+mainPage.getNextBtn().on('click', rolling.btnHandler.bind(this, 1, null));
 
 mainPage.getMoreBtn().on('click', mainPage.getMoreProductsAjax);
 
