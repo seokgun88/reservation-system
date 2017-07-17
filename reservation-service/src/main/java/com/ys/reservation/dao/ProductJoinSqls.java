@@ -24,7 +24,7 @@ public class ProductJoinSqls {
 			+ "FROM product p, product_detail d "
 			+ "WHERE p.id = :id AND p.id = d.product_id;";
 	public final static String SELECT_FILES = 
-			"SELECT file_name, save_file_name, file_length, content_type "
+			"SELECT f.id, file_name, save_file_name, file_length, content_type "
 			+ "FROM product_image p, file f "
 			+ "WHERE p.product_id = :id AND p.type = :type AND p.file_id = f.id";
 	public final static String SELECT_DISPLAY_INFO = 
