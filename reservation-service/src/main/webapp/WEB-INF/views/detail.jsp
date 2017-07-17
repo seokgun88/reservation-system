@@ -140,29 +140,32 @@
 								</strong> <span class="join_count"><em class="green">52건</em> 등록</span>
 							</div>
 							<ul class="list_short_review">
+								<script id="comment-template" type="text/x-handlebars-template">
 								<li class="list_item">
 									<div>
 										<div class="review_area">
+											{{#if img}}
 											<div class="thumb_area">
-												<a href="#" class="thumb" title="이미지 크게 보기"> <img
-													width="90" height="90" class="img_vertical_top"
-													src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300"
+												<a href="#" class="thumb" title="이미지 크게 보기">
+													<img width="90" height="90" class="img_vertical_top"
+													src="{{this}}"
 													alt="리뷰이미지">
 												</a> <span class="img_count">1</span>
 											</div>
-											<h4 class="resoc_name">뮤지컬 로미오와 줄리엣</h4>
-											<p class="review">2층이어서 걱정했는데 꽤잘보여서 좋았습니다 고미오 너무 멋있었습니다
-												사진은 커튼콜때 찍었습니다 끝나고 퇴근길도 봐서 너무 좋았어요</p>
+											{{/if}}
+											<h4 class="resoc_name">{{productName}}</h4>
+											<p class="review">{{comment}}</p>
 										</div>
 										<div class="info_area">
 											<div class="review_info">
-												<span class="grade">4.0</span> <span class="name">dbfl****</span>
-												<span class="date">2017.3.5. 방문</span>
+												<span class="grade">{{score}}</span> <span class="name">{{snsId}}</span>
+												<span class="date">{{date}} 방문</span>
 											</div>
 										</div>
 									</div>
 								</li>
-								<li class="list_item">
+								</script>
+								<%-- <li class="list_item">
 									<div>
 										<div class="review_area no_img">
 											<h4 class="resoc_name">뮤지컬 로미오와 줄리엣</h4>
@@ -177,24 +180,7 @@
 											</div>
 										</div>
 									</div>
-								</li>
-								<li class="list_item">
-									<div>
-										<div class="review_area no_img">
-											<h4 class="resoc_name">뮤지컬 로미오와 줄리엣</h4>
-											<p class="review">
-												좋은 공연이었습니다. <br>머큐쇼역활 하신분의 열창이 기억에 남는 반면에,,, 로미오는 별로
-												기억에 남지 않네요..
-											</p>
-										</div>
-										<div class="info_area">
-											<div class="review_info">
-												<span class="grade">4.0</span> <span class="name">xero****</span>
-												<span class="date">2017.3.4. 방문</span>
-											</div>
-										</div>
-									</div>
-								</li>
+								</li> --%>
 							</ul>
 						</div>
 						<p class="guide">
