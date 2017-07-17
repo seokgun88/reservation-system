@@ -12,6 +12,8 @@ public class UserCommentVo {
 	private Date modifyDate;
 	private float avgScore;
 	private String snsId;
+	private int fileId;
+	private int filesNum;
 	
 	public int getId() {
 		return id;
@@ -66,5 +68,17 @@ public class UserCommentVo {
 	}
 	public void setSnsId(String snsId) {
 		this.snsId = snsId;
+	}
+	public int getFileId() {
+		return fileId;
+	}
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
+	}
+	public int getFilesNum() {
+		return filesNum;
+	}
+	public void setFilesNum(int filesNum) {
+		this.filesNum = filesNum;
 	}
 }
