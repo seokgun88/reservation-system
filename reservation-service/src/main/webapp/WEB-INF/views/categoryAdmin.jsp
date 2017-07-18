@@ -5,14 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="/resources/categoryAdmin.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/categoryAdmin.css">
 <title>카테고리 관리자 페이지</title>
 </head>
 <body>
 <div id="main_div">
 	<h1>카테고리 관리</h1>
-	<form method="post" action="/category/admin/create">
-	    <input type="text" name="name" id="name" placeholder="새로운 카테고리를 입력하세요." size="30">
+	<form method="post" action="/category/admin">
+	    <input type="text" name="name" id="name" placeholder="새로운 카테고리를 입력하세요." size="30" autofocus>
 	</form>
 	<ul id="category_list">
 		<c:forEach items="${categories}" var="category">
@@ -27,6 +27,6 @@
 	</ul>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/resources/categoryAdmin.js"></script>
+<script src="/resources/js/categoryAdmin.js"></script>
 </body>
 </html>

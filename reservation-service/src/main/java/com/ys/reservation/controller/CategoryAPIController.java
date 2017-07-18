@@ -1,10 +1,12 @@
 package com.ys.reservation.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,28 +19,24 @@ import com.ys.reservation.service.CategoryService;
 
 @RestController
 @RequestMapping("/api/categories")
-public class RestAPIController {
-	
+public class CategoryAPIController {
 	@Autowired
 	private CategoryService categoryService;
-	
-	@DeleteMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public String delete(@PathVariable Integer id) {
+
+	@GetMapping
+	public List<Category> getAll() {
+		return categoryService.getAll();
+	}
+
+	@DeleteMapping("/{id:[\\d]+}") // 숫자 받는 정규식
+	public void delete(@PathVariable Integer id) {
 		categoryService.remove(id);
-		return "redirect:/category/admin";
 	}
-	
+
 	@PutMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable Integer id, @RequestBody Map<String, Object> payload) {
-		String name = (String)payload.get("name");
-		if(name != null && name.trim().length() != 0){
-			Category category = new Category();
-			category.setId(id);
-			category.setName(name);
-			categoryService.update(category);			
-		}
+	public void update(@PathVariable Integer id, @RequestBody Category category) {
+		category.setId(id);
+		categoryService.update(category);
 	}
-	
+
 }

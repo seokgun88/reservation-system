@@ -1,0 +1,15 @@
+{
+  "name": "reservation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mainPage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "handlebars": "^4.0.10",
+    "jQuery": "^1.7.4"
+  }
+}

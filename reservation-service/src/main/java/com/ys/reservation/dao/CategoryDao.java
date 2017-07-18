@@ -30,7 +30,7 @@ public class CategoryDao {
 				.usingGeneratedKeyColumns("id");
 	}
 	
-	public Integer insert(Category category) {
+	public int insert(Category category) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(category);
 		return insertAction.executeAndReturnKey(params).intValue();
 	}
@@ -38,9 +38,10 @@ public class CategoryDao {
 	public List<Category> selectAll() {
 		Map<String, Object> params = Collections.emptyMap();
 		return jdbc.query(CategorySqls.SELECT_ALL, params, rowMapper);
+		//jdbc.query(CategorySqls.SELECT_ALL, rowMapper); 스프링에서 빈객체 하나 알아서 활용
 	}
 	
-	public int delete(Integer id) {
+	public int delete(Integer id) { //객체 생성 메모리 릭
 		Map<String, ?> params = Collections.singletonMap("id", id);
 		return jdbc.update(CategorySqls.DELETE_BY_ID, params);
 	}
