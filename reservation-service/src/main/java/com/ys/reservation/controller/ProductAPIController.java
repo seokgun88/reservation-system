@@ -27,12 +27,12 @@ public class ProductAPIController {
 	
 	@GetMapping
 	public List<ProductVo> getAll() {
-		return productService.getAllProducts();
+		return productService.getAll();
 	}
 
 	@GetMapping("/pages/{page}")
 	public List<ProductVo> getByPage(@PathVariable int page) {
-		return productService.limitedGet(page);
+		return productService.getWithLimit(page);
 	}
 	
 	@GetMapping("/{id}")
@@ -43,16 +43,6 @@ public class ProductAPIController {
 	@GetMapping("/count")
 	public int getCount() {
 		return productService.getCount();
-	}
-	
-	@GetMapping("/categories/{categoryId}/pages/{page}")
-	public List<ProductVo> limitedGetByPageAndCategoryId(@PathVariable int categoryId, @PathVariable int page) {
-		return productService.limitedGetByCategoryId(categoryId, page);
-	}
-	
-	@GetMapping("/categories/{categoryId}/count")
-	public int getCountByCategoryId(@PathVariable int categoryId) {
-		return productService.getCountByCategoryId(categoryId);
 	}
 	
 	@GetMapping("/{id}/detail")

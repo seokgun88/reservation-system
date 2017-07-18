@@ -19,7 +19,7 @@ public class CategoryService {
 	}
 	
 	public int create(Category category){
-		if(category.getName() != null && ! category.getName().trim().isEmpty()){ 
+		if(category != null && category.getName() != null && ! category.getName().trim().isEmpty()){ 
 			return categoryDao.insert(category);
 		}
 		return -1;
