@@ -38,7 +38,7 @@ var mainPage = (function() {
 	var getProductsAjax = function() {
 		var categoryId = $('#container ul.event_tab_lst a.anchor.active').closest('.item').data('category');
 		var apiUrl;
-		categoryId == 0 ? apiUrl = '/api/products' : apiUrl = '/api/products/categories/' + categoryId;
+		categoryId == 0 ? apiUrl = '/api/products' : apiUrl = '/api/categories/' + categoryId + '/products';
 		apiUrl = apiUrl + '/pages/' + (productPage + 1);
 		loading = true;
 		$.ajax({
@@ -77,7 +77,7 @@ var mainPage = (function() {
 	var getProductsCountAjax = function() {
 		var categoryId = $('#container ul.event_tab_lst a.anchor.active').closest('.item').data('category');
 		var apiUrl;
-		categoryId == 0 ? apiUrl = '/api/products/count' : apiUrl = '/api/products/categories/' + categoryId + '/count';
+		categoryId == 0 ? apiUrl = '/api/products/count' : apiUrl = '/api/categories/' + categoryId + '/products/count';
 
 		$.ajax({
 			url: apiUrl,
@@ -116,7 +116,7 @@ var mainPage = (function() {
 			var categoryId = $li.data('category');
 			var apiUrl;
 
-			categoryId == 0 ? apiUrl = '/api/products' : apiUrl = '/api/products/categories/' + categoryId;
+			categoryId == 0 ? apiUrl = '/api/products' : apiUrl = '/api/categories/' + categoryId + '/products';
 			apiUrl = apiUrl + '/pages/1';
 
 			$.ajax({

@@ -26,11 +26,11 @@ public class ProductService {
 	@Autowired
 	private UserCommentDao userCommentDao;
 	
-	public List<ProductVo> getAllProducts() {
+	public List<ProductVo> getAll() {
 		return productDao.selectAll();
 	}
 	
-	public List<ProductVo> limitedGet(int page) {
+	public List<ProductVo> getWithLimit(int page) {
 		int offset = 10 * (page-1);
 		return productDao.limitedSelect(offset);
 	}
@@ -43,11 +43,10 @@ public class ProductService {
 		return productDao.countAll();
 	}
 	
-//	public List<Product> getProductsByCategory(int categoryId) {
-//		return productDao.selectByCategory(categoryId);
-//	}
-	
-	public List<ProductVo> limitedGetByCategoryId(int categoryId, int page) {
+	public List<ProductVo> getWithLimitByCategoryId(int categoryId, int page) {
+		if(page <= 0) {
+			return null;
+		}
 		int offset = 10 * (page-1);
 		return productDao.limitedSelectByCategoryId(categoryId, offset);
 	}
