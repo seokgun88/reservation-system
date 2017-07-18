@@ -20,14 +20,12 @@ var mainPage = (function() {
 		$categoryList.append(html);
 	};
 
+	var productTemplate = Handlebars.compile($('#product-template').html());
 	var drawProduct = function(data) {
 		var $curProductList = $productList.eq(productListCnt % 2);
 		productListCnt++;
-
-		var source = $('#product-template').html();
-		var template = Handlebars.compile(source);
 		var product = { product: data };
-		var html = template(product);
+		var html = productTemplate(product);
 		$curProductList.append(html);
 	};
 

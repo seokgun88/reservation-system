@@ -23,11 +23,10 @@ var rolling = (function() {
 		setRollingInterval();
 	};
 
+  var rollingTemplate = Handlebars.compile($('#rolling-template').html());
 	var draw = function(data) {
-		var source = $('#rolling-template').html();
-		var template = Handlebars.compile(source);
 		var items = { items: data };
-		var html = template(items);
+		var html = rollingTemplate(items);
 		$list.append(html);
 		listInit();
 	};
