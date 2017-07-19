@@ -1,6 +1,6 @@
 "use strict";
 
-var rolling = (function() {
+var Rolling = (function() {
   var $list = $('#container ul.visual_img');
 	var rollingBtnClicked = false;
 	var intervalVar;

@@ -1,6 +1,6 @@
 "use strict";
 
-var mainPage = (function() {
+var ReservationMain = (function() {
 	var $categoryList = $('#container ul.event_tab_lst');
 	var $productList = $('#container ul.lst_event_box');
 	var $productsCnt = $('#container p.event_lst_txt span.pink');
@@ -90,85 +90,70 @@ var mainPage = (function() {
 		});
 	};
 
-	return {
-		getCategoryList: function() {
-			return $categoryList;
-		},
-		getPrevBtn: function() {
-			return $prevBtn;
-		},
-		getNextBtn: function() {
-			return $nextBtn;
-		},
-		getMoreBtn: function() {
-			return $moreBtn;
-		},
-		getLoading: function() {
-			return loading;
-		},
-		categoryClickListener: function(e) {
-			e.preventDefault();
+	var categoryClickListener = function(e) {
+		e.preventDefault();
 
-			var $a = $(e.target).closest('a.anchor');
-			var $li = $(e.target).closest('li.item');
-			var categoryId = $li.data('category');
-			var apiUrl;
+		var $a = $(e.target).closest('a.anchor');
+		var $li = $(e.target).closest('li.item');
+		var categoryId = $li.data('category');
+		var apiUrl;
 
-			categoryId == 0 ? apiUrl = '/api/products' : apiUrl = '/api/categories/' + categoryId + '/products';
-			apiUrl = apiUrl + '?page=1';
+		categoryId == 0 ? apiUrl = '/api/products' : apiUrl = '/api/categories/' + categoryId + '/products';
+		apiUrl = apiUrl + '?page=1';
 
-			$.ajax({
-				url: apiUrl,
-				type: 'GET'
-			})
-			.done(function(data) {
-				$categoryList.find('a.anchor').removeClass('active');
-				$a.addClass('active');
+		$.ajax({
+			url: apiUrl,
+			type: 'GET'
+		})
+		.done(function(data) {
+			$categoryList.find('a.anchor').removeClass('active');
+			$a.addClass('active');
 
-				getProductsCountAjax();
-				$productList.empty();
-				productListCnt = 0;
-				productPage = 1;
-				$.each(data, function(index, value){
-					drawProduct(value);
-				});
-				if(data.length > 0){
-					$moreBtn.show();
-				} else {
-					$moreBtn.hide();
-				}
-			})
-			.fail(function(error){
-				console.log(error.responseJSON);
-				alert('Products list load를 실패했습니다.');
+			getProductsCountAjax();
+			$productList.empty();
+			productListCnt = 0;
+			productPage = 1;
+			$.each(data, function(index, value){
+				drawProduct(value);
 			});
-		},
-		documentInit: function() {
-			rolling.setRollingSpace(338)
-			rolling.getRollingAjax('/api/products');
+			if(data.length > 0){
+				$moreBtn.show();
+			} else {
+				$moreBtn.hide();
+			}
+		})
+		.fail(function(error){
+			console.log(error.responseJSON);
+			alert('Products list load를 실패했습니다.');
+		});
+	};
+
+	var getMoreProductsAjax = function(){
+		if($moreBtn.css('display') !== 'none'){
+			getProductsAjax();
+		}
+	};
+
+	return {
+		init: function() {
+			Rolling.setRollingSpace(338)
+			Rolling.getRollingAjax('/api/products');
 			getProductsAjax();
 			getCategoriesAjax();
 			getProductsCountAjax();
-		},
-		getMoreProductsAjax: function(){
-			if($moreBtn.css('display') !== 'none'){
-				getProductsAjax();
-			}
+
+			$categoryList.on('click', 'a', categoryClickListener);
+			$prevBtn.on('click', Rolling.btnHandler.bind(this, 0, null));
+			$nextBtn.on('click', Rolling.btnHandler.bind(this, 1, null));
+			$moreBtn.on('click', getMoreProductsAjax);
+
+			$(window).scroll(function(){
+			    if(!loading && $(window).scrollTop() > $(document).height() - $(window).height() - 100){
+						getMoreProductsAjax();
+				}
+			});
 		}
 	};
 })();
 
-$(document).ready(mainPage.documentInit);
-
-mainPage.getCategoryList().on('click', 'a', mainPage.categoryClickListener);
-
-mainPage.getPrevBtn().on('click', rolling.btnHandler.bind(this, 0, null));
-mainPage.getNextBtn().on('click', rolling.btnHandler.bind(this, 1, null));
-
-mainPage.getMoreBtn().on('click', mainPage.getMoreProductsAjax);
-
-$(window).scroll(function(){
-    if(!mainPage.loading && $(window).scrollTop() > $(document).height() - $(window).height() - 100){
-			mainPage.getMoreProductsAjax();
-	}
-});
+$(ReservationMain.init);
