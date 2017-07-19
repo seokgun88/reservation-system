@@ -40,7 +40,7 @@ public class MainController {
 		return "redirect:/admin/categories";
 	}
 	
-	@GetMapping("/product/{id}")
+	@GetMapping("/products/{id}")
 	public String productDetailById(@PathVariable int id, Model model) {
 		model.addAttribute("id", id);
 		return "detail";
