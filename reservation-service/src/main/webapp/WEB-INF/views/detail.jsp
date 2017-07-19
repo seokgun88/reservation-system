@@ -135,13 +135,13 @@
 								<!-- [D] 별점 graph_value는 퍼센트 환산하여 width 값을 넣어줌 -->
 								<span class="graph_mask"> <em class="graph_value"
 									style="width: 84%;"></em>
-								</span> <strong class="text_value"> <span>4.2</span> <em
+								</span> <strong class="text_value"> <span>0.0</span> <em
 									class="total">5.0</em>
-								</strong> <span class="join_count"><em class="green">52건</em> 등록</span>
+								</strong> <span class="join_count"><em class="green">0건</em> 등록</span>
 							</div>
 							<ul class="list_short_review">
 								<script id="comment-template" type="text/x-handlebars-template">
-								<li class="list_item">
+								<li class="list_item" data-id="{{id}}">
 									<div>
 										<div class="review_area">
 											{{#if fileId}}
@@ -165,22 +165,6 @@
 									</div>
 								</li>
 								</script>
-								<%-- <li class="list_item">
-									<div>
-										<div class="review_area no_img">
-											<h4 class="resoc_name">뮤지컬 로미오와 줄리엣</h4>
-											<p class="review">
-												너무 재밌게봤구요~<br>마지막공연 후 뒷풀이도 잘봤습니다
-											</p>
-										</div>
-										<div class="info_area">
-											<div class="review_info">
-												<span class="grade">5.0</span> <span class="name">yyck****</span>
-												<span class="date">2017.3.5. 방문</span>
-											</div>
-										</div>
-									</div>
-								</li> --%>
 							</ul>
 						</div>
 						<p class="guide">
@@ -188,7 +172,7 @@
 								이용자가 남긴 평가입니다.</span>
 						</p>
 					</div>
-					<a class="btn_review_more" href="#"> <span>예매자 한줄평 더보기</span> <i
+					<a class="btn_review_more" href="#" style="display: none;"> <span>예매자 한줄평 더보기</span> <i
 						class="fn fn-forward1"></i>
 					</a>
 				</div>
@@ -228,11 +212,10 @@
 					<!-- [D] 오시는길 외 다른 탭 선택 시 detail_location에 hide 추가 -->
 					<div class="detail_location hide">
 						<div class="box_store_info no_topline">
-							<a href="#" class="store_location" title="지도웹으로 연결"> <img
-								class="store_map img_thumb" alt="map"
-								src="https://simg.pstatic.net/static.map/image?version=1.1&amp;crs=EPSG:4326&amp;baselayer=bl_vc_bg&amp;exception=xml&amp;scale=2&amp;caller=mw_smart_booking&amp;overlayers=ol_vc_an&amp;center=127.0011948,37.5717079&amp;markers=type,default2,127.0011948,37.5717079&amp;level=11&amp;w=340&amp;h=150">
-								<span class="img_border"></span> <span class="btn_map"><i
-									class="spr_book2 ico_mapview"></i></span>
+							<a href="#" class="store_location" title="지도웹으로 연결">
+								<div id="map" style="width:374px;height:200px;"></div>
+								<span class="img_border"></span>
+								<span class="btn_map"><i class="spr_book2 ico_mapview"></i></span>
 							</a>
 							<script id="location-template" type="text/x-handlebars-template">
 							<h3 class="store_name">{{productName}}</h3>
@@ -294,11 +277,22 @@
 		<span class="copyright">© NAVER Corp.</span>
 	</div>
 	</footer>
-	<div id="photoviwer"></div>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+	<div id="photoviwer" style="display:none; position:absolute; top:0px; left:0px; width:auto; height:auto; background:#000000; z-index:1000000">
+		<button class="btnPhotoviwerExit" type="button">닫기</button>
+		<span style="color:#ffffff; float:right"><span class="index_photo">1</span>/<span class="total_photo">1</span></span>
+		<ul class="photo_list" style="overflow:visible; width:100%; height:100vh; position:relative; white-space: nowrap"></ul>
+			<script id="photo-viewer-template" type="text/x-handlebars-template">
+			{{#each this}}
+			<li style="display:inline-block;">
+				<img alt="" src="/api/files/{{this}}" style="max-width:100%; max-hegiht:100%;">
+			</li>
+			{{/each}}
+			</script>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=zRCp4iB_1dQ7hvpSdfYB&submodules=geocoder"></script>
+	<script src="/resources/js/flicking.js"></script>
 	<script src="/resources/js/rolling.js"></script>
 	<script src="/resources/js/detail.js"></script>
 </body>

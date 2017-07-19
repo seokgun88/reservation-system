@@ -5,17 +5,23 @@ var productDesc;
 var $curImgIdx = $('span[class=num]');
 var $prevBtn = $('.btn_prev');
 var $nextBtn = $('.btn_nxt');
+var $gotoHomeBtn = $('.btn_goto_home');
+var $gotoTelBtn = $('.btn_goto_tel');
+var $gotoMailBtn = $('.btn_goto_mail');
+var $gotoPathBtn = $('.btn_goto_path');
 var $moreOpen = $('.bk_more._open');
 var $moreClose = $('.bk_more._close');
 var $bookingBtn = $('.bk_btn');
 var $avgScore = $('.grade_area .text_value span');
 var $commentsNum = $('.grade_area .join_count em');
 var $detailBtn = $('.item._detail');
-var $pathBtn = $('.item._path');
+var $pathViewBtn = $('.item._path');
 var $detail = $('.detail_area_wrap');
 var $location = $('.detail_location');
+var $map = $('.store_location');
+var $pathBtn = $('.btn_path');
 
-var lazy = (function(){
+var Lazy = (function(){
   var isInViewport = function(el) {
     var rect = el.getBoundingClientRect();
 
@@ -40,6 +46,11 @@ var lazy = (function(){
       window.addEventListener('load', lazyLoad);
       window.addEventListener('scroll', lazyLoad);
       window.addEventListener('resize', lazyLoad);
+    },
+    disable: function() {
+      window.removeEventListener('load', lazyLoad);
+      window.removeEventListener('scroll', lazyLoad);
+      window.removeEventListener('resize', lazyLoad);
     }
   };
 })();
@@ -82,12 +93,15 @@ var getCommentsSummaryAjax = function() {
   .done(function(data){
     $avgScore.html(data.avgScore.toFixed(1));
     $commentsNum.html(data.num + '건');
+    if(data.num > 3) {
+      $('.btn_review_more').show();
+    }
     var starPercentage = data.avgScore / 5 * 100;
     $('.graph_value').css('width', starPercentage+'%');
   })
   .fail(function(error){
     console.log(error.responseJSON);
-    alert('Comment summary load를 실패했습니다.');
+    //alert('Comment summary load를 실패했습니다.');
   });
 };
 
@@ -97,9 +111,6 @@ var getCommentAjax = function() {
     type: 'GET'
   })
   .done(function(data){
-    if(data.length <= 3) {
-      $('.btn_review_more').hide();
-    }
     $.each(data, function(index, value){
       value.productName = productName;
       var d = new Date(value.createDate);
@@ -109,6 +120,51 @@ var getCommentAjax = function() {
       var template = Handlebars.compile(source);
       var html = template(value);
       $('.list_short_review').append(html);
+    });
+    $('.thumb').on('click', function(){
+      $.ajax({
+        url: '/api/comments/' + $(this).closest('li').data('id') + '/images',
+        type: 'GET'
+      })
+      .done(function(data){
+        $('.photo_list').empty();
+        $('.photo_list').data('curItem', 1);
+
+        var source = $('#photo-viewer-template').html();
+        var template = Handlebars.compile(source);
+        var html = template(data);
+        $('.photo_list').append(html);
+
+        console.log(data);
+        $('.total_photo').html(data.length);
+
+        var $el = $('#photoviwer');
+        var $elWidth = ~~($el.outerWidth()),
+            $elHeight = ~~($el.outerHeight()),
+            docWidth = $(document).width(),
+            docHeight = $(document).height();
+
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+          $el.css({
+            width: docWidth,
+            height: docHeight
+          })
+        } else {
+            $el.css({top: 0, left: 0});
+        }
+        $el.fadeIn();
+        Lazy.disable();
+      })
+      .fail(function(error){
+        console.log(error.responseJSON);
+        alert('Comment photos load를 실패했습니다.');
+      });
+    });
+    $('.btnPhotoviwerExit').on('click', function(){
+      var $el = $('#photoviwer');
+      $el.fadeOut();
+      Lazy.init();
     });
   })
   .fail(function(error){
@@ -128,13 +184,51 @@ var getDetailImageAjax = function() {
 		var html = template(data);
     $('.detail_info_group').append(html);
 
-    lazy.init();
+    Lazy.init();
   })
   .fail(function(error){
     console.log(error.responseJSON);
     //alert('Detail image load를 실패했습니다.');
   });
 }
+
+var initMap = function (address) {
+  naver.maps.Service.geocode({
+    address: address
+  }, function(status, response) {
+    if (status === naver.maps.Service.Status.ERROR) {
+      //return alert('Something Wrong!');
+    }
+    var item = response.result.items[0],
+      point = new naver.maps.Point(item.point.x, item.point.y);
+
+    var map = new naver.maps.Map('map', {
+      center: new naver.maps.LatLng(point.y, point.x),
+      zoom: 10
+    });
+    console.log(map.getCenter());
+    var marker = new naver.maps.Marker({
+      position: new naver.maps.LatLng(point.y, point.x),
+      map: map
+    });
+
+    $map.on('click', function(e){
+      url = 'http://map.naver.com/index.nhn?enc=utf8&level=2&lng='+ point.x +'&lat='+ point.y
+      +'&pinTitle=' + $('.store_addr.addr_detail').html() +'&pinType=SITE';
+      window.open(url);
+    });
+
+    var pathUrl = 'http://map.naver.com/?&enc=utf8&dtPathType=0&menu=route&mapMode=0&pathType=1'
+      +'&elng=' + point.x
+      +'&elat=' + point.y
+      +'&eText=' + $('.store_addr.addr_detail').html();
+    $pathBtn.on('click', function(e){
+      url = pathUrl;
+      window.open(url);
+    });
+    $gotoPathBtn.attr('href', pathUrl);
+  });
+};
 
 var getDisplayInfoAjax = function() {
   $.ajax({
@@ -147,6 +241,10 @@ var getDisplayInfoAjax = function() {
 		var template = Handlebars.compile(source);
 		var html = template(data);
     $('.box_store_info').append(html);
+    initMap(data.placeStreet);
+    $gotoHomeBtn.attr('href', data.homepage);
+    $gotoTelBtn.attr('href', 'tel:' + data.tel);
+    $gotoMailBtn.attr('href', 'mailto:' + data.email);
   })
   .fail(function(error){
     console.log(error.responseJSON);
@@ -215,54 +313,49 @@ $('.bk_btn').on('click', function(e){
 
 $detailBtn.on('click', function(e){
   $detailBtn.find('a.anchor').addClass('active');
-  $pathBtn.find('a.anchor').removeClass('active');
+  $pathViewBtn.find('a.anchor').removeClass('active');
   $detail.removeClass('hide');
   $location.addClass('hide');
   e.preventDefault();
 });
 
-$pathBtn.on('click', function(e){
-  $pathBtn.find('a.anchor').addClass('active');
+$pathViewBtn.on('click', function(e){
+  $pathViewBtn.find('a.anchor').addClass('active');
   $detailBtn.find('a.anchor').removeClass('active');
   $detail.addClass('hide');
   $location.removeClass('hide');
   e.preventDefault();
 });
 
-var swipedetect = function(el, swipeHandler) {
-    var startX;
-    var startY;
-
-    el.addEventListener('touchstart', function(e){
-        var touchobj = e.changedTouches[0];
-        startX = touchobj.pageX;
-        startY = touchobj.pageY;
-        e.preventDefault();
-    }, false)
-
-    el.addEventListener('touchmove', function(e){
-        e.preventDefault();
-    }, false)
-
-    el.addEventListener('touchend', function(e){
-        var touchobj = e.changedTouches[0];
-        var distX = touchobj.pageX - startX;
-        var distY = touchobj.pageY - startY;
-        var swipedir;
-        if (Math.abs(distX) >= 50 && Math.abs(distY) <= 150){
-            swipedir = (distX < 0) ? 'left' : 'right';
-        }
-        swipeHandler(swipedir);
-        e.preventDefault();
-    }, false)
-};
-
 var el = document.getElementsByClassName('group_visual')[0];
-swipedetect(el, function(swipedir){
+Flicking.swipedetect(el, function(swipedir){
     if (swipedir =='left') {
       rolling.btnHandler(1);
     }
     if (swipedir =='right') {
       rolling.btnHandler(0);
+    }
+});
+
+Flicking.swipedetect($('.photo_list')[0], function(swipedir){
+    if (swipedir =='left') {
+      var curItem = $('.photo_list').data('curItem');
+      if(curItem < $('.total_photo').html()){
+        $('.photo_list').data('curItem', curItem+1);
+        $('.index_photo').html(curItem+1);
+        $('.photo_list').animate({
+          left: '-=424px'
+        });
+      }
+    }
+    if (swipedir =='right') {
+      var curItem = $('.photo_list').data('curItem');
+      if(curItem > 1){
+        $('.photo_list').data('curItem', curItem-1);
+        $('.index_photo').html(curItem-1);
+        $('.photo_list').animate({
+          left: '+=424px'
+        });
+      }
     }
 });
