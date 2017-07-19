@@ -31,11 +31,17 @@ public class ProductService {
 	}
 	
 	public List<ProductVo> getWithLimit(int page) {
+		if(page < 1) {
+			return null;
+		}
 		int offset = 10 * (page-1);
-		return productDao.limitedSelect(offset);
+		return productDao.selectLimited(offset);
 	}
 	
 	public Product getById(int id) {
+		if(id < 1) {
+			return null;
+		}
 		return productDao.select(id);
 	}
 	
@@ -44,22 +50,31 @@ public class ProductService {
 	}
 	
 	public List<ProductVo> getWithLimitByCategoryId(int categoryId, int page) {
-		if(page <= 0) {
+		if(categoryId < 1 || page <= 0) {
 			return null;
 		}
 		int offset = 10 * (page-1);
-		return productDao.limitedSelectByCategoryId(categoryId, offset);
+		return productDao.selectLimitedByCategoryId(categoryId, offset);
 	}
 	
 	public int getCountByCategoryId(int categoryId) {
+		if(categoryId < 1) {
+			return -1;
+		}
 		return productDao.countByCategoryId(categoryId);
 	}
 	
 	public ProductDetailVo getDetailById(int id) {
+		if(id < 1) {
+			return null;
+		}
 		return productDao.selectDetail(id);
 	}
 	
 	public List<Integer> getFileIds(int id, int type) {
+		if(id < 1 || type < 0) {
+			return null;
+		}
 		List<Integer> ids = new ArrayList<>();
 		for(FileDomain fileDomain : productDao.selectFiles(id, type)) {
 			ids.add(fileDomain.getId());
@@ -68,14 +83,23 @@ public class ProductService {
 	}
 	
 	public DisplayInfoVo getDisplayInfo(int id){ 
+		if(id < 1) {
+			return null;
+		}
 		return productDao.selectDisplayInfo(id);
 	}
 	
 	public int getSubImageId(int id) {
+		if(id < 1) {
+			return -1;
+		}
 		return fileDao.selectSubImage(id).getId();
 	}
 	
 	public List<UserCommentVo> getUserComment(int id) {
+		if(id < 1) {
+			return null;
+		}
 		List<UserCommentVo> comments = productDao.selectUserComment(id);
 		for(UserCommentVo comment : comments) {
 			List<FileDomain> files = userCommentDao.selectFiles(comment.getId());
@@ -92,6 +116,9 @@ public class ProductService {
 	}
 	
 	public CommentsSummaryVo getAvgCommentScore(int id) {
+		if(id < 1) {
+			return null;
+		}
 		return productDao.selectAvgCommentScore(id);
 	}
 }

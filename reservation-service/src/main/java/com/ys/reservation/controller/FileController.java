@@ -50,11 +50,11 @@ public class FileController {
 			String uuid = UUID.randomUUID().toString();
 			String saveFileName = formattedDate + File.separator + uuid;
 			
-            System.out.println("contentType :" + contentType);
-            System.out.println("name :" + name);
-            System.out.println("originalFilename : " + originalFilename);
-            System.out.println("size : " + size);
-            System.out.println("saveFileName : " + saveFileName);
+//            System.out.println("contentType :" + contentType);
+//            System.out.println("name :" + name);
+//            System.out.println("originalFilename : " + originalFilename);
+//            System.out.println("size : " + size);
+//            System.out.println("saveFileName : " + saveFileName);
             
             try(
             		InputStream in = file.getInputStream();

@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import com.ys.reservation.dao.sqls.FileSqls;
 import com.ys.reservation.domain.FileDomain;
 
 @Repository

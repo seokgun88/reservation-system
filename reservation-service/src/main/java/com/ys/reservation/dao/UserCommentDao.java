@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.ys.reservation.dao.sqls.FileSqls;
 import com.ys.reservation.domain.FileDomain;
 
 @Repository

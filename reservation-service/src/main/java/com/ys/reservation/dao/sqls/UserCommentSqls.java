@@ -1,4 +1,4 @@
-package com.ys.reservation.dao;
+package com.ys.reservation.dao.sqls;
 
 public class UserCommentSqls {
 	public final static String SELECT_BY_PRODUCT_ID = 

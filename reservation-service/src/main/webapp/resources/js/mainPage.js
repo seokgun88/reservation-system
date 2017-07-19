@@ -37,7 +37,7 @@ var mainPage = (function() {
 		var categoryId = $('#container ul.event_tab_lst a.anchor.active').closest('.item').data('category');
 		var apiUrl;
 		categoryId == 0 ? apiUrl = '/api/products' : apiUrl = '/api/categories/' + categoryId + '/products';
-		apiUrl = apiUrl + '/pages/' + (productPage + 1);
+		apiUrl = apiUrl + '?page=' + (productPage + 1);
 		loading = true;
 		$.ajax({
 			url: apiUrl,
@@ -115,7 +115,7 @@ var mainPage = (function() {
 			var apiUrl;
 
 			categoryId == 0 ? apiUrl = '/api/products' : apiUrl = '/api/categories/' + categoryId + '/products';
-			apiUrl = apiUrl + '/pages/1';
+			apiUrl = apiUrl + '?page=1';
 
 			$.ajax({
 				url: apiUrl,

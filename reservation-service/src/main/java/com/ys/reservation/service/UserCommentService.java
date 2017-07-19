@@ -15,6 +15,9 @@ public class UserCommentService {
 	private UserCommentDao userCommentDao;
 	
 	public List<Integer> getImgageIds(int id) {
+		if(id < 1) {
+			return null;
+		}
 		List<FileDomain> files = userCommentDao.selectFiles(id);
 		List<Integer> ids = files.stream().map(f -> f.getId()).collect(Collectors.toList());
 		return ids;

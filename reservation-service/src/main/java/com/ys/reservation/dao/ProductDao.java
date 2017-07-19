@@ -13,13 +13,16 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.ys.reservation.dao.sqls.ProductJoinSqls;
+import com.ys.reservation.dao.sqls.ProductSqls;
+import com.ys.reservation.dao.sqls.UserCommentSqls;
 import com.ys.reservation.domain.FileDomain;
 import com.ys.reservation.domain.Product;
+import com.ys.reservation.vo.CommentsSummaryVo;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
 import com.ys.reservation.vo.ProductVo;
 import com.ys.reservation.vo.UserCommentVo;
-import com.ys.reservation.vo.CommentsSummaryVo;
 
 @Repository
 public class ProductDao {
@@ -41,7 +44,7 @@ public class ProductDao {
 		return jdbc.query(ProductJoinSqls.SELECT_ALL, dtoRowMapper);
 	}
 	
-	public List<ProductVo> limitedSelect(int offset) {
+	public List<ProductVo> selectLimited(int offset) {
 		Map<String, ?> params = Collections.singletonMap("offset", offset);
 		return jdbc.query(ProductJoinSqls.LIMITED_SELECT_ALL, params, dtoRowMapper);
 	}
@@ -60,12 +63,7 @@ public class ProductDao {
 		return jdbc.queryForObject(ProductSqls.COUNT_ALL, params, Integer.class);
 	}
 	
-//	public List<Product> selectByCategoryId(int categoryId) {
-//		Map<String, ?> params = Collections.singletonMap("categoryId", categoryId);
-//		return jdbc.query(ProductSqls.SELECT_BY_CATEGORY_ID, params, rowMapper);
-//	}
-	
-	public List<ProductVo> limitedSelectByCategoryId(int categoryId, int offset) {
+	public List<ProductVo> selectLimitedByCategoryId(int categoryId, int offset) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("categoryId", categoryId);
 		params.put("offset", offset);

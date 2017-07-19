@@ -26,16 +26,14 @@ public class ProductAPIController {
 	private ProductService productService;
 	
 	@GetMapping
-	public List<ProductVo> getAll() {
-		return productService.getAll();
-	}
-
-	@GetMapping("/pages/{page}")
-	public List<ProductVo> getByPage(@PathVariable int page) {
+	public List<ProductVo> getByPage(@RequestParam(value="page", required=false) Integer page) {
+		if(page == null) {
+			return productService.getAll();			
+		}
 		return productService.getWithLimit(page);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/{id:[\\d]+}")
 	public Product getById(@PathVariable int id) {
 		return productService.getById(id);
 	}
@@ -45,33 +43,33 @@ public class ProductAPIController {
 		return productService.getCount();
 	}
 	
-	@GetMapping("/{id}/detail")
+	@GetMapping("/{id:[\\d]+}/detail")
 	public ProductDetailVo getDetailById(@PathVariable int id) {
 		return productService.getDetailById(id);
 	}
 	
-	@GetMapping("/{id}/files")
-	public List<Integer> getProductFileIds(@PathVariable int id, @RequestParam int type, HttpServletResponse response) {
+	@GetMapping("/{id:[\\d]+}/files")
+	public List<Integer> getFileIds(@PathVariable int id, @RequestParam int type, HttpServletResponse response) {
 		List<Integer> fileIds = productService.getFileIds(id, type);
 		return fileIds;
 	}
 	
-	@GetMapping("/{id}/displayInfo")
+	@GetMapping("/{id:[\\d]+}/displayInfo")
 	public DisplayInfoVo getDisplayInfo(@PathVariable int id) {
 		return productService.getDisplayInfo(id);
 	}
 	
-	@GetMapping("/{id}/subImage")
+	@GetMapping("/{id:[\\d]+}/subImage")
 	public int getSubImageId(@PathVariable int id) {
 		return productService.getSubImageId(id);
 	}
 	
-	@GetMapping("{id}/comments")
+	@GetMapping("/{id:[\\d]+}/comments")
 	public List<UserCommentVo> getUserComment(@PathVariable int id) {
 		return productService.getUserComment(id);
 	}
 	
-	@GetMapping("{id}/comments/summary")
+	@GetMapping("/{id:[\\d]+}/comments/summary")
 	public CommentsSummaryVo getAvgCommentScore(@PathVariable int id) {
 		return productService.getAvgCommentScore(id);
 	}

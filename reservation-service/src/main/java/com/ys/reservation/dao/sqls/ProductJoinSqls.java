@@ -1,4 +1,4 @@
-package com.ys.reservation.dao;
+package com.ys.reservation.dao.sqls;
 
 public class ProductJoinSqls {
 	public final static String SELECT_ALL = 

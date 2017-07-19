@@ -26,10 +26,16 @@ public class CategoryService {
 	}
 	
 	public int remove(int id){
+		if(id < 1) {
+			return -1;
+		}
 		return categoryDao.delete(id);
 	}
 	
 	public int update(Category category){
+		if(category == null) {
+			return -1;
+		}
 		return categoryDao.update(category);
 	}
 	
