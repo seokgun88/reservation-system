@@ -29,8 +29,18 @@ var ReservationMain = (function() {
 		$curProductList.append(html);
 	};
 
-	var drawProductsCnt = function(cnt) {
-		$productsCnt.text(cnt + '개');
+	var getMainImageAjax = function(data, drawImg){
+		$.each(data, function(index, value){
+			$.ajax({
+				url: '/api/products/' + value.id + '/mainImage',
+				type: 'GET'
+			})
+			.done(drawImg.bind(this, value.id))
+			.fail(function(error){
+				console.log(error.responseJSON);
+				alert('Product main image load를 실패했습니다.');
+			});
+		});
 	};
 
 	var getProductsAjax = function() {
@@ -48,6 +58,11 @@ var ReservationMain = (function() {
 				productPage++;
 				$.each(data, function(index, value){
 					drawProduct(value);
+				});
+				getMainImageAjax(data, function(id, imgId){
+					if(imgId !== -1){
+						$('.lst_event_box li[data-id=' + id + '] img').attr('src', '/api/files/' + imgId);
+					}
 				});
 			} else {
 				$moreBtn.hide();
@@ -70,6 +85,10 @@ var ReservationMain = (function() {
 			console.log(error.responseJSON);
 			alert('Category list load를 실패했습니다.');
 		});
+	};
+
+	var drawProductsCnt = function(cnt) {
+		$productsCnt.text(cnt + '개');
 	};
 
 	var getProductsCountAjax = function() {
@@ -116,6 +135,11 @@ var ReservationMain = (function() {
 			$.each(data, function(index, value){
 				drawProduct(value);
 			});
+			getMainImageAjax(data, function(id, imgId){
+				if(imgId !== -1){
+					$('.lst_event_box li[data-id=' + id + '] img').attr('src', '/api/files/' + imgId);
+				}
+			});
 			if(data.length > 0){
 				$moreBtn.show();
 			} else {
@@ -137,7 +161,7 @@ var ReservationMain = (function() {
 	return {
 		init: function() {
 			Rolling.setRollingSpace(338)
-			Rolling.getRollingAjax('/api/products');
+			Rolling.getRollingAjax('/api/products', getMainImageAjax);
 			getProductsAjax();
 			getCategoriesAjax();
 			getProductsCountAjax();

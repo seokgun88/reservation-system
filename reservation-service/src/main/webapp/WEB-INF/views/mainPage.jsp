@@ -21,7 +21,7 @@
 					class="spr_bi ico_bk_logo">예약</span>
 				</a>
 			</h1>
-			<a href="/resources/html/myreservation.html" class="btn_my"> <span title="내 예약">MY</span>
+			<a href="/login" class="btn_my"> <span title="내 예약">MY</span>
 			</a> </header>
 		</div>
 		<hr>
@@ -49,8 +49,8 @@
 								<ul class="visual_img"></ul>
 									<script id="rolling-template" type="text/x-handlebars-template">
 									{{#items}}
-									<li class="item" data-id={{id}} style="background-image: url(http://naverbooking.phinf.naver.net/20170119_48/1484802596907hmVDm_JPEG/image.jpg); width: 338px;">
-										<a href="/detail">
+									<li class="item" data-id={{id}} style="width: 338px;">
+										<a href="/products/{{id}}">
 											<span class="img_btm_border"></span>
 											<span class="img_right_border"></span>
 											<span class="img_bg_gra"></span>
@@ -91,11 +91,10 @@
 					<ul class="lst_event_box"></ul>
 						<script id="product-template" type="text/x-handlebars-template">
 						{{#product}}
-						<li class="item">
-							<a href="/detail" class="item_book">
+						<li data-id="{{id}}" class="item">
+							<a href="/products/{{id}}" class="item_book">
 								<div class="item_preview">
-									<img alt="뮤지컬 드림걸즈(DREAMGIRLS) 최초 내한" class="img_thumb"
-										src="https://ssl.phinf.net/naverbooking/20170303_271/1488514705030TuUK4_JPEG/17%B5%E5%B8%B2%B0%C9%C1%EE_%B8%DE%C0%CE%C6%F7%BD%BA%C5%CD_%C3%D6%C1%BE.jpg?type=l591_945">
+									<img class="img_thumb">
 									<span class="img_border"></span>
 								</div>
 								<div class="event_txt">

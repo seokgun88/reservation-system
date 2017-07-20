@@ -22,7 +22,7 @@
 					class="spr_bi ico_bk_logo">예약</span>
 				</a>
 			</h1>
-			<a href="/resources/html/myreservation.html" class="btn_my"> <span
+			<a href="/login" class="btn_my"> <span
 				title="내 예약">MY</span>
 			</a> </header>
 		</div>
@@ -37,7 +37,7 @@
 							class="spr_bi ico_bk_logo">예약</span>
 						</a>
 					</h1>
-					<a href="/resources/html/myreservation.html" class="btn_my"> <span
+					<a href="/login" class="btn_my"> <span
 						title="내 예약">MY</span>
 					</a> </header>
 					<div class="pagination">

@@ -78,7 +78,11 @@ var Rolling = (function() {
 				.done(function(data){
           draw(data);
           if(callback) {
-            callback(data);
+            callback(data, function(id, imgId) {
+      				if(imgId !== -1){
+      					$('.visual_img li[data-id=' + id +']').css('background-image', 'url(/api/files/' + imgId + ')');
+      				}
+      			});
           }
         })
 				.fail(function(error){
