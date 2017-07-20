@@ -18,9 +18,13 @@ import com.ys.reservation.domain.FileDomain;
 @RestController
 @RequestMapping("/api/files")
 public class FileApiController {
-	@Autowired
 	private FileDao fileDao;
-	
+
+	@Autowired
+	public FileApiController(FileDao fileDao) {
+		this.fileDao = fileDao;
+	}
+
 	@GetMapping("/{id}")
 	public void getFile(@PathVariable int id, HttpServletResponse response) {
 		FileDomain fileDomain = fileDao.select(id);

@@ -21,10 +21,19 @@ import com.ys.reservation.domain.FileDomain;
 @Controller
 @RequestMapping("/admin/files")
 public class FileController {
-	@Autowired
 	private FileDao fileDao;
 	private String baseDir = "c:" + File.separator + "temp_img";
-	
+
+	@Autowired
+	public FileController(FileDao fileDao) {
+		this.fileDao = fileDao;
+	}
+
+	public FileController(FileDao fileDao, String baseDir) {
+		this.fileDao = fileDao;
+		this.baseDir = baseDir;
+	}
+
 	@GetMapping
 	public String imageAdmin() {
 		return "imageAdmin";

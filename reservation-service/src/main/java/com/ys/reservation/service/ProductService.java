@@ -19,17 +19,21 @@ import com.ys.reservation.vo.UserCommentVo;
 
 @Service
 public class ProductService {
-	@Autowired
 	private ProductDao productDao;
-	@Autowired
 	private FileDao fileDao;
-	@Autowired
 	private UserCommentDao userCommentDao;
 	
+	@Autowired
+	public ProductService(ProductDao productDao, FileDao fileDao, UserCommentDao userCommentDao) {
+		this.productDao = productDao;
+		this.fileDao = fileDao;
+		this.userCommentDao = userCommentDao;
+	}
+
 	public List<ProductVo> getAll() {
 		return productDao.selectAll();
 	}
-	
+
 	public List<ProductVo> getWithLimit(int page) {
 		if(page < 1) {
 			return null;

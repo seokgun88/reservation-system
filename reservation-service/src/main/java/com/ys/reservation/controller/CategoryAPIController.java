@@ -20,10 +20,15 @@ import com.ys.reservation.vo.ProductVo;
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryAPIController {
-	@Autowired
 	private CategoryService categoryService;
-	@Autowired
 	private ProductService productService;
+
+	@Autowired
+	public CategoryAPIController(CategoryService categoryService, ProductService productService) {
+		super();
+		this.categoryService = categoryService;
+		this.productService = productService;
+	}
 
 	@GetMapping
 	public List<Category> getAll() {

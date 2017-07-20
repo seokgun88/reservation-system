@@ -13,8 +13,13 @@ import com.ys.reservation.service.UserCommentService;
 @RestController
 @RequestMapping("/api/comments")
 public class CommentApiController {
-	@Autowired
 	private UserCommentService userCommentService;
+
+	@Autowired
+	public CommentApiController(UserCommentService userCommentService) {
+		super();
+		this.userCommentService = userCommentService;
+	}
 	
 	@GetMapping("/{id}/images")
 	public List<Integer> getImageIds(@PathVariable int id) {

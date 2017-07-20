@@ -19,14 +19,18 @@ import com.ys.reservation.service.CategoryService;
 @Controller
 @RequestMapping("/")
 public class MainController {
-	@Autowired
 	private CategoryService categoryService;
-	
+
+	@Autowired
+	public MainController(CategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
+
 	@GetMapping
 	public String mainPage() {
 		return "mainPage";
 	}
-	
+
 	// 카테고리 관리페이지 요청시 전체 카테고리를 이름순으로 정렬한 리스트 반환
 	@GetMapping("/admin/categories")
 	public String categoryAdmin(Model model) {

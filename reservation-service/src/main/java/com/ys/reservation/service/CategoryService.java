@@ -10,14 +10,17 @@ import com.ys.reservation.domain.Category;
 
 @Service //여기서 변수 검증해야함
 public class CategoryService {
-	
-	@Autowired
 	private CategoryDao categoryDao;
-	
+
+	@Autowired
+	public CategoryService(CategoryDao categoryDao) {
+		this.categoryDao = categoryDao;
+	}
+
 	public List<Category> getAll(){
 		return categoryDao.selectAll();
 	}
-	
+
 	public int create(Category category){
 		if(category != null && category.getName() != null && ! category.getName().trim().isEmpty()){ 
 			return categoryDao.insert(category);

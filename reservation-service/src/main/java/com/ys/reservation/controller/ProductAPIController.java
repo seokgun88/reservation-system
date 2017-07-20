@@ -22,9 +22,13 @@ import com.ys.reservation.vo.CommentsSummaryVo;
 @RestController
 @RequestMapping("/api/products")
 public class ProductAPIController {
-	@Autowired
 	private ProductService productService;
-	
+
+	@Autowired
+	public ProductAPIController(ProductService productService) {
+		this.productService = productService;
+	}
+
 	@GetMapping
 	public List<ProductVo> getByPage(@RequestParam(value="page", required=false) Integer page) {
 		if(page == null) {
@@ -32,7 +36,7 @@ public class ProductAPIController {
 		}
 		return productService.getWithLimit(page);
 	}
-	
+
 	@GetMapping("/{id:[\\d]+}")
 	public Product getById(@PathVariable int id) {
 		return productService.getById(id);

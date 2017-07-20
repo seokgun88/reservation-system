@@ -11,9 +11,13 @@ import com.ys.reservation.domain.FileDomain;
 
 @Service
 public class UserCommentService {
-	@Autowired
 	private UserCommentDao userCommentDao;
-	
+
+	@Autowired
+	public UserCommentService(UserCommentDao userCommentDao) {
+		this.userCommentDao = userCommentDao;
+	}
+
 	public List<Integer> getImgageIds(int id) {
 		if(id < 1) {
 			return null;

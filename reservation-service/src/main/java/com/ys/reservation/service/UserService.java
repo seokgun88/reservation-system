@@ -9,9 +9,13 @@ import com.ys.reservation.domain.User;
 
 @Service
 public class UserService {
-	@Autowired
 	private UserDao userDao;
-	
+
+	@Autowired
+	public UserService(UserDao userDao) {
+		this.userDao = userDao;
+	}
+
 	public User create(NaverProfile profile) {
 		User user = userDao.select(profile.getEmail());
 		if(user == null) {
