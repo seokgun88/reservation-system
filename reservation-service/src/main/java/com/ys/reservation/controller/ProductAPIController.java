@@ -62,6 +62,11 @@ public class ProductAPIController {
 	public DisplayInfoVo getDisplayInfo(@PathVariable int id) {
 		return productService.getDisplayInfo(id);
 	}
+
+	@GetMapping("/{id:[\\d]+}/mainImage")
+	public int getMainImageId(@PathVariable int id) {
+		return productService.getMainImageId(id);
+	}
 	
 	@GetMapping("/{id:[\\d]+}/subImage")
 	public int getSubImageId(@PathVariable int id) {

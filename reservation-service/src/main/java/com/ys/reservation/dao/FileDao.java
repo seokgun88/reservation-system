@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -37,6 +38,15 @@ public class FileDao {
 	public FileDomain select(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
 		return jdbc.queryForObject(FileSqls.SELECT, params, rowMapper);
+	}
+	
+	public int selectMainImageId(int id) {
+		Map<String, ?> params = Collections.singletonMap("id", id);
+		try {
+			return jdbc.queryForObject(FileSqls.SELECT_MAIN_IMAGE_ID, params, Integer.class);
+		} catch(EmptyResultDataAccessException e) {
+			return -1;
+		}
 	}
 	
 	public FileDomain selectSubImage(int id) {

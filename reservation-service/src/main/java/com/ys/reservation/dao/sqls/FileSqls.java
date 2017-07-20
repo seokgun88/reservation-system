@@ -5,6 +5,11 @@ public class FileSqls {
 			"SELECT * "
 			+ "FROM file "
 			+ "WHERE id = :id";
+	public final static String SELECT_MAIN_IMAGE_ID = 
+			"SELECT f.id "
+			+ "FROM product_image p, file f "
+			+ "WHERE p.product_id = :id and p.type=0 and p.file_id=f.id "
+			+ "ORDER BY id LIMIT 1";
 	public final static String SELECT_SUB_IMAGE = 
 			"SELECT f.* "
 			+ "FROM product_image p, file f "

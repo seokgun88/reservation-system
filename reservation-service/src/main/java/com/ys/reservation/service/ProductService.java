@@ -93,6 +93,13 @@ public class ProductService {
 		return productDao.selectDisplayInfo(id);
 	}
 	
+	public int getMainImageId(int id) {
+		if(id < 1) {
+			return -1;
+		}
+		return fileDao.selectMainImageId(id);
+	}
+	
 	public int getSubImageId(int id) {
 		if(id < 1) {
 			return -1;
