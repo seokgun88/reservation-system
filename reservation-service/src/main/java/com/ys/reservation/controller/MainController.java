@@ -2,6 +2,8 @@ package com.ys.reservation.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +46,14 @@ public class MainController {
 	public String productDetailById(@PathVariable int id, Model model) {
 		model.addAttribute("id", id);
 		return "detail";
+	}
+	
+	@GetMapping("/my/reservation")
+	public String myReservation(HttpSession session) {
+		if(session.getAttribute("login") == null) {
+			return "redirect:/";
+		}
+		return "myreservation";
 	}
 	
 }
