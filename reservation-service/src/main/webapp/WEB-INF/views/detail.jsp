@@ -283,8 +283,8 @@
 		<ul class="photo_list" style="overflow:visible; width:100%; height:100vh; position:relative; white-space: nowrap"></ul>
 			<script id="photo-viewer-template" type="text/x-handlebars-template">
 			{{#each this}}
-			<li style="display:inline-block;">
-				<img alt="" src="/api/files/{{this}}" style="max-width:100%; max-hegiht:100%;">
+			<li style="display:inline-block; width:100%; height:100%; text-align:center;">
+				<img src="/api/files/{{this}}" style="max-width:100%; max-hegiht:100%;">
 			</li>
 			{{/each}}
 			</script>

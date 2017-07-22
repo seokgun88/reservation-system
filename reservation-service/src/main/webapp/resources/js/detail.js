@@ -302,13 +302,14 @@ var ProductDetail = (function(){
       });
 
       Flicking.swipedetect($('.photo_list')[0], function(swipedir){
+        var windowWidth = $(window).width();
           if (swipedir =='left') {
             var curItem = $('.photo_list').data('curItem');
             if(curItem < $('.total_photo').html()){
               $('.photo_list').data('curItem', curItem+1);
               $('.index_photo').html(curItem+1);
               $('.photo_list').animate({
-                left: '-=424px'
+                left: '-=' + windowWidth + 'px'
               });
             }
           }
@@ -318,7 +319,7 @@ var ProductDetail = (function(){
               $('.photo_list').data('curItem', curItem-1);
               $('.index_photo').html(curItem-1);
               $('.photo_list').animate({
-                left: '+=424px'
+                left: '+=' + windowWidth + 'px'
               });
             }
           }
