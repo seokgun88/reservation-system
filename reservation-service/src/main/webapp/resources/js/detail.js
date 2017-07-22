@@ -292,7 +292,7 @@ var ProductDetail = (function(){
         e.preventDefault();
       });
 
-      Flicking.swipedetect($('.group_visual')[0], function(swipedir){
+      Flicking.swipedetect($('.group_visual'), function(swipedir){
           if (swipedir =='left') {
             Rolling.btnHandler(1);
           }
@@ -301,7 +301,7 @@ var ProductDetail = (function(){
           }
       });
 
-      Flicking.swipedetect($('.photo_list')[0], function(swipedir){
+      Flicking.swipedetect($('.photo_list'), function(swipedir){
         var windowWidth = $(window).width();
           if (swipedir =='left') {
             var curItem = $('.photo_list').data('curItem');

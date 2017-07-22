@@ -1,31 +1,30 @@
 var Flicking = (function(){
   return {
-      swipedetect: function(el, swipeHandler) {
-        var startX;
-        var startY;
+      swipedetect: function($el, swipeHandler) {
+        var startX,
+            startY;
 
-        el.addEventListener('touchstart', function(e){
-            var touchobj = e.changedTouches[0];
-            startX = touchobj.pageX;
-            startY = touchobj.pageY;
-            e.preventDefault();
-        }, false)
+        var swipeStart = function(e){
+            var eventObj = e.type === "mousedown" ? e : e.originalEvent.changedTouches[0];
+            startX = eventObj.pageX;
+            startY = eventObj.pageY;
+        };
 
-        el.addEventListener('touchmove', function(e){
-            e.preventDefault();
-        }, false)
-
-        el.addEventListener('touchend', function(e){
-            var touchobj = e.changedTouches[0];
-            var distX = touchobj.pageX - startX;
-            var distY = touchobj.pageY - startY;
+        var swipeEnd = function(e){
+            var eventObj = e.type === "mouseup" ? e : e.originalEvent.changedTouches[0];
+            var distX = eventObj.pageX - startX;
+            var distY = eventObj.pageY - startY;
             var swipedir;
             if (Math.abs(distX) >= 50 && Math.abs(distY) <= 150){
                 swipedir = (distX < 0) ? 'left' : 'right';
+                swipeHandler(swipedir);
+                e.preventDefault();
             }
-            swipeHandler(swipedir);
-            e.preventDefault();
-        }, false)
+        };
+
+        $el.on('mousedown touchstart', swipeStart);
+        $el.on('mouseup touchend', swipeEnd);
+
     }
   }
 })();
