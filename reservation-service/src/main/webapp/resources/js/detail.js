@@ -1,8 +1,12 @@
 var ProductDetail = (function(){
+  var mainImageFlicking = new Flicking();
+  var commentPhotoFlicking = new Flicking();
+
   var productId = $('#container').data('id');
   var productName;
   var productDesc;
 
+  var $mainImageList = $('#container ul.visual_img');
   var $curImgIdx = $('span[class=num]');
   var $prevBtn = $('.btn_prev');
   var $nextBtn = $('.btn_nxt');
@@ -21,6 +25,7 @@ var ProductDetail = (function(){
   var $location = $('.detail_location');
   var $map = $('.store_location');
   var $pathBtn = $('.btn_path');
+  var $indexPhoto = $('.index_photo');
 
   var getProductDetailAjax = function() {
     $.ajax({
@@ -72,7 +77,7 @@ var ProductDetail = (function(){
     });
   };
 
-  var getCommentAjax = function() {
+  var getCommentAjax = function(listInit) {
     $.ajax({
       url: '/api/products/' + productId + '/comments',
       type: 'GET'
@@ -121,6 +126,7 @@ var ProductDetail = (function(){
           }
           $el.fadeIn();
           Lazy.disable();
+          listInit();
         })
         .fail(function(error){
           console.log(error.responseJSON);
@@ -215,32 +221,60 @@ var ProductDetail = (function(){
       console.log(error.responseJSON);
       alert('Display info load를 실패했습니다.');
     });
-  }
+  };
 
-  return {
-    init: function(){
-      getProductDetailAjax();
-      Rolling.setRollingSpace(414);
-      Rolling.setIntervalFlag(false);
-      Rolling.getRollingAjax('/api/products/' + productId + "/files?type=0", function(data){
+	var drawMainImages = function(data) {
+	  var mainImagesTemplate = Handlebars.compile($('#main-images-template').html());
+		$mainImageList.append(mainImagesTemplate(data));
+	};
+
+  var getMainImagesAjax  = function(listInit) {
+      $mainImageList.data('curItem', 1);
+      $.ajax({
+        url: '/api/products/' + productId + "/files?type=0",
+        type: 'GET'
+      })
+      .done(function(data){
+        drawMainImages(data);
+        listInit($mainImageList);
         $('.visual_txt_tit span').eq(1).html(productName);
         $('.visual_txt_dsc').eq(1).html(productDesc);
         $('.visual_txt_tit span').eq(-1).html(productName);
         $('.visual_txt_dsc').eq(-1).html(productDesc);
         $('.num.off').html('/ <span>' + data.length + '</span>');
+      })
+      .fail(function(error){
+        console.log(error.responseJSON);
+        alert('Rolling list load를 실패했습니다.');
       });
+  };
+
+  return {
+    init: function(){
+      mainImageFlicking.width = 414;
+      mainImageFlicking.$list = $('#container ul.visual_img');
+      mainImageFlicking.intervalFlag = false;
+      mainImageFlicking.afterFlickFn = function(){
+        $curImgIdx.html(this.$list.data('curItem'));
+      };
+      mainImageFlicking.detectClick($prevBtn, "prev");
+      mainImageFlicking.detectClick($nextBtn, "next");
+      mainImageFlicking.swipedetect($('.group_visual'));
+
+      commentPhotoFlicking.width = $(window).width();
+      commentPhotoFlicking.$list = $('.photo_list');
+      commentPhotoFlicking.intervalFlag = false;
+      commentPhotoFlicking.afterFlickFn = function(){
+        $indexPhoto.html(this.$list.data('curItem'));
+      };
+      commentPhotoFlicking.swipedetect($('.photo_list'));
+
+      getProductDetailAjax();
+      getMainImagesAjax(mainImageFlicking.listInit.bind(mainImageFlicking));
       getDetailImageAjax();
       getDisplayInfoAjax();
       getCommentsSummaryAjax();
-      getCommentAjax();
-
-      $prevBtn.on('click', Rolling.btnHandler.bind(this, 0, function(){
-        $curImgIdx.html($('#container ul.visual_img').data('curItem'));
-      }));
-
-      $nextBtn.on('click', Rolling.btnHandler.bind(this, 1, function(){
-        $curImgIdx.html($('#container ul.visual_img').data('curItem'));
-      }));
+      getCommentAjax(commentPhotoFlicking.listInit.bind(commentPhotoFlicking));
 
       $moreOpen.on('click', function(e){
         e.preventDefault();
@@ -290,39 +324,6 @@ var ProductDetail = (function(){
         $detail.addClass('hide');
         $location.removeClass('hide');
         e.preventDefault();
-      });
-
-      Flicking.swipedetect($('.group_visual'), function(swipedir){
-          if (swipedir =='left') {
-            Rolling.btnHandler(1);
-          }
-          if (swipedir =='right') {
-            Rolling.btnHandler(0);
-          }
-      });
-
-      Flicking.swipedetect($('.photo_list'), function(swipedir){
-        var windowWidth = $(window).width();
-          if (swipedir =='left') {
-            var curItem = $('.photo_list').data('curItem');
-            if(curItem < $('.total_photo').html()){
-              $('.photo_list').data('curItem', curItem+1);
-              $('.index_photo').html(curItem+1);
-              $('.photo_list').animate({
-                left: '-=' + windowWidth + 'px'
-              });
-            }
-          }
-          if (swipedir =='right') {
-            var curItem = $('.photo_list').data('curItem');
-            if(curItem > 1){
-              $('.photo_list').data('curItem', curItem-1);
-              $('.index_photo').html(curItem-1);
-              $('.photo_list').animate({
-                left: '+=' + windowWidth + 'px'
-              });
-            }
-          }
       });
     }
   };

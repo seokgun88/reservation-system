@@ -1,6 +1,7 @@
 "use strict";
 
 var ReservationMain = (function() {
+  var $promotionList = $('#container ul.visual_img');
 	var $categoryList = $('#container ul.event_tab_lst');
 	var $productList = $('#container ul.lst_event_box');
 	var $productsCnt = $('#container p.event_lst_txt span.pink');
@@ -29,6 +30,11 @@ var ReservationMain = (function() {
 		$curProductList.append(html);
 	};
 
+	var drawPromotions = function(data) {
+	  var promotionsTemplate = Handlebars.compile($('#promotions-template').html());
+		$promotionList.append(promotionsTemplate(data));
+	};
+
 	var getMainImageAjax = function(data, drawImg){
 		$.each(data, function(index, value){
 			$.ajax({
@@ -40,6 +46,27 @@ var ReservationMain = (function() {
 				console.log(error.responseJSON);
 				alert('Product main image load를 실패했습니다.');
 			});
+		});
+	};
+
+	var getPromotionsAjax = function(listInit){
+		$promotionList.data('curItem', 1);
+		$.ajax({
+			url: '/api/products',
+			type: 'GET'
+		})
+		.done(function(data){
+			drawPromotions(data);
+			listInit($promotionList);
+			getMainImageAjax(data, function(id, imgId) {
+				if(imgId !== -1){
+					$('.visual_img li[data-id=' + id +']').css('background-image', 'url(/api/files/' + imgId + ')');
+				}
+			});
+		})
+		.fail(function(error){
+			console.log(error.responseJSON);
+			alert('Promotion list load를 실패했습니다.');
 		});
 	};
 
@@ -160,15 +187,17 @@ var ReservationMain = (function() {
 
 	return {
 		init: function() {
-			Rolling.setRollingSpace(338)
-			Rolling.getRollingAjax('/api/products', getMainImageAjax);
+      var promotionFlicking = new Flicking();
+			promotionFlicking.width = 338;
+      promotionFlicking.$list = $('#container ul.visual_img');
+			getPromotionsAjax(promotionFlicking.listInit.bind(promotionFlicking));
 			getProductsAjax();
 			getCategoriesAjax();
 			getProductsCountAjax();
-
 			$categoryList.on('click', 'a', categoryClickListener);
-			$prevBtn.on('click', Rolling.btnHandler.bind(this, 0, null));
-			$nextBtn.on('click', Rolling.btnHandler.bind(this, 1, null));
+			promotionFlicking.detectClick($prevBtn, "prev");
+      promotionFlicking.detectClick($nextBtn, "next");
+      promotionFlicking.swipedetect($('.group_visual'));
 			$moreBtn.on('click', getMoreProductsAjax);
 
 			$(window).scroll(function(){

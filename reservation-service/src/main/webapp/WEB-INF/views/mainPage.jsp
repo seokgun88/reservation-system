@@ -47,8 +47,8 @@
 							<div class="container_visual">
 								<!-- [D] 이전,다음 버튼을 클릭할때마다 캐러셀 형태로 순환 됨 --->
 								<ul class="visual_img"></ul>
-									<script id="rolling-template" type="text/x-handlebars-template">
-									{{#items}}
+									<script id="promotions-template" type="text/x-handlebars-template">
+									{{#each this}}
 									<li class="item" data-id={{id}} style="width: 338px;">
 										<a href="/products/{{id}}">
 											<span class="img_btm_border"></span>
@@ -61,7 +61,7 @@
 											</div>
 										</a>
 									</li>
-									{{/items}}
+									{{/each}}
 									</script>
 							</div>
 							<span class="nxt_fix"></span>
@@ -130,7 +130,7 @@
 	</footer>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
-	<script src="/resources/js/rolling.js"></script>
+	<script src="/resources/js/flicking.js"></script>
 	<script src="/resources/js/mainPage.js"></script>
 </body>
 </html>

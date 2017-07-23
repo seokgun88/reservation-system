@@ -50,8 +50,8 @@
 						<div>
 							<div class="container_visual" style="width: 414px;">
 								<ul class="visual_img"></ul>
-                  <script id="rolling-template" type="text/x-handlebars-template">
-                  {{#each items}}
+                  <script id="main-images-template" type="text/x-handlebars-template">
+                  {{#each this}}
                   <li class="item" style="width: 414px;">
                     <img alt="" class="img_thumb" src="/api/files/{{this}}">
                     <span class="img_bg"></span>
@@ -280,7 +280,7 @@
 	<div id="photoviwer" style="display:none; position:absolute; top:0px; left:0px; background:#000000; z-index:1000000; overflow:hidden">
 		<button class="btnPhotoviwerExit" type="button">닫기</button>
 		<span style="color:#ffffff; float:right"><span class="index_photo">1</span>/<span class="total_photo">1</span></span>
-		<ul class="photo_list" style="overflow:visible; width:100%; height:100%; position:relative; white-space: nowrap"></ul>
+		<ul class="photo_list" style="overflow:visible; width:100%; height:100%; position:relative; white-space:nowrap; font-size:0;"></ul>
 			<script id="photo-viewer-template" type="text/x-handlebars-template">
 			{{#each this}}
 			<li style="display:inline-block; width:100%; height:100%; text-align:center;">
@@ -293,7 +293,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
 	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=zRCp4iB_1dQ7hvpSdfYB&submodules=geocoder"></script>
 	<script src="/resources/js/flicking.js"></script>
-	<script src="/resources/js/rolling.js"></script>
 	<script src="/resources/js/lazy.js"></script>
 	<script src="/resources/js/detail.js"></script>
 </body>
