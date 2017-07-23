@@ -289,8 +289,8 @@
 			{{/each}}
 			</script>
 	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+	<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
+	<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
 	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=zRCp4iB_1dQ7hvpSdfYB&submodules=geocoder"></script>
 	<script src="/resources/js/flicking.js"></script>
 	<script src="/resources/js/lazy.js"></script>
