@@ -23,11 +23,14 @@ var ProductDetail = (function(){
   var $pathViewBtn = $('.item._path');
   var $detail = $('.detail_area_wrap');
   var $location = $('.detail_location');
+  var $displayInfo = $('.box_store_info');
   var $map = $('.store_location');
   var $pathBtn = $('.btn_path');
+  var $photoViewer = $('#photoviwer');
+  var $photoList = $('.photo_list');
   var $indexPhoto = $('.index_photo');
 
-  var getProductDetailAjax = function() {
+  var getProductDetailAjax = function(afterAjaxFn) {
     $.ajax({
       url: '/api/products/' + productId + '/detail',
       type: 'GET'
@@ -50,6 +53,8 @@ var ProductDetail = (function(){
   		var template = Handlebars.compile(source);
   		var html = template(data);
       $('.detail_info_group').append(html);
+
+      afterAjaxFn();
     })
     .fail(function(error){
       console.log(error.responseJSON);
@@ -77,7 +82,37 @@ var ProductDetail = (function(){
     });
   };
 
-  var getCommentAjax = function(listInit) {
+  var getCommentImagesAjax = function(listInit, e){
+    $.ajax({
+      url: '/api/comments/' + $(e.target).closest('li').data('id') + '/images',
+      type: 'GET'
+    })
+    .done(function(data){
+      $photoList.empty();
+      $photoList.data('curItem', 1);
+
+      var source = $('#photo-viewer-template').html();
+      var template = Handlebars.compile(source);
+      var html = template(data);
+      $photoList.append(html);
+
+      $('.total_photo').html(data.length);
+
+      $photoViewer.css({
+        width: $(document).width(),
+        height: $(document).height()
+      })
+      $photoViewer.fadeIn();
+      Lazy.disable();
+      listInit();
+    })
+    .fail(function(error){
+      console.log(error.responseJSON);
+      alert('Comment photos load를 실패했습니다.');
+    });
+  };
+
+  var getCommentsAjax = function(listInit) {
     $.ajax({
       url: '/api/products/' + productId + '/comments',
       type: 'GET'
@@ -93,49 +128,9 @@ var ProductDetail = (function(){
         var html = template(value);
         $('.list_short_review').append(html);
       });
-      $('.thumb').on('click', function(){
-        $.ajax({
-          url: '/api/comments/' + $(this).closest('li').data('id') + '/images',
-          type: 'GET'
-        })
-        .done(function(data){
-          $('.photo_list').empty();
-          $('.photo_list').data('curItem', 1);
-
-          var source = $('#photo-viewer-template').html();
-          var template = Handlebars.compile(source);
-          var html = template(data);
-          $('.photo_list').append(html);
-
-          $('.total_photo').html(data.length);
-
-          var $el = $('#photoviwer');
-          var $elWidth = ~~($el.outerWidth()),
-              $elHeight = ~~($el.outerHeight()),
-              docWidth = $(document).width(),
-              docHeight = $(document).height();
-
-          // 화면의 중앙에 레이어를 띄운다.
-          if ($elHeight < docHeight || $elWidth < docWidth) {
-            $el.css({
-              width: docWidth,
-              height: docHeight
-            })
-          } else {
-              $el.css({top: 0, left: 0});
-          }
-          $el.fadeIn();
-          Lazy.disable();
-          listInit();
-        })
-        .fail(function(error){
-          console.log(error.responseJSON);
-          alert('Comment photos load를 실패했습니다.');
-        });
-      });
+      $('.thumb').on('click', getCommentImagesAjax.bind(this, listInit));
       $('.btnPhotoviwerExit').on('click', function(){
-        var $el = $('#photoviwer');
-        $el.fadeOut();
+        $photoViewer.fadeOut();
         Lazy.init();
       });
     })
@@ -211,7 +206,7 @@ var ProductDetail = (function(){
   		var source = $('#location-template').html();
   		var template = Handlebars.compile(source);
   		var html = template(data);
-      $('.box_store_info').append(html);
+      $displayInfo.append(html);
       initMap(data.placeStreet);
       $gotoHomeBtn.attr('href', data.homepage);
       $gotoTelBtn.attr('href', 'tel:' + data.tel);
@@ -237,15 +232,18 @@ var ProductDetail = (function(){
       .done(function(data){
         drawMainImages(data);
         listInit($mainImageList);
-        $('.visual_txt_tit span').eq(1).html(productName);
-        $('.visual_txt_dsc').eq(1).html(productDesc);
-        $('.visual_txt_tit span').eq(-1).html(productName);
-        $('.visual_txt_dsc').eq(-1).html(productDesc);
-        $('.num.off').html('/ <span>' + data.length + '</span>');
+        var $mainImageTitle = $('.visual_txt_tit span');
+        var $mainImageDesc = $('.visual_txt_dsc');
+        var $mainImageNum = $('.num.off');
+        $mainImageTitle.eq(1).html(productName);
+        $mainImageDesc.eq(1).html(productDesc);
+        $mainImageTitle.eq(-1).html(productName);
+        $mainImageDesc.eq(-1).html(productDesc);
+        $mainImageNum.html('/ <span>' + data.length + '</span>');
       })
       .fail(function(error){
         console.log(error.responseJSON);
-        alert('Rolling list load를 실패했습니다.');
+        alert('Main image list load를 실패했습니다.');
       });
   };
 
@@ -262,19 +260,18 @@ var ProductDetail = (function(){
       mainImageFlicking.swipedetect($('.group_visual'));
 
       commentPhotoFlicking.width = $(window).width();
-      commentPhotoFlicking.$list = $('.photo_list');
+      commentPhotoFlicking.$list = $photoList;
       commentPhotoFlicking.intervalFlag = false;
       commentPhotoFlicking.afterFlickFn = function(){
         $indexPhoto.html(this.$list.data('curItem'));
       };
-      commentPhotoFlicking.swipedetect($('.photo_list'));
+      commentPhotoFlicking.swipedetect($photoList);
 
-      getProductDetailAjax();
-      getMainImagesAjax(mainImageFlicking.listInit.bind(mainImageFlicking));
+      getProductDetailAjax(getMainImagesAjax.bind(this, mainImageFlicking.listInit.bind(mainImageFlicking)));
       getDetailImageAjax();
       getDisplayInfoAjax();
       getCommentsSummaryAjax();
-      getCommentAjax(commentPhotoFlicking.listInit.bind(commentPhotoFlicking));
+      getCommentsAjax(commentPhotoFlicking.listInit.bind(commentPhotoFlicking));
 
       $moreOpen.on('click', function(e){
         e.preventDefault();
@@ -289,8 +286,7 @@ var ProductDetail = (function(){
         $moreClose.hide();
         $moreOpen.show();
       });
-
-      $('.bk_btn').on('click', function(e){
+      $bookingBtn.on('click', function(e){
         $.ajax({
           url: '/api/products/' + productId + '/detail',
           type: 'GET'
