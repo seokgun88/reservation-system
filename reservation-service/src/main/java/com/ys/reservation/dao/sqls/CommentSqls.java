@@ -1,6 +1,6 @@
 package com.ys.reservation.dao.sqls;
 
-public class DetailSqls {
+public class CommentSqls {
 	public static final String SELECT_COMMENT = 
 			"SELECT user_id, score, comment "
 			+ "FROM reservation_user_comment "

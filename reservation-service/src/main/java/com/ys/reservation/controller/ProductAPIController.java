@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ys.reservation.domain.Price;
 import com.ys.reservation.domain.Product;
 import com.ys.reservation.service.ProductService;
+import com.ys.reservation.vo.CommentsSummaryVo;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
+import com.ys.reservation.vo.ProductReservationInfoVo;
 import com.ys.reservation.vo.ProductVo;
 import com.ys.reservation.vo.UserCommentVo;
-import com.ys.reservation.vo.CommentsSummaryVo;
 
 @RestController
 @RequestMapping("/api/products")
@@ -81,5 +83,15 @@ public class ProductAPIController {
 	@GetMapping("/{id:[\\d]+}/comments/summary")
 	public CommentsSummaryVo getAvgCommentScore(@PathVariable int id) {
 		return productService.getAvgCommentScore(id);
+	}
+
+	@GetMapping("/{id:[\\d]+}/reservationInfo")
+	public ProductReservationInfoVo getReservationInfo(@PathVariable int id) {
+		return productService.getReservationInfo(id);
+	}
+	
+	@GetMapping("/{id:[\\d]+}/prices")
+	public List<Price> getPrices(@PathVariable int id) {
+		return productService.getPrices(id);
 	}
 }

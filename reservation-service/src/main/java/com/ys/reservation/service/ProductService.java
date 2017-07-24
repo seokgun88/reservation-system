@@ -7,13 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ys.reservation.dao.FileDao;
+import com.ys.reservation.dao.PriceDao;
 import com.ys.reservation.dao.ProductDao;
 import com.ys.reservation.dao.UserCommentDao;
 import com.ys.reservation.domain.FileDomain;
+import com.ys.reservation.domain.Price;
 import com.ys.reservation.domain.Product;
 import com.ys.reservation.vo.CommentsSummaryVo;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
+import com.ys.reservation.vo.ProductReservationInfoVo;
 import com.ys.reservation.vo.ProductVo;
 import com.ys.reservation.vo.UserCommentVo;
 
@@ -22,12 +25,14 @@ public class ProductService {
 	private ProductDao productDao;
 	private FileDao fileDao;
 	private UserCommentDao userCommentDao;
+	private PriceDao priceDao;
 	
 	@Autowired
-	public ProductService(ProductDao productDao, FileDao fileDao, UserCommentDao userCommentDao) {
+	public ProductService(ProductDao productDao, FileDao fileDao, UserCommentDao userCommentDao, PriceDao priceDao) {
 		this.productDao = productDao;
 		this.fileDao = fileDao;
 		this.userCommentDao = userCommentDao;
+		this.priceDao = priceDao;
 	}
 
 	public List<ProductVo> getAll() {
@@ -131,5 +136,19 @@ public class ProductService {
 			return null;
 		}
 		return productDao.selectAvgCommentScore(id);
+	}
+	
+	public ProductReservationInfoVo getReservationInfo(int id) {
+		if(id < 1) {
+			return null;
+		}
+		return productDao.selectReservationInfo(id);
+	}
+	
+	public List<Price> getPrices(int id) {
+		if(id < 1) {
+			return null;
+		}
+		return priceDao.selectByProductId(id);	
 	}
 }

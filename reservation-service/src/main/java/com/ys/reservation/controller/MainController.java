@@ -46,7 +46,7 @@ public class MainController {
 		return "redirect:/admin/categories";
 	}
 	
-	@GetMapping("/products/{id}")
+	@GetMapping("/products/{id:[\\d]+}")
 	public String productDetailById(@PathVariable int id, Model model) {
 		model.addAttribute("id", id);
 		return "detail";
@@ -58,6 +58,16 @@ public class MainController {
 			return "redirect:/";
 		}
 		return "myreservation";
+	}
+	
+	@GetMapping("/products/{id:[\\d]+}/reservation")
+	public String reservation(@PathVariable int id, Model model, HttpSession session) {
+		if(session.getAttribute("login") == null) {
+			return "redirect:/";
+		}
+		model.addAttribute("profile", session.getAttribute("profile"));
+		model.addAttribute("id", id);
+		return "reserve";
 	}
 	
 }

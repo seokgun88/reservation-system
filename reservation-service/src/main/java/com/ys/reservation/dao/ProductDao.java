@@ -21,6 +21,7 @@ import com.ys.reservation.domain.Product;
 import com.ys.reservation.vo.CommentsSummaryVo;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
+import com.ys.reservation.vo.ProductReservationInfoVo;
 import com.ys.reservation.vo.ProductVo;
 import com.ys.reservation.vo.UserCommentVo;
 
@@ -34,6 +35,7 @@ public class ProductDao {
 	private RowMapper<DisplayInfoVo> placeInfoRowMapper = BeanPropertyRowMapper.newInstance(DisplayInfoVo.class);
 	private RowMapper<UserCommentVo> userCommentRowMapper = BeanPropertyRowMapper.newInstance(UserCommentVo.class);
 	private RowMapper<CommentsSummaryVo> userCommentVoRowMapper = BeanPropertyRowMapper.newInstance(CommentsSummaryVo.class);
+	private RowMapper<ProductReservationInfoVo> reservationInfoRowMapper = BeanPropertyRowMapper.newInstance(ProductReservationInfoVo.class);
 	
 	public ProductDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -100,5 +102,10 @@ public class ProductDao {
 	public CommentsSummaryVo selectAvgCommentScore(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
 		return jdbc.queryForObject(UserCommentSqls.SELECT_AVG_SCORE_BY_PRODUCT_ID, params, userCommentVoRowMapper);
+	}
+	
+	public ProductReservationInfoVo selectReservationInfo(int id) {
+		Map<String, ?> params = Collections.singletonMap("id", id);
+		return jdbc.queryForObject(ProductJoinSqls.SELECT_RESERVATION_INFO, params, reservationInfoRowMapper);
 	}
 }

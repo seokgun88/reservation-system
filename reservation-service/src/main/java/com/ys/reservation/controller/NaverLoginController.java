@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import com.ys.reservation.domain.NaverLoginResponse;
 import com.ys.reservation.domain.NaverProfile;
 import com.ys.reservation.domain.NaverProfileResponse;
+import com.ys.reservation.domain.User;
 import com.ys.reservation.service.UserService;
 
 @Controller
@@ -71,9 +72,6 @@ public class NaverLoginController {
 					+ "&grant_type=authorization_code&state=" + storedState + "&code=" + code;
 			RestTemplate restTemplate = new RestTemplate();
 			NaverLoginResponse loginResponse = restTemplate.getForObject(url, NaverLoginResponse.class);
-			session.setAttribute("accessToken", loginResponse.getAccessToken());
-			session.setAttribute("refreshToken", loginResponse.getRefreshToken());
-			session.setAttribute("login", true);
 
 			url = "https://openapi.naver.com/v1/nid/me";
 			HttpHeaders headers = new HttpHeaders();
@@ -84,8 +82,13 @@ public class NaverLoginController {
 			NaverProfileResponse profileResponse = profileResponseEntity.getBody();
 			NaverProfile profile = profileResponse.getResponse();
 
-			userService.create(profile);
+			User user = userService.create(profile);
 
+			session.setAttribute("accessToken", loginResponse.getAccessToken());
+			session.setAttribute("refreshToken", loginResponse.getRefreshToken());
+			session.setAttribute("login", true);
+			session.setAttribute("user", user);
+			
 			return "redirect:/my/reservation";
 		}
 	}
