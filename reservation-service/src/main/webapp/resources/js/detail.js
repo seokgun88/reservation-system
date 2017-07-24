@@ -292,13 +292,15 @@ var ProductDetail = (function(){
           type: 'GET'
         })
         .done(function(data){
+          console.log(JSON.stringify(data));
+          console.log(Date.now());
           if(data.salesEnd < Date.now()){
             alert('판매기간 종료');
           } else if(data.salesFlag === 0){
             alert('매진');
+          } else {
+            location.href = "/products/" + productId + "/reservation";
           }
-          console.log(JSON.stringify(data));
-          console.log(Date.now());
         })
         .fail(function(error){
           console.log(error.responseJSON);
