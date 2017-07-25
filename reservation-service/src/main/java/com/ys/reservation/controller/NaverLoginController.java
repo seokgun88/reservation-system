@@ -42,7 +42,7 @@ public class NaverLoginController {
 	@GetMapping("/login")
 	public String login(HttpSession session) throws UnsupportedEncodingException {
 		if (session.getAttribute("login") != null) {
-			return "redirect:/my/reservation";
+			return "redirect:/myreservation";
 		} else {
 			// CSRF 방지를 위한 상태 토큰 생성 코드
 			// 상태 토큰은 추후 검증을 위해 세션에 저장되어야 한다.
@@ -89,7 +89,7 @@ public class NaverLoginController {
 			session.setAttribute("login", true);
 			session.setAttribute("user", user);
 			
-			return "redirect:/my/reservation";
+			return "redirect:/myreservation";
 		}
 	}
 }

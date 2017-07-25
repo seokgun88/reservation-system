@@ -29,11 +29,6 @@ public class FileController {
 		this.fileDao = fileDao;
 	}
 
-	public FileController(FileDao fileDao, String baseDir) {
-		this.fileDao = fileDao;
-		this.baseDir = baseDir;
-	}
-
 	@GetMapping
 	public String imageAdmin() {
 		return "imageAdmin";
