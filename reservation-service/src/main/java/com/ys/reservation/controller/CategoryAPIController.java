@@ -36,12 +36,12 @@ public class CategoryAPIController {
 	}
 
 	@DeleteMapping("/{id:[\\d]+}") // 숫자 받는 정규식
-	public void remove(@PathVariable Integer id) {
+	public void remove(@PathVariable int id) {
 		categoryService.remove(id);
 	}
 
 	@PutMapping("/{id:[\\d]+}")
-	public void update(@PathVariable Integer id, @RequestBody Category category) {
+	public void update(@PathVariable int id, @RequestBody Category category) {
 		category.setId(id);
 		categoryService.update(category);
 	}
