@@ -76,7 +76,7 @@ public class NaverLoginController {
 			url = "https://openapi.naver.com/v1/nid/me";
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Authorization", loginResponse.getTokenType() + " " + loginResponse.getAccessToken());
-			HttpEntity entity = new HttpEntity(headers);
+			HttpEntity<String> entity = new HttpEntity<String>(headers);
 			ResponseEntity<NaverProfileResponse> profileResponseEntity = restTemplate.exchange(url, HttpMethod.GET,
 					entity, NaverProfileResponse.class);
 			NaverProfileResponse profileResponse = profileResponseEntity.getBody();
