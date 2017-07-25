@@ -21,9 +21,15 @@ public class ReservationService {
 	
 	
 	public ReservationInfo create(ReservationInfo reservationInfo) {
-		if(reservationInfo == null || reservationInfo.getProductId() == 0
-				|| reservationInfo.getUserId() == 0 || reservationInfo.getReservationName() == null
-				|| reservationInfo.getReservationTel() == null || reservationInfo.getReservationEmail() == null
+		if(reservationInfo == null 
+				|| reservationInfo.getProductId() == 0
+				|| reservationInfo.getUserId() == 0 
+				|| reservationInfo.getReservationName() == null
+				|| reservationInfo.getReservationName().trim().isEmpty()
+				|| reservationInfo.getReservationTel() == null 
+				|| reservationInfo.getReservationTel().trim().isEmpty()
+				|| reservationInfo.getReservationEmail() == null
+				|| reservationInfo.getReservationEmail().trim().isEmpty()
 				|| reservationInfo.getReservationDate() == null) {
 			return null;
 		}
