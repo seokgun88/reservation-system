@@ -45,7 +45,7 @@ var categoryAdmin = (function() {
 
 	return {
 		removeBtnListener: function(e) {
-			if (e.target && e.target.className === 'removeBtn') {
+			if ($(e.target).hasClass('removeBtn')) {
 				var li = e.target.parentNode;
 				var id = li.dataset.id;
 				$.ajax({

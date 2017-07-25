@@ -14,11 +14,11 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import com.ys.reservation.dao.sqls.CategorySqls;
 import com.ys.reservation.domain.Category;
 
 @Repository
 public class CategoryDao {
-	
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
 	private RowMapper<Category> rowMapper = BeanPropertyRowMapper.newInstance(Category.class);
@@ -36,9 +36,7 @@ public class CategoryDao {
 	}
 	
 	public List<Category> selectAll() {
-		Map<String, Object> params = Collections.emptyMap();
-		return jdbc.query(CategorySqls.SELECT_ALL, params, rowMapper);
-		//jdbc.query(CategorySqls.SELECT_ALL, rowMapper); 스프링에서 빈객체 하나 알아서 활용
+		return jdbc.query(CategorySqls.SELECT_ALL, rowMapper);
 	}
 	
 	public int delete(Integer id) { //객체 생성 메모리 릭

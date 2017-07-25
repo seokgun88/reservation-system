@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Product {
 	private int id;
-	private int category_id;
+	private int categoryId;
 	private String name;
 	private String description;
 	private Date sales_start;
@@ -18,11 +18,11 @@ public class Product {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getCategory_id() {
-		return category_id;
+	public int getCategoryId() {
+		return categoryId;
 	}
-	public void setCategory_id(int category_id) {
-		this.category_id = category_id;
+	public void setCategoryId(int category_id) {
+		this.categoryId = category_id;
 	}
 	public String getName() {
 		return name;
@@ -68,7 +68,7 @@ public class Product {
 	}
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", category_id=" + category_id + ", name=" + name + ", description=" + description
+		return "Product [id=" + id + ", category_id=" + categoryId + ", name=" + name + ", description=" + description
 				+ ", sales_start=" + sales_start + ", sales_end=" + sales_end + ", event=" + event + ", create_date="
 				+ create_date + ", modify_date=" + modify_date + "]";
 	}

@@ -25,7 +25,7 @@ public class ProductDaoTest {
 
 	@Test
 	public void shouldSelectAllLimit10() {
-		List<ProductVo> productList = productDao.limitedSelect(0);
+		List<ProductVo> productList = productDao.selectLimited(0);
 		productList.forEach( item -> {
 			System.out.println(item);
 		});
