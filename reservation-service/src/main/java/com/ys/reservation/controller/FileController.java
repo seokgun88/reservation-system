@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +22,11 @@ import com.ys.reservation.domain.FileDomain;
 
 @Controller
 @RequestMapping("/admin/files")
+@PropertySource("classpath:/application.properties")
 public class FileController {
 	private FileDao fileDao;
-	private String baseDir = "c:" + File.separator + "temp_img";
+	@Value("${file.basedir}")
+	private String baseDir;
 
 	@Autowired
 	public FileController(FileDao fileDao) {
