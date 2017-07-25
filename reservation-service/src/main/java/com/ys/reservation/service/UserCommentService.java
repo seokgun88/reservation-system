@@ -23,6 +23,9 @@ public class UserCommentService {
 			return null;
 		}
 		List<FileDomain> files = userCommentDao.selectFiles(id);
+		if(files == null) {
+			return null;
+		}
 		List<Integer> ids = files.stream().map(f -> f.getId()).collect(Collectors.toList());
 		return ids;
 	}

@@ -85,7 +85,11 @@ public class ProductService {
 			return null;
 		}
 		List<Integer> ids = new ArrayList<>();
-		for(FileDomain fileDomain : productDao.selectFiles(id, type)) {
+		List<FileDomain> files = productDao.selectFiles(id, type);
+		if(files == null) {
+			return null;
+		}
+		for(FileDomain fileDomain : files) {
 			ids.add(fileDomain.getId());
 		}
 		return ids;
@@ -117,9 +121,12 @@ public class ProductService {
 			return null;
 		}
 		List<UserCommentVo> comments = productDao.selectUserComment(id);
+		if(comments == null) {
+			return null;
+		}
 		for(UserCommentVo comment : comments) {
 			List<FileDomain> files = userCommentDao.selectFiles(comment.getId());
-			if(files.size() > 0) {
+			if(files != null && files.size() > 0) {
 				comment.setFileId(files.get(0).getId());
 				comment.setFilesNum(files.size());
 			}
