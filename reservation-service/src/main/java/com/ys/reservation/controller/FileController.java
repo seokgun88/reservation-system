@@ -52,7 +52,6 @@ public class FileController {
 			}
 			
 			String contentType = file.getContentType();
-			String name = file.getName();
 			String originalFilename = file.getOriginalFilename();
 			long size = file.getSize();
 			
