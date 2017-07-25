@@ -12,11 +12,10 @@ import com.ys.reservation.domain.ReservationInfo;
 
 @Repository
 public class ReservationDao {
-	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
 	
 	public ReservationDao(DataSource dataSource) {
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		new NamedParameterJdbcTemplate(dataSource);
 		this.insertAction = new SimpleJdbcInsert(dataSource)
 				.withTableName("reservation_info")
 				.usingGeneratedKeyColumns("id");
