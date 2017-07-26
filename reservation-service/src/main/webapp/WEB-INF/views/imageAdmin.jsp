@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form method="post" action="/admin/files" enctype="multipart/form-data">
+	<form method="post" action="/admin/images" enctype="multipart/form-data">
 		<input type="radio" name="relation" value="production" checked>상품 대표이미지
 		<input type="radio" name="relation" value="production_sub">상품 부가이미지
 		<input type="radio" name="relation" value="review">리뷰 이미지

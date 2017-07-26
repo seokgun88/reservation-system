@@ -54,7 +54,7 @@ public class ProductAPIController {
 		return productService.getDetailById(id);
 	}
 	
-	@GetMapping("/{id:[\\d]+}/files")
+	@GetMapping("/{id:[\\d]+}/images")
 	public List<Integer> getFileIds(@PathVariable int id, @RequestParam int type, HttpServletResponse response) {
 		List<Integer> fileIds = productService.getImageIds(id, type);
 		return fileIds;

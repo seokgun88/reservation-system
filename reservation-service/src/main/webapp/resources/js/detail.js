@@ -226,7 +226,7 @@ var ProductDetail = (function(){
   var getMainImagesAjax  = function(listInit) {
       $mainImageList.data('curItem', 1);
       $.ajax({
-        url: '/api/products/' + productId + "/files?type=0",
+        url: '/api/products/' + productId + "/images?type=0",
         type: 'GET'
       })
       .done(function(data){

@@ -60,7 +60,7 @@ var ReservationMain = (function() {
 			listInit($promotionList);
 			getMainImageAjax(data, function(id, imgId) {
 				if(imgId !== -1){
-					$('.visual_img li[data-id=' + id +']').css('background-image', 'url(/api/files/' + imgId + ')');
+					$('.visual_img li[data-id=' + id +']').css('background-image', 'url(/api/images/' + imgId + ')');
 				}
 			});
 		})
@@ -88,7 +88,7 @@ var ReservationMain = (function() {
 				});
 				getMainImageAjax(data, function(id, imgId){
 					if(imgId !== -1){
-						$('.lst_event_box li[data-id=' + id + '] img').attr('src', '/api/files/' + imgId);
+						$('.lst_event_box li[data-id=' + id + '] img').attr('src', '/api/images/' + imgId);
 					}
 				});
 			} else {
@@ -164,7 +164,7 @@ var ReservationMain = (function() {
 			});
 			getMainImageAjax(data, function(id, imgId){
 				if(imgId !== -1){
-					$('.lst_event_box li[data-id=' + id + '] img').attr('src', '/api/files/' + imgId);
+					$('.lst_event_box li[data-id=' + id + '] img').attr('src', '/api/images/' + imgId);
 				}
 			});
 			if(data.length > 0){
