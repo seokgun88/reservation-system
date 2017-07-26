@@ -7,15 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ys.reservation.dao.CategoryDao;
-import com.ys.reservation.dao.FileDao;
+import com.ys.reservation.dao.ImageDao;
 import com.ys.reservation.dao.PriceDao;
 import com.ys.reservation.dao.ProductDao;
 import com.ys.reservation.dao.ReservationDao;
 import com.ys.reservation.dao.UserCommentDao;
-import com.ys.reservation.domain.FileDomain;
+import com.ys.reservation.domain.Image;
 import com.ys.reservation.domain.Price;
 import com.ys.reservation.domain.Product;
-import com.ys.reservation.domain.ReservationInfo;
 import com.ys.reservation.vo.CommentsSummaryVo;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
@@ -27,13 +26,13 @@ import com.ys.reservation.vo.UserCommentVo;
 public class ProductService {
 	private ProductDao productDao;
 	private CategoryDao categoryDao;
-	private FileDao fileDao;
+	private ImageDao fileDao;
 	private UserCommentDao userCommentDao;
 	private PriceDao priceDao;
 	private ReservationDao reservationDao;
 	
 	@Autowired
-	public ProductService(ProductDao productDao, CategoryDao categoryDao, FileDao fileDao,
+	public ProductService(ProductDao productDao, CategoryDao categoryDao, ImageDao fileDao,
 			UserCommentDao userCommentDao, PriceDao priceDao, ReservationDao reservationDao) {
 		this.productDao = productDao;
 		this.categoryDao = categoryDao;
@@ -93,11 +92,11 @@ public class ProductService {
 			return null;
 		}
 		List<Integer> ids = new ArrayList<>();
-		List<FileDomain> files = fileDao.selectByProductId(id, type);
+		List<Image> files = fileDao.selectByProductId(id, type);
 		if(files == null) {
 			return null;
 		}
-		for(FileDomain fileDomain : files) {
+		for(Image fileDomain : files) {
 			ids.add(fileDomain.getId());
 		}
 		return ids;
@@ -133,7 +132,7 @@ public class ProductService {
 			return null;
 		}
 		for(UserCommentVo comment : comments) {
-			List<FileDomain> files = userCommentDao.selectFiles(comment.getId());
+			List<Image> files = userCommentDao.selectFiles(comment.getId());
 			if(files != null && files.size() > 0) {
 				comment.setFileId(files.get(0).getId());
 				comment.setFilesNum(files.size());

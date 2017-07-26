@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ys.reservation.dao.UserCommentDao;
-import com.ys.reservation.domain.FileDomain;
+import com.ys.reservation.domain.Image;
 
 @Service
 public class UserCommentService {
@@ -22,7 +22,7 @@ public class UserCommentService {
 		if(id < 1) {
 			return null;
 		}
-		List<FileDomain> files = userCommentDao.selectFiles(id);
+		List<Image> files = userCommentDao.selectFiles(id);
 		if(files == null) {
 			return null;
 		}

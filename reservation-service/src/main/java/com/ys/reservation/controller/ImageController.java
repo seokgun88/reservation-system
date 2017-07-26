@@ -17,20 +17,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ys.reservation.dao.FileDao;
-import com.ys.reservation.domain.FileDomain;
+import com.ys.reservation.dao.ImageDao;
+import com.ys.reservation.domain.Image;
 
 @Controller
-@RequestMapping("/admin/files")
+@RequestMapping("/admin/images")
 @PropertySource("classpath:/application.properties")
-public class FileController {
-	private FileDao fileDao;
+public class ImageController {
+	private ImageDao imageDao;
 	@Value("${file.basedir}")
 	private String baseDir;
 
 	@Autowired
-	public FileController(FileDao fileDao) {
-		this.fileDao = fileDao;
+	public ImageController(ImageDao fileDao) {
+		this.imageDao = fileDao;
 	}
 
 	@GetMapping
@@ -74,14 +74,14 @@ public class FileController {
             } catch(Exception e){
             	e.printStackTrace();
             }
-            FileDomain fileDomain = new FileDomain();
+            Image fileDomain = new Image();
             fileDomain.setFileName(originalFilename);
             fileDomain.setUserId(id);
             fileDomain.setSaveFileName(saveFileName);
             fileDomain.setFileLength(size);
             fileDomain.setContentType(contentType);
             fileDomain.setDeleteFlag(0);
-            fileDao.insert(fileDomain);
+            imageDao.insert(fileDomain);
 		}
 		
 		return "redirect:/admin/files";

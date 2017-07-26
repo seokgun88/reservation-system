@@ -1,6 +1,6 @@
 package com.ys.reservation.dao.sqls;
 
-public class FileSqls {
+public class ImageSqls {
 	public static final String SELECT = 
 			"SELECT * "
 			+ "FROM file "

@@ -1,6 +1,6 @@
 package com.ys.reservation.domain;
 
-public class FileDomain {
+public class Image {
 	private int id;
 	private int userId;
 	private String fileName;

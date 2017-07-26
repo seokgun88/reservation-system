@@ -16,52 +16,52 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import com.ys.reservation.dao.sqls.FileSqls;
+import com.ys.reservation.dao.sqls.ImageSqls;
 import com.ys.reservation.dao.sqls.ProductJoinSqls;
-import com.ys.reservation.domain.FileDomain;
+import com.ys.reservation.domain.Image;
 
 @Repository
-public class FileDao {
+public class ImageDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
-	private RowMapper<FileDomain> fileRowMapper = BeanPropertyRowMapper.newInstance(FileDomain.class);
+	private RowMapper<Image> imageRowMapper = BeanPropertyRowMapper.newInstance(Image.class);
 
 	
-	public FileDao(DataSource dataSource) {
+	public ImageDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 		this.insertAction = new SimpleJdbcInsert(dataSource)
 				.withTableName("file")
 				.usingGeneratedKeyColumns("id");
 	}
 	
-	public int insert(FileDomain file) {
+	public int insert(Image file) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(file);
 		return insertAction.executeAndReturnKey(params).intValue();
 	}
 	
-	public FileDomain select(int id) {
+	public Image select(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return jdbc.queryForObject(FileSqls.SELECT, params, fileRowMapper);
+		return jdbc.queryForObject(ImageSqls.SELECT, params, imageRowMapper);
 	}
 	
-	public List<FileDomain> selectByProductId(int id, int type) {
+	public List<Image> selectByProductId(int id, int type) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("id", id);
 		params.put("type", type);
-		return jdbc.query(ProductJoinSqls.SELECT_FILES, params, fileRowMapper);
+		return jdbc.query(ProductJoinSqls.SELECT_FILES, params, imageRowMapper);
 	}
 	
 	public int selectMainImageId(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
 		try {
-			return jdbc.queryForObject(FileSqls.SELECT_MAIN_IMAGE_ID, params, Integer.class);
+			return jdbc.queryForObject(ImageSqls.SELECT_MAIN_IMAGE_ID, params, Integer.class);
 		} catch(EmptyResultDataAccessException e) {
 			return -1;
 		}
 	}
 	
-	public FileDomain selectSubImage(int id) {
+	public Image selectSubImage(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return jdbc.queryForObject(FileSqls.SELECT_SUB_IMAGE, params, fileRowMapper);
+		return jdbc.queryForObject(ImageSqls.SELECT_SUB_IMAGE, params, imageRowMapper);
 	}
 }

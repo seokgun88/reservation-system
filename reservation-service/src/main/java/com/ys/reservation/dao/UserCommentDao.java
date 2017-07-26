@@ -11,9 +11,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.ys.reservation.dao.sqls.FileSqls;
+import com.ys.reservation.dao.sqls.ImageSqls;
 import com.ys.reservation.dao.sqls.UserCommentSqls;
-import com.ys.reservation.domain.FileDomain;
+import com.ys.reservation.domain.Image;
 import com.ys.reservation.vo.CommentsSummaryVo;
 import com.ys.reservation.vo.UserCommentVo;
 
@@ -22,7 +22,7 @@ public class UserCommentDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<UserCommentVo> userCommentRowMapper = BeanPropertyRowMapper.newInstance(UserCommentVo.class);
 	private RowMapper<CommentsSummaryVo> userCommentVoRowMapper = BeanPropertyRowMapper.newInstance(CommentsSummaryVo.class);
-	private RowMapper<FileDomain> fileRowMapper = BeanPropertyRowMapper.newInstance(FileDomain.class);
+	private RowMapper<Image> fileRowMapper = BeanPropertyRowMapper.newInstance(Image.class);
 	
 	public UserCommentDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -38,8 +38,8 @@ public class UserCommentDao {
 		return jdbc.queryForObject(UserCommentSqls.SELECT_AVG_SCORE_BY_PRODUCT_ID, params, userCommentVoRowMapper);
 	}
 	
-	public List<FileDomain> selectFiles(int id) {
+	public List<Image> selectFiles(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return jdbc.query(FileSqls.SELECT_COMMENT_IMAGES, params, fileRowMapper);
+		return jdbc.query(ImageSqls.SELECT_COMMENT_IMAGES, params, fileRowMapper);
 	}
 }

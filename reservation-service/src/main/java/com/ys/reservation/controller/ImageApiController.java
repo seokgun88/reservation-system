@@ -12,22 +12,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ys.reservation.dao.FileDao;
-import com.ys.reservation.domain.FileDomain;
+import com.ys.reservation.dao.ImageDao;
+import com.ys.reservation.domain.Image;
 
 @RestController
-@RequestMapping("/api/files")
-public class FileApiController {
-	private FileDao fileDao;
+@RequestMapping("/api/images")
+public class ImageApiController {
+	private ImageDao imageDao;
 
 	@Autowired
-	public FileApiController(FileDao fileDao) {
-		this.fileDao = fileDao;
+	public ImageApiController(ImageDao fileDao) {
+		this.imageDao = fileDao;
 	}
 
 	@GetMapping("/{id}")
 	public void getFile(@PathVariable int id, HttpServletResponse response) {
-		FileDomain fileDomain = fileDao.select(id);
+		Image fileDomain = imageDao.select(id);
 		response.setContentLengthLong(fileDomain.getFileLength());
 		response.setContentType(fileDomain.getContentType());
 		response.setHeader("Content-Disposition", "inline; filename=\"" + fileDomain.getFileName() + "\";");
