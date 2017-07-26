@@ -22,7 +22,7 @@ public class UserCommentDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<UserCommentVo> userCommentRowMapper = BeanPropertyRowMapper.newInstance(UserCommentVo.class);
 	private RowMapper<CommentsSummaryVo> userCommentVoRowMapper = BeanPropertyRowMapper.newInstance(CommentsSummaryVo.class);
-	private RowMapper<Image> fileRowMapper = BeanPropertyRowMapper.newInstance(Image.class);
+	private RowMapper<Image> imageRowMapper = BeanPropertyRowMapper.newInstance(Image.class);
 	
 	public UserCommentDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -38,8 +38,8 @@ public class UserCommentDao {
 		return jdbc.queryForObject(UserCommentSqls.SELECT_AVG_SCORE_BY_PRODUCT_ID, params, userCommentVoRowMapper);
 	}
 	
-	public List<Image> selectFiles(int id) {
+	public List<Image> selectImages(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return jdbc.query(ImageSqls.SELECT_COMMENT_IMAGES, params, fileRowMapper);
+		return jdbc.query(ImageSqls.SELECT_COMMENT_IMAGES, params, imageRowMapper);
 	}
 }

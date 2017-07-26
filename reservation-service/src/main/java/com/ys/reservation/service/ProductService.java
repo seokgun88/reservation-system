@@ -26,17 +26,17 @@ import com.ys.reservation.vo.UserCommentVo;
 public class ProductService {
 	private ProductDao productDao;
 	private CategoryDao categoryDao;
-	private ImageDao fileDao;
+	private ImageDao imageDao;
 	private UserCommentDao userCommentDao;
 	private PriceDao priceDao;
 	private ReservationDao reservationDao;
 	
 	@Autowired
-	public ProductService(ProductDao productDao, CategoryDao categoryDao, ImageDao fileDao,
+	public ProductService(ProductDao productDao, CategoryDao categoryDao, ImageDao imageDao,
 			UserCommentDao userCommentDao, PriceDao priceDao, ReservationDao reservationDao) {
 		this.productDao = productDao;
 		this.categoryDao = categoryDao;
-		this.fileDao = fileDao;
+		this.imageDao = imageDao;
 		this.userCommentDao = userCommentDao;
 		this.priceDao = priceDao;
 		this.reservationDao = reservationDao;
@@ -87,17 +87,17 @@ public class ProductService {
 		return productDao.selectDetail(id);
 	}
 	
-	public List<Integer> getFileIds(int id, int type) {
+	public List<Integer> getImageIds(int id, int type) {
 		if(id < 1 || type < 0) {
 			return null;
 		}
 		List<Integer> ids = new ArrayList<>();
-		List<Image> files = fileDao.selectByProductId(id, type);
-		if(files == null) {
+		List<Image> images = imageDao.selectByProductId(id, type);
+		if(images == null) {
 			return null;
 		}
-		for(Image fileDomain : files) {
-			ids.add(fileDomain.getId());
+		for(Image image : images) {
+			ids.add(image.getId());
 		}
 		return ids;
 	}
@@ -113,14 +113,14 @@ public class ProductService {
 		if(id < 1) {
 			return -1;
 		}
-		return fileDao.selectMainImageId(id);
+		return imageDao.selectMainImageId(id);
 	}
 	
 	public int getSubImageId(int id) {
 		if(id < 1) {
 			return -1;
 		}
-		return fileDao.selectSubImage(id).getId();
+		return imageDao.selectSubImage(id).getId();
 	}
 	
 	public List<UserCommentVo> getUserComment(int id) {
@@ -132,10 +132,10 @@ public class ProductService {
 			return null;
 		}
 		for(UserCommentVo comment : comments) {
-			List<Image> files = userCommentDao.selectFiles(comment.getId());
-			if(files != null && files.size() > 0) {
-				comment.setFileId(files.get(0).getId());
-				comment.setFilesNum(files.size());
+			List<Image> images = userCommentDao.selectImages(comment.getId());
+			if(images != null && images.size() > 0) {
+				comment.setImageId(images.get(0).getId());
+				comment.setImagesNum(images.size());
 			}
 			
 		}

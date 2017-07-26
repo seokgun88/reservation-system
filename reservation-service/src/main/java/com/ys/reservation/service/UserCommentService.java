@@ -22,7 +22,7 @@ public class UserCommentService {
 		if(id < 1) {
 			return null;
 		}
-		List<Image> files = userCommentDao.selectFiles(id);
+		List<Image> files = userCommentDao.selectImages(id);
 		if(files == null) {
 			return null;
 		}

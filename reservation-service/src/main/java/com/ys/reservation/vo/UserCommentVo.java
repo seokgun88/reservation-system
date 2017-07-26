@@ -12,8 +12,8 @@ public class UserCommentVo {
 	private Date modifyDate;
 	private float avgScore;
 	private String snsId;
-	private int fileId;
-	private int filesNum;
+	private int imageId;
+	private int imagesNum;
 	
 	public int getId() {
 		return id;
@@ -70,15 +70,15 @@ public class UserCommentVo {
 		this.snsId = snsId;
 	}
 	public int getFileId() {
-		return fileId;
+		return imageId;
 	}
-	public void setFileId(int fileId) {
-		this.fileId = fileId;
+	public void setImageId(int imageId) {
+		this.imageId = imageId;
 	}
-	public int getFilesNum() {
-		return filesNum;
+	public int getImagesNum() {
+		return imagesNum;
 	}
-	public void setFilesNum(int filesNum) {
-		this.filesNum = filesNum;
+	public void setImagesNum(int imagesNum) {
+		this.imagesNum = imagesNum;
 	}
 }
