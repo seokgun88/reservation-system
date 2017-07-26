@@ -1,6 +1,8 @@
 package com.ys.reservation.dao;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -15,13 +17,15 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import com.ys.reservation.dao.sqls.FileSqls;
+import com.ys.reservation.dao.sqls.ProductJoinSqls;
 import com.ys.reservation.domain.FileDomain;
 
 @Repository
 public class FileDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
-	private RowMapper<FileDomain> rowMapper = BeanPropertyRowMapper.newInstance(FileDomain.class);
+	private RowMapper<FileDomain> fileRowMapper = BeanPropertyRowMapper.newInstance(FileDomain.class);
+
 	
 	public FileDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -37,7 +41,14 @@ public class FileDao {
 	
 	public FileDomain select(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return jdbc.queryForObject(FileSqls.SELECT, params, rowMapper);
+		return jdbc.queryForObject(FileSqls.SELECT, params, fileRowMapper);
+	}
+	
+	public List<FileDomain> selectByProductId(int id, int type) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("id", id);
+		params.put("type", type);
+		return jdbc.query(ProductJoinSqls.SELECT_FILES, params, fileRowMapper);
 	}
 	
 	public int selectMainImageId(int id) {
@@ -51,6 +62,6 @@ public class FileDao {
 	
 	public FileDomain selectSubImage(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return jdbc.queryForObject(FileSqls.SELECT_SUB_IMAGE, params, rowMapper);
+		return jdbc.queryForObject(FileSqls.SELECT_SUB_IMAGE, params, fileRowMapper);
 	}
 }

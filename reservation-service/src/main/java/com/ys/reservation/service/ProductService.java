@@ -6,13 +6,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ys.reservation.dao.CategoryDao;
 import com.ys.reservation.dao.FileDao;
 import com.ys.reservation.dao.PriceDao;
 import com.ys.reservation.dao.ProductDao;
+import com.ys.reservation.dao.ReservationDao;
 import com.ys.reservation.dao.UserCommentDao;
 import com.ys.reservation.domain.FileDomain;
 import com.ys.reservation.domain.Price;
 import com.ys.reservation.domain.Product;
+import com.ys.reservation.domain.ReservationInfo;
 import com.ys.reservation.vo.CommentsSummaryVo;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
@@ -23,16 +26,21 @@ import com.ys.reservation.vo.UserCommentVo;
 @Service
 public class ProductService {
 	private ProductDao productDao;
+	private CategoryDao categoryDao;
 	private FileDao fileDao;
 	private UserCommentDao userCommentDao;
 	private PriceDao priceDao;
+	private ReservationDao reservationDao;
 	
 	@Autowired
-	public ProductService(ProductDao productDao, FileDao fileDao, UserCommentDao userCommentDao, PriceDao priceDao) {
+	public ProductService(ProductDao productDao, CategoryDao categoryDao, FileDao fileDao,
+			UserCommentDao userCommentDao, PriceDao priceDao, ReservationDao reservationDao) {
 		this.productDao = productDao;
+		this.categoryDao = categoryDao;
 		this.fileDao = fileDao;
 		this.userCommentDao = userCommentDao;
 		this.priceDao = priceDao;
+		this.reservationDao = reservationDao;
 	}
 
 	public List<ProductVo> getAll() {
@@ -70,7 +78,7 @@ public class ProductService {
 		if(categoryId < 1) {
 			return -1;
 		}
-		return productDao.countByCategoryId(categoryId);
+		return categoryDao.countProducts(categoryId);
 	}
 	
 	public ProductDetailVo getDetailById(int id) {
@@ -85,7 +93,7 @@ public class ProductService {
 			return null;
 		}
 		List<Integer> ids = new ArrayList<>();
-		List<FileDomain> files = productDao.selectFiles(id, type);
+		List<FileDomain> files = fileDao.selectByProductId(id, type);
 		if(files == null) {
 			return null;
 		}
@@ -120,7 +128,7 @@ public class ProductService {
 		if(id < 1) {
 			return null;
 		}
-		List<UserCommentVo> comments = productDao.selectUserComment(id);
+		List<UserCommentVo> comments = userCommentDao.selectByProductId(id);
 		if(comments == null) {
 			return null;
 		}
@@ -142,14 +150,14 @@ public class ProductService {
 		if(id < 1) {
 			return null;
 		}
-		return productDao.selectAvgCommentScore(id);
+		return userCommentDao.selectAvgScoreByProductId(id);
 	}
 	
 	public ProductReservationInfoVo getReservationInfo(int id) {
 		if(id < 1) {
 			return null;
 		}
-		return productDao.selectReservationInfo(id);
+		return reservationDao.selectByProductId(id);
 	}
 	
 	public List<Price> getPrices(int id) {
