@@ -19,7 +19,6 @@ import com.ys.reservation.domain.Category;
 @ContextConfiguration(classes = RootApplicationContextConfig.class)
 @Transactional
 public class CategoryDaoTest {
-	
 	@Autowired
 	CategoryDao categoryDao;
 	

@@ -19,12 +19,14 @@ import org.springframework.stereotype.Repository;
 import com.ys.reservation.dao.sqls.ImageSqls;
 import com.ys.reservation.dao.sqls.ProductJoinSqls;
 import com.ys.reservation.domain.Image;
+import com.ys.reservation.vo.CommentImageVo;
 
 @Repository
 public class ImageDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
 	private RowMapper<Image> imageRowMapper = BeanPropertyRowMapper.newInstance(Image.class);
+	private RowMapper<CommentImageVo> commentImageRowMapper = BeanPropertyRowMapper.newInstance(CommentImageVo.class);
 
 	
 	public ImageDao(DataSource dataSource) {
@@ -63,5 +65,15 @@ public class ImageDao {
 	public Image selectSubImage(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
 		return jdbc.queryForObject(ImageSqls.SELECT_SUB_IMAGE, params, imageRowMapper);
+	}
+	
+	public List<Integer> selectIdByCommentId(int id) {
+		Map<String, ?> params = Collections.singletonMap("id", id);
+		return jdbc.queryForList(ImageSqls.SELECT_ID_BY_COMMENT_ID, params, Integer.class);
+	}
+
+	public List<CommentImageVo> selectIdByCommentIds(List<Integer> ids) {
+		Map<String, ?> params = Collections.singletonMap("ids", ids);
+		return jdbc.query(ImageSqls.SELECT_ID_BY_COMMENT_IDS, params, commentImageRowMapper);
 	}
 }

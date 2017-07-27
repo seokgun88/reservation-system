@@ -21,21 +21,21 @@ public class ImageApiController {
 	private ImageDao imageDao;
 
 	@Autowired
-	public ImageApiController(ImageDao fileDao) {
-		this.imageDao = fileDao;
+	public ImageApiController(ImageDao imageDao) {
+		this.imageDao = imageDao;
 	}
 
 	@GetMapping("/{id}")
 	public void getFile(@PathVariable int id, HttpServletResponse response) {
-		Image fileDomain = imageDao.select(id);
-		response.setContentLengthLong(fileDomain.getFileLength());
-		response.setContentType(fileDomain.getContentType());
-		response.setHeader("Content-Disposition", "inline; filename=\"" + fileDomain.getFileName() + "\";");
+		Image image = imageDao.select(id);
+		response.setContentLengthLong(image.getFileLength());
+		response.setContentType(image.getContentType());
+		response.setHeader("Content-Disposition", "inline; filename=\"" + image.getFileName() + "\";");
 		response.setHeader("Content-Transfer-Encoding", "binary");
 		response.setHeader("Pragma", "no-cache;");
 		response.setHeader("Expires", "-1;");
 		
-		File f = new File(fileDomain.getSaveFileName());
+		File f = new File(image.getSaveFileName());
 		if(!f.exists()) {
 			throw new RuntimeException("file not found");
 		}

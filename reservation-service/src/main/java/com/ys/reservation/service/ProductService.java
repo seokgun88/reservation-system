@@ -2,6 +2,8 @@ package com.ys.reservation.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.ys.reservation.dao.UserCommentDao;
 import com.ys.reservation.domain.Image;
 import com.ys.reservation.domain.Price;
 import com.ys.reservation.domain.Product;
+import com.ys.reservation.vo.CommentImageVo;
 import com.ys.reservation.vo.CommentsSummaryVo;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
@@ -131,13 +134,17 @@ public class ProductService {
 		if(comments == null) {
 			return null;
 		}
+		List<Integer> ids = comments.stream().map(c -> c.getId()).collect(Collectors.toList());
+		List<CommentImageVo> commentImageList = imageDao.selectIdByCommentIds(ids);
+		Map<Integer, List<Integer>> commentImageMap = commentImageList.stream()
+				.collect(Collectors.groupingBy(CommentImageVo::getCommentId, 
+						Collectors.mapping(CommentImageVo::getFileId, Collectors.toList())));
 		for(UserCommentVo comment : comments) {
-			List<Image> images = userCommentDao.selectImages(comment.getId());
-			if(images != null && images.size() > 0) {
-				comment.setImageId(images.get(0).getId());
-				comment.setImagesNum(images.size());
+			List<Integer> imageList = commentImageMap.get(comment.getId());
+			if(imageList != null) {
+				comment.setImageId(imageList.get(0));
+				comment.setImagesNum(imageList.size());
 			}
-			
 		}
 		if(comments.size() > 3) {
 			return comments.subList(0, 3);
