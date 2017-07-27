@@ -84,6 +84,6 @@ public class ImageController {
             imageDao.insert(fileDomain);
 		}
 		
-		return "redirect:/admin/files";
+		return "redirect:/admin/images";
 	}
 }

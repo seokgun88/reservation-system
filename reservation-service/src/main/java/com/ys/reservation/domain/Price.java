@@ -1,10 +1,18 @@
 package com.ys.reservation.domain;
 
 public class Price {
+	private int productId;
 	private int priceType;
 	private int price;
 	private float discountRate;
 	
+	
+	public int getProductId() {
+		return productId;
+	}
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
 	public int getPriceType() {
 		return priceType;
 	}
