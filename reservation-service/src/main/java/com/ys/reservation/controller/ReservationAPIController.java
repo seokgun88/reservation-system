@@ -21,14 +21,14 @@ public class ReservationAPIController {
 	public ReservationAPIController(ReservationService reservationService) {
 		this.reservationService = reservationService;
 	}
-	
+
 	@PostMapping
 	public ReservationInfo create(@RequestBody ReservationInfo reservationInfo) {
 		return reservationService.create(reservationInfo);
 	}
-	
+
 	@GetMapping("/users/{id:[\\d]+}")
-	public MyReservationVo getMyReservation(@PathVariable int userId) {
-		return reservationService.getMyReservation(userId);
+	public MyReservationVo getMyReservation(@PathVariable int id) {
+		return reservationService.getMyReservation(id);
 	}
 }
