@@ -9,7 +9,6 @@ var ReviewWrite = (function(){
         $reviewTextarea = $(".review_textarea"),
         $imageFileInput = $("#reviewImageFileOpenInput"),
         $imageList = $(".lst_thumb"),
-        $bntImageRemove = $("a.anchor");
         $btnBooking = $(".bk_btn");
 
     var removeImageAjax = function($el, id){
@@ -26,8 +25,9 @@ var ReviewWrite = (function(){
         });
     };
 
-    var addImageRemoveHandler = function(){
-        $bntImageRemove.on("click", function(e){
+    var addImageRemoveHandler = function($imageList){
+        $imageList.find("a.anchor").on("click", function(e){
+            e.preventDefault();
             $li = $(e.target).closest("li.item");
             removeImageAjax($li, $li.data("id"));
         });
@@ -47,23 +47,29 @@ var ReviewWrite = (function(){
             processData: false,
             contentType: false
         })
-        .done(drawImage)
+        .done(function(data){
+            drawImage(data);
+            $imageFileInput.val("");
+        })
         .fail(function(error){
             console.log(error.responseJSON);
             alert("Image upload를 실패했습니다.");
         });
     };
 
-    var createCommentAjax = function(comment, score, e){
-        var fileIds = [];
-        $imageList.children("li.item").each(function(i, $e){
-            fileIds.push($e.data("id"));
+    var createCommentAjax = function(e){
+        var comment = $reviewTextarea.val(),
+            score = rating.score(),
+            fileIds = [];
+        $imageList.children("li.item").each(function(i, el){
+            fileIds.push($(el).data("id"));
         });
         var commentData = JSON.stringify({
             "comment" : comment,
             "score" : score,
-            "fileIds" :fileIds
+            "fileIds" : fileIds
         });
+        console.log(commentData);
         $.ajax({
             url: "/api/products/" + productId + "/comments/users/" + userId,
             type: "POST",
@@ -71,7 +77,7 @@ var ReviewWrite = (function(){
             contentType: "application/json"
         })
         .done(function(){
-            location.href("/myreservation");
+            location.href = "/myreservation";
         })
         .fail(function(error){
             console.log(error.responseJSON);
@@ -133,9 +139,7 @@ var ReviewWrite = (function(){
                 }
             });
 
-            $btnBooking.on("click", createCommentAjax.bind(
-                this, $reviewTextarea.val(), rating.score()
-            ));
+            $btnBooking.on("click", createCommentAjax);
         }
     }
 })();
