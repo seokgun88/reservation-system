@@ -18,6 +18,7 @@ import com.ys.reservation.domain.Product;
 import com.ys.reservation.domain.UserComment;
 import com.ys.reservation.service.ProductService;
 import com.ys.reservation.service.UserCommentService;
+import com.ys.reservation.vo.CommentCreationVo;
 import com.ys.reservation.vo.CommentsSummaryVo;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
@@ -68,9 +69,10 @@ public class ProductAPIController {
 	
 	@PostMapping("/{id:[\\d]+}/comments/users/{userId:[\\d]+}")
 	public void createUserComment(@PathVariable int id, @PathVariable int userId, 
-			@RequestBody float score, @RequestBody String comment, @RequestBody List<Integer> fileIds) {
-		UserComment userComment = new UserComment(id, userId, score, comment);
-		userCommentService.create(userComment, fileIds);
+			@RequestBody CommentCreationVo commentCreationVo) {
+		UserComment userComment = new UserComment(id, userId, 
+				commentCreationVo.getScore(), commentCreationVo.getComment());
+		userCommentService.create(userComment, commentCreationVo.getFileIds());
 	}
 	
 	@GetMapping("/{id:[\\d]+}/detail")

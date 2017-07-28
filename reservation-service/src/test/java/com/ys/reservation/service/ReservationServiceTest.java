@@ -20,7 +20,7 @@ public class ReservationServiceTest {
 	@Test
 	public void test() {
 		MyReservationVo myReservation = reservationService.getMyReservation(2);
-		
+		System.out.println(myReservation);
 	}
 
 }

@@ -22,6 +22,8 @@ public class ImageSqls {
 			"SELECT c.reservation_user_comment_id comment_id, f.id file_id "
 			+ "FROM reservation_user_comment_image c, file f "
 			+ "WHERE c.file_id = f.id AND c.reservation_user_comment_id IN (:ids)";
-	public static final String DELETE_IMAGE = "UPDATE file SET delete_flag=1 WHERE id=:id";
-	public static final String UPDATE_IMAGES = "UPDATE file SET delete_flag=0 WHERE id IN (:ids)";
+	public static final String UPDATE_DELETE_FLAG_TO_1 = 
+			"UPDATE file SET delete_flag=1 WHERE id=:id";
+	public static final String UPDATE_DELETE_FLAG_TO_0_BY_IDS = 
+			"UPDATE file SET delete_flag=0 WHERE id IN (:ids)";
 }

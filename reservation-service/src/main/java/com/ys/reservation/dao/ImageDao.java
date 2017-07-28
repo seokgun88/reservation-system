@@ -79,11 +79,11 @@ public class ImageDao {
 	
 	public int delete(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return jdbc.update(ImageSqls.DELETE_IMAGE, params);
+		return jdbc.update(ImageSqls.UPDATE_DELETE_FLAG_TO_1, params);
 	}
 	
 	public int update(List<Integer> ids) {
 		Map<String, ?> params = Collections.singletonMap("ids", ids);
-		return jdbc.update(ImageSqls.UPDATE_IMAGES, params);
+		return jdbc.update(ImageSqls.UPDATE_DELETE_FLAG_TO_0_BY_IDS, params);
 	}
 }

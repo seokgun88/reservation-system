@@ -15,9 +15,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import com.ys.reservation.dao.sqls.ImageSqls;
 import com.ys.reservation.dao.sqls.UserCommentSqls;
-import com.ys.reservation.domain.Image;
 import com.ys.reservation.domain.UserComment;
 import com.ys.reservation.domain.UserCommentImage;
 import com.ys.reservation.vo.CommentsSummaryVo;
