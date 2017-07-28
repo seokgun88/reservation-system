@@ -121,9 +121,13 @@ var ReviewWrite = (function(){
 
             $imageFileInput.on("change", function(e){
                 var files = e.target.files,
-                    reader = new FileReader(),
                     idx = 0,
                     formData = new FormData();
+                    
+                if($imageList.children("li.item").length + files.length > 5){
+                    alert("이미지는 최대 5개 업로드 가능합니다.");
+                    return;
+                }
 
                 for(var i=0; i<files.length; i++){
                     if(files[i].size > 1024 * 1000){
