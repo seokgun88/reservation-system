@@ -57,7 +57,7 @@ public class ProductService {
 		return productDao.selectLimited(offset);
 	}
 	
-	public Product getById(int id) {
+	public Product get(int id) {
 		if(id < 1) {
 			return null;
 		}

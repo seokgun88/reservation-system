@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +25,13 @@ import com.ys.reservation.service.ImageService;
 
 @RestController
 @RequestMapping("/api/images")
-
+@PropertySource("classpath:/application.properties")
 public class ImageApiController {
 	private ImageDao imageDao;
 	private ImageService imageService;
-	
+	@Value("${file.basedir}")
+	private String baseDir;
+
 	@Autowired
 	public ImageApiController(ImageDao imageDao, ImageService imageService) {
 		super();

@@ -53,7 +53,7 @@ public class ProductAPIController {
 	
 	@GetMapping("/{id:[\\d]+}")
 	public Product getById(@PathVariable int id) {
-		return productService.getById(id);
+		return productService.get(id);
 	}
 	
 	@GetMapping("/{id:[\\d]+}/comments")
