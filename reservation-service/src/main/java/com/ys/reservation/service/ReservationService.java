@@ -92,4 +92,11 @@ public class ReservationService {
 		
 		return myReservation;
 	}
+	
+	public int update(int reservationId) {
+		if(reservationId<=0) {
+			return 0;
+		}
+		return reservationDao.update(reservationId);
+	}
 }
