@@ -41,4 +41,35 @@ templates['reservationCardItem'] = template({"1":function(container,depth0,helpe
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.btnCancelText : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "                </div>\r\n            </div>\r\n            <div class=\"right\"></div>\r\n        </div>\r\n        <div class=\"card_footer\">\r\n            <div class=\"left\"></div>\r\n            <div class=\"middle\"></div>\r\n            <div class=\"right\"></div>\r\n        </div>\r\n    </a>\r\n    <a href=\"#\" class=\"fn fn-share1 naver-splugin btn_goto_share\" title=\"공유하기\"></a>\r\n</article>\r\n";
 },"useData":true});
+templates['userCommentItem'] = template({"1":function(container,depth0,helpers,partials,data) {
+    return " no_img";
+},"3":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "                <div class=\"thumb_area\">\r\n                    <a href=\"#\" class=\"thumb\" title=\"이미지 크게 보기\">\r\n                        <img width=\"90\" height=\"90\" class=\"img_vertical_top\"\r\n                             src=\"/api/images/"
+    + alias4(((helper = (helper = helpers.fileId || (depth0 != null ? depth0.fileId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"fileId","hash":{},"data":data}) : helper)))
+    + "\"\r\n                             alt=\"리뷰이미지\">\r\n                    </a> <span class=\"img_count\">"
+    + alias4(((helper = (helper = helpers.filesNum || (depth0 != null ? depth0.filesNum : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"filesNum","hash":{},"data":data}) : helper)))
+    + "</span>\r\n                </div>\r\n";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "<li class=\"list_item\" data-id=\""
+    + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
+    + "\">\r\n    <div>\r\n        <div class=\"review_area"
+    + ((stack1 = helpers.unless.call(alias1,(depth0 != null ? depth0.fileId : depth0),{"name":"unless","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\">\r\n"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.fileId : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "            <h4 class=\"resoc_name\">"
+    + alias4(((helper = (helper = helpers.productName || (depth0 != null ? depth0.productName : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"productName","hash":{},"data":data}) : helper)))
+    + "</h4>\r\n            <p class=\"review\">"
+    + alias4(((helper = (helper = helpers.comment || (depth0 != null ? depth0.comment : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"comment","hash":{},"data":data}) : helper)))
+    + "</p>\r\n        </div>\r\n        <div class=\"info_area\">\r\n            <div class=\"review_info\">\r\n                <span class=\"grade\">"
+    + alias4(((helper = (helper = helpers.score || (depth0 != null ? depth0.score : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"score","hash":{},"data":data}) : helper)))
+    + "</span>\r\n                <span class=\"name\">"
+    + alias4(((helper = (helper = helpers.snsId || (depth0 != null ? depth0.snsId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"snsId","hash":{},"data":data}) : helper)))
+    + "</span>\r\n                <span class=\"date\">"
+    + alias4(((helper = (helper = helpers.date || (depth0 != null ? depth0.date : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"date","hash":{},"data":data}) : helper)))
+    + " 방문</span>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</li>";
+},"useData":true});
 })();
