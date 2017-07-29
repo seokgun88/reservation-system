@@ -126,7 +126,7 @@ public class ProductService {
 		return imageDao.selectSubImage(id).getId();
 	}
 	
-	public List<UserCommentVo> getUserComment(int id) {
+	public List<UserCommentVo> getUserComment(int id, int size) {
 		if(id < 1) {
 			return null;
 		}
@@ -146,8 +146,8 @@ public class ProductService {
 				comment.setImagesNum(imageList.size());
 			}
 		}
-		if(comments.size() > 3) {
-			return comments.subList(0, 3);
+		if(comments.size() > size) {
+			return comments.subList(0, size);
 		}
 		return comments;
 	}

@@ -49,7 +49,8 @@ public class ProductController {
 
 	@GetMapping("/{productId:[\\d]+}/comments")
 	public String commentAll(@PathVariable int productId, Model model) {
-		model.addAttribute("productId", productId);
+		Product product = productService.get(productId);
+		model.addAttribute("product", product);
 		return "review";
 	}
 }
