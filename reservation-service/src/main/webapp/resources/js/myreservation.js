@@ -5,6 +5,7 @@ var reservatinosForTest = {
     totalReservationCount: 4,
     reservations: {
         1: [{
+            id: 1,
             childTicketCount: 0,
             displayEnd: 1484059840000,
             displayStart: 1483282240000,
@@ -13,9 +14,9 @@ var reservatinosForTest = {
             productName: "전시1",
             reservationType: 1,
             totalPrice: 10000,
-            userId: 0,
             youthTicketCount: 2
         }, {
+            id: 2,
             childTicketCount: 0,
             displayEnd: 1484059840000,
             displayStart: 1483282240000,
@@ -24,10 +25,10 @@ var reservatinosForTest = {
             productName: "전시1",
             reservationType: 1,
             totalPrice: 15000,
-            userId: 0,
             youthTicketCount: 1
         }],
         2: [{
+            id: 3,
             childTicketCount: 1,
             displayEnd: 1484059840000,
             displayStart: 1483282240000,
@@ -36,10 +37,10 @@ var reservatinosForTest = {
             productName: "전시2",
             reservationType: 1,
             totalPrice: 20000,
-            userId: 0,
             youthTicketCount: 2
         }],
         3: [{
+            id: 4,
             childTicketCount: 1,
             displayEnd: 1484059840000,
             displayStart: 1483282240000,
@@ -48,7 +49,6 @@ var reservatinosForTest = {
             productName: "전시3",
             reservationType: 1,
             totalPrice: 30000,
-            userId: 0,
             youthTicketCount: 0
         }],
         4: [{
@@ -60,7 +60,6 @@ var reservatinosForTest = {
             productName: "전시4",
             reservationType: 1,
             totalPrice: 40000,
-            userId: 0,
             youthTicketCount: 2
         }]
     }
@@ -140,6 +139,7 @@ var MyReservationModule = (function(){
 
     function showFormattedMyReservations (){
         var reservations = myReservationData.reservations;
+        console.log(myReservationData);
         if(myReservationData.totalReservationCount > 0){
             var index = 0;
             for (var [type, reservation] of Object.entries(reservations)) {
@@ -187,6 +187,12 @@ var MyReservationModule = (function(){
         },
         bindEvents: function(){
             this.$root.find(".btn:contains(\"취소\")").on("click", this.fadeInPopup.bind(this));
+            this.$root.find(".btn:contains(\"예매자 리뷰 남기기\")").on("click", this.goReviewWrite.bind(this));
+        },
+        goReviewWrite: function(evt){
+            evt.preventDefault();
+            var productId = this.values.productId;
+            window.location.href = BASE_URL + "/products/" + productId + "/comments/users/" + userId;
         },
         fadeInPopup: function(evt){
             evt.preventDefault();
