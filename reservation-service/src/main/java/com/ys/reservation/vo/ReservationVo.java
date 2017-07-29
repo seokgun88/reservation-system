@@ -3,6 +3,7 @@ package com.ys.reservation.vo;
 import java.util.Date;
 
 public class ReservationVo {
+	private int id;
 	private int userId;
 	private int productId;
 	private String productName;
@@ -14,6 +15,12 @@ public class ReservationVo {
 	private Date displayEnd;
 	private int totalPrice;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getUserId() {
 		return userId;
 	}

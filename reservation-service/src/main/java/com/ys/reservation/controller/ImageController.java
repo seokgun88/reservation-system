@@ -56,12 +56,6 @@ public class ImageController {
 			
 			String uuid = UUID.randomUUID().toString();
 			String saveFileName = formattedDate + File.separator + uuid;
-			
-//            System.out.println("contentType :" + contentType);
-//            System.out.println("name :" + name);
-//            System.out.println("originalFilename : " + originalFilename);
-//            System.out.println("size : " + size);
-//            System.out.println("saveFileName : " + saveFileName);
             
             try(
             		InputStream in = file.getInputStream();
@@ -74,14 +68,14 @@ public class ImageController {
             } catch(Exception e){
             	e.printStackTrace();
             }
-            Image fileDomain = new Image();
-            fileDomain.setFileName(originalFilename);
-            fileDomain.setUserId(id);
-            fileDomain.setSaveFileName(saveFileName);
-            fileDomain.setFileLength(size);
-            fileDomain.setContentType(contentType);
-            fileDomain.setDeleteFlag(0);
-            imageDao.insert(fileDomain);
+            Image image = new Image();
+            image.setFileName(originalFilename);
+            image.setUserId(id);
+            image.setSaveFileName(saveFileName);
+            image.setFileLength(size);
+            image.setContentType(contentType);
+            image.setDeleteFlag(0);
+            imageDao.insert(image);
 		}
 		
 		return "redirect:/admin/images";

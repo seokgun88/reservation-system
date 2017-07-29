@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,10 @@ public class ReservationAPIController {
 	public ReservationInfo create(@RequestBody ReservationInfo reservationInfo) {
 		return reservationService.create(reservationInfo);
 	}
-
+	@PutMapping("/{id:[\\d]+}")
+	public void update(@PathVariable int id) {
+		reservationService.update(id);
+	}
 	@GetMapping("/users/{id:[\\d]+}")
 	public MyReservationVo getMyReservation(@PathVariable int id) {
 		return reservationService.getMyReservation(id);

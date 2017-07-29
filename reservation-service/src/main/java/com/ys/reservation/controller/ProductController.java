@@ -16,7 +16,7 @@ import com.ys.reservation.service.ProductService;
 @RequestMapping("/products")
 public class ProductController {
 	private ProductService productService;
-	
+
 	@Autowired
 	public ProductController(ProductService productService) {
 		this.productService = productService;
@@ -37,7 +37,7 @@ public class ProductController {
 		model.addAttribute("id", id);
 		return "reserve";
 	}
-	
+
 	@GetMapping("/{productId:[\\d]+}/comments/users/{userId:[\\d]+}")
 	public String comment(@PathVariable int productId, @PathVariable int userId, Model model) {
 		Product p = productService.get(productId);
@@ -46,7 +46,7 @@ public class ProductController {
 		model.addAttribute("productName", p.getName());
 		return "reviewWrite";
 	}
-	
+
 	@GetMapping("/{productId:[\\d]+}/comments")
 	public String commentAll(@PathVariable int productId, Model model) {
 		model.addAttribute("productId", productId);

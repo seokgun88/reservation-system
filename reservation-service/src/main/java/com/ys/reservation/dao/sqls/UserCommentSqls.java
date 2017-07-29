@@ -9,4 +9,8 @@ public class UserCommentSqls {
 			"SELECT COUNT(*) num, AVG(score) avg_score "
 			+ "FROM reservation_user_comment "
 			+ "WHERE product_id = :id";
+	public static final String UPDATE_USER_COMMENT = 
+			"UPDATE reservation_user_comment "
+			+ "SET score=:score, comment=:comment "
+			+ "WHERE id=:id";
 }

@@ -48,4 +48,9 @@ public class ReservationDao {
 		Map<String, ?> params = Collections.singletonMap("id", userId);
 		return jdbc.query(ReservationSqls.SELECT_BY_USER_ID, params, reservationRowMapper);
 	}
+	
+	public int update(int reservationId) {
+		Map<String, ?> params = Collections.singletonMap("id", reservationId);
+		return jdbc.update(ReservationSqls.UPDATE_SET_TYPE_TO_4, params);
+	}
 }

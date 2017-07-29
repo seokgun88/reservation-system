@@ -55,5 +55,4 @@ public class CategoryAPIController {
 	public int getProductsCount(@PathVariable int categoryId) {
 		return productService.getCountByCategoryId(categoryId);
 	}
-
 }
