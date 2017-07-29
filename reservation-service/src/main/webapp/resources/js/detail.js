@@ -247,6 +247,11 @@ var ProductDetail = (function(){
       });
   };
 
+  var goMoreCommentsView = function(evt){
+    evt.preventDefault();
+    window.location.href += "/comments";
+  };
+
   return {
     init: function(){
       mainImageFlicking.width = 414;
@@ -323,6 +328,8 @@ var ProductDetail = (function(){
         $location.removeClass('hide');
         e.preventDefault();
       });
+
+      $('.btn_review_more').on("click", goMoreCommentsView);
     }
   };
 })();
