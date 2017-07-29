@@ -1,3 +1,8 @@
+$(function(){
+    MyReservationModule.init();
+    Navigation.init(".header");
+})
+
 var reservatinosForTest = {
     canceledReservationCount: 1,
     completedReservationCount: 1,
@@ -123,6 +128,7 @@ var MyReservationModule = (function(){
 
     var apiUrl = apiBaseUrl + "/users/" + userId;
     var myReservationData = {};
+
     function init(){
         var ajaxReservations = $.ajax(apiUrl, {
             type: "GET"
@@ -236,58 +242,77 @@ var MyReservationModule = (function(){
         CardItem.prototype[fnName] = cardFn[fnName];
     }
 
-    // 예약 상단 네비게이션 영역
-    var Navigation = (function(){
+    return {
+        init: init
+    }
+})();
 
-    })();
+// 예약 상단 네비게이션 영역
+var Navigation = (function(){
+    var goReservationMain = function(evt){
+        evt.preventDefault();
+        window.location.href = window.location.origin;
+    }
 
-    // 전체 요약 영역
-    var MySummary = (function(){
-        var $mySummary = $('.my_summary');
-        var defaultCounts = {
-            canceledReservationCount: 0,
-            completedReservationCount: 0,
-            scheduledReservationCount: 0,
-            totalReservationCount: 0
-        };
+    var goNAVER = function(evt){
+        evt.preventDefault();
+        window.location.href = "https://m.naver.com";
+    }
 
-        var summaryCounts = {};
+    var goMyReservation = function(evt){
+        evt.preventDefault();
+        window.location.href = window.location.origin + "/login";
+    }
 
-        function init(myReservationData){
-            summaryCounts = $.extend({}, defaultCounts, myReservationData);
-            appendMySummaryTemplate();
-        }
-
-        function appendMySummaryTemplate(){
-            $mySummary.html(Handlebars.templates['mySummary'](summaryCounts));
-        }
-
-        function updateSummary(type){
-            var count = Number($mySummary.find('.item:last span').text()) + 1;
-            console.log(count);
-            $mySummary.find('.item:last span').text(count);
-            if(type === 1 || type === 2){
-                var count = Number($mySummary.find('.item:eq(1) span').text()) - 1;
-                var clsSeletor = '.item:eq(1) span';
-                $mySummary.find(clsSeletor).text(count);
-            } else if(type === 3){
-                var count = Number($mySummary.find('.item:eq(2) span').text()) - 1;
-                var clsSeletor = '.item:eq(2) span';
-                $mySummary.find(clsSeletor).text(count);
-            }
-        }
-
-        return {
-            init: init,
-            updateSummary: updateSummary
-        }
-    })();
+    var init = function(rootElement){
+        $(rootElement).find(".lnk_logo[title=\"네이버\"]").on("click", goNAVER);
+        $(rootElement).find(".lnk_logo[title=\"예약\"]").on("click", goReservationMain);
+        $(rootElement).find(".btn_my").on("click", goMyReservation);
+    }
 
     return {
         init: init
     }
 })();
 
-$(function(){
-    MyReservationModule.init();
-})
+// 전체 요약 영역
+var MySummary = (function(){
+    var $mySummary = $('.my_summary');
+    var defaultCounts = {
+        canceledReservationCount: 0,
+        completedReservationCount: 0,
+        scheduledReservationCount: 0,
+        totalReservationCount: 0
+    };
+
+    var summaryCounts = {};
+
+    function init(myReservationData){
+        summaryCounts = $.extend({}, defaultCounts, myReservationData);
+        appendMySummaryTemplate();
+    }
+
+    function appendMySummaryTemplate(){
+        $mySummary.html(Handlebars.templates['mySummary'](summaryCounts));
+    }
+
+    function updateSummary(type){
+        var count = Number($mySummary.find('.item:last span').text()) + 1;
+        console.log(count);
+        $mySummary.find('.item:last span').text(count);
+        if(type === 1 || type === 2){
+            var count = Number($mySummary.find('.item:eq(1) span').text()) - 1;
+            var clsSeletor = '.item:eq(1) span';
+            $mySummary.find(clsSeletor).text(count);
+        } else if(type === 3){
+            var count = Number($mySummary.find('.item:eq(2) span').text()) - 1;
+            var clsSeletor = '.item:eq(2) span';
+            $mySummary.find(clsSeletor).text(count);
+        }
+    }
+
+    return {
+        init: init,
+        updateSummary: updateSummary
+    }
+})();
