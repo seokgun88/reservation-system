@@ -1,5 +1,4 @@
 var Comment = (function(){
-    var productName = "전시 1";
     var scrollFlag = true;
 
     var init = function (){
@@ -9,7 +8,7 @@ var Comment = (function(){
 
     var addComments = function(comments){
         var html = $.map(comments, function(comment){
-            comment.productName = productName;
+            comment.productName = productName; // 응답으로 상품 이름도 받아오는 게 나을 듯
             var d = new Date(comment.createDate);
             var date = d.getFullYear() + '.' + (d.getMonth()+1) + '.' + d.getDate();
             comment.date = date;
