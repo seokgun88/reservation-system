@@ -46,7 +46,7 @@ templates['userCommentItem'] = template({"1":function(container,depth0,helpers,p
 },"3":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "                <div class=\"thumb_area\">\r\n                    <a href=\"#\" class=\"thumb\" title=\"이미지 크게 보기\">\r\n                        <img width=\"90\" height=\"90\" class=\"img_vertical_top\"\r\n                             src=\"/api/images/"
+  return "                <div class=\"thumb_area\">\r\n                    <a href=\"#\" class=\"thumb\" title=\"이미지 크게 보기\">\r\n                        <img width=\"90\" height=\"90\" class=\"img_vertical_top\"\r\n                             src=\"http://220.230.112.236/api/images/"
     + alias4(((helper = (helper = helpers.fileId || (depth0 != null ? depth0.fileId : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"fileId","hash":{},"data":data}) : helper)))
     + "\"\r\n                             alt=\"리뷰이미지\">\r\n                    </a> <span class=\"img_count\">"
     + alias4(((helper = (helper = helpers.filesNum || (depth0 != null ? depth0.filesNum : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"filesNum","hash":{},"data":data}) : helper)))

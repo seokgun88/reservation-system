@@ -132,6 +132,5 @@
 	<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
 	<script src="/resources/js/flicking.js"></script>
 	<script src="/resources/js/mainPage.js"></script>
-    <script src="/resources/js/gnb.js"></script>
 </body>
 </html>
