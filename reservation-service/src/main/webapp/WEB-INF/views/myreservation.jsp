@@ -146,6 +146,7 @@
 	<script src="/resources/js/node_modules/handlebars/dist/handlebars.runtime.js"></script>
 	<script src="/resources/js/templatesCompiled.js"></script>
     <script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
+	<script src="/resources/js/util.js"></script>
 	<script src="/resources/js/myreservation.js" ></script>
 
     </body>
