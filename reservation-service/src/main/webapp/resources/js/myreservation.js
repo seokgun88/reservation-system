@@ -146,9 +146,16 @@ var CardItem = extend(eg.Component, {
     },
     cancelMyReservation: function(evt){
         evt.preventDefault();
+
         this.$popBottomBtnArea.off("click", ".btn_green", this.cancelMyReservationHandler);
 
         MySummary.updateSummary(this.myReservation.type);
+
+        var apiUrl = window.location.origin + "/api/reservations/" + this.myReservation.id;
+        var ajaxCancelMyReservation = $.ajax(apiUrl, {
+            type: "PUT"
+        });
+        ajaxCancelMyReservation.then(function(){console.log("update success!")});
 
         this.$root.find('.booking_cancel').remove();
         this.$root.appendTo("li.card.used:last");
