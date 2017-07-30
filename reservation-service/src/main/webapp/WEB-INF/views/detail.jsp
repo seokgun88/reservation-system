@@ -291,7 +291,7 @@
 	</div>
 	<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
 	<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
-	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=zRCp4iB_1dQ7hvpSdfYB&submodules=geocoder"></script>
+	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=${clientId}&submodules=geocoder"></script>
 	<script src="/resources/js/flicking.js"></script>
 	<script src="/resources/js/lazy.js"></script>
 	<script src="/resources/js/detail.js"></script>

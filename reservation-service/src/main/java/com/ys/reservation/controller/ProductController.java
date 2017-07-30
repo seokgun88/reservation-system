@@ -3,6 +3,8 @@ package com.ys.reservation.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +16,10 @@ import com.ys.reservation.service.ProductService;
 
 @Controller
 @RequestMapping("/products")
+@PropertySource("classpath:/application.properties")
 public class ProductController {
+	@Value("${naver.openapi.clientid}")
+	private String clientId;
 	private ProductService productService;
 
 	@Autowired
@@ -25,6 +30,7 @@ public class ProductController {
 	@GetMapping("/{id:[\\d]+}")
 	public String productDetailById(@PathVariable int id, Model model) {
 		model.addAttribute("id", id);
+		model.addAttribute("clientId", clientId);
 		return "detail";
 	}
 
