@@ -44,7 +44,42 @@ var Comment = (function(){
 
     var init = function (){
         requestComment();
+        requestSummary();
         $(window).on("scroll", scrollViewMoreProductList);
+    };
+
+    var updateGradeArea = function(summary){
+        var $gradeArea = $(".grade_area");
+        $gradeArea.find(".grade_value").css("width", (summary.avgScore/5 * 100).toFixed());
+        $gradeArea.find(".text_value > span").text(summary.avgScore.toFixed(1));
+        $gradeArea.find(".join_count > em.green").text(summary.num + "건");
+    }
+
+    var requestComment = function(){
+        var apiUrl = window.location.origin + "/api" + window.location.pathname;
+        var options = {
+            type: "GET",
+            data: {
+                size: 10
+            }
+        };
+        var ajaxRequestComment = $.ajax(apiUrl, options);
+        ajaxRequestComment.then(addComments.bind($('.list_short_review')));
+        ajaxRequestComment.then(function (){
+            $('.thumb').on('click', getCommentImagesAjax.bind(this, commentPhotoFlicking.listInit.bind(commentPhotoFlicking)));
+            $('.btnPhotoviwerExit').on('click', function(){
+                $photoViewer.fadeOut();
+            });
+        });
+    };
+
+    var requestSummary = function(){
+        var apiUrl = window.location.origin + "/api" + window.location.pathname + "/summary";
+        var options = {
+            type: "GET"
+        };
+        var ajaxRequestSummary = $.ajax(apiUrl, options);
+        ajaxRequestSummary.then(updateGradeArea);
     }
 
     var addComments = function(comments){
@@ -57,24 +92,6 @@ var Comment = (function(){
         }).join("");
         this.append(html);
         scrollFlag = true;
-    }
-
-    var requestComment = function (){
-        var apiUrl = window.location.origin + "/api" + window.location.pathname;
-        var options = {
-            type: "GET",
-            data: {
-                size: 10
-            }
-        }
-        var ajaxrequestComment = $.ajax(apiUrl, options);
-        ajaxrequestComment.then(addComments.bind($('.list_short_review')));
-        ajaxrequestComment.then(function (){
-            $('.thumb').on('click', getCommentImagesAjax.bind(this, commentPhotoFlicking.listInit.bind(commentPhotoFlicking)));
-            $('.btnPhotoviwerExit').on('click', function(){
-                $photoViewer.fadeOut();
-            });
-        });
     };
 
     var scrollViewMoreProductList = function(){
