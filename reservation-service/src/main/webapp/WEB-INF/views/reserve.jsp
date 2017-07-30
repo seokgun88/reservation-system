@@ -19,14 +19,14 @@
                   <a href="/" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
                   <a href="/" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
               </h1>
-              <a href="/my/reservation" class="btn_my"> <span title="내 예약">MY</span> </a>
+              <a href="/myreservation" class="btn_my"> <span title="내 예약">MY</span> </a>
           </header>
       </div>
       <div class="ct">
           <div class="ct_wrap">
               <script id="reservation-info-template" type="text/x-handlebars-template">
               <div class="top_title">
-                  <a href="#" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
+                  <a href="#" onClick="history.back()" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
                   <h2><span class="title">{{name}}</span></h2>
               </div>
               <div class="group_visual">
