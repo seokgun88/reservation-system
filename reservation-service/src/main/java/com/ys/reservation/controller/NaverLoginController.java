@@ -32,6 +32,10 @@ public class NaverLoginController {
 	private String clientId;
 	@Value("${naver.openapi.clientsecret}")
 	private String clientSecret;
+	@Value("${naver.oauth2.callback}")
+	private String oauth2callback;
+	private final String NAVER_OAUTH_URL = "https://nid.naver.com/oauth2.0";
+	private final String NAVER_GET_PROFILE_URL = "https://openapi.naver.com/v1/nid/me";
 	private UserService userService;
 
 	@Autowired
@@ -41,22 +45,18 @@ public class NaverLoginController {
 
 	@GetMapping("/login")
 	public String login(HttpSession session) throws UnsupportedEncodingException {
-		if (session.getAttribute("login") != null) {
-			return "redirect:/myreservation";
-		} else {
-			// CSRF 방지를 위한 상태 토큰 생성 코드
-			// 상태 토큰은 추후 검증을 위해 세션에 저장되어야 한다.
-			// 상태 토큰으로 사용할 랜덤 문자열 생성
-			SecureRandom random = new SecureRandom();
-			String state = new BigInteger(130, random).toString(32);
+		// CSRF 방지를 위한 상태 토큰 생성 코드
+		// 상태 토큰은 추후 검증을 위해 세션에 저장되어야 한다.
+		// 상태 토큰으로 사용할 랜덤 문자열 생성
+		SecureRandom random = new SecureRandom();
+		String state = new BigInteger(130, random).toString(32);
 
-			// 세션 또는 별도의 저장 공간에 상태 토큰을 저장
-			session.setAttribute("state", state);
-			String callback = URLEncoder.encode("http://localhost:8080/oauth2callback", "UTF-8");
+		// 세션 또는 별도의 저장 공간에 상태 토큰을 저장
+		session.setAttribute("state", state);
+		String callback = URLEncoder.encode(oauth2callback, "UTF-8");
 
-			return "redirect:https://nid.naver.com/oauth2.0/authorize?client_id=" + clientId
-					+ "&response_type=code&redirect_uri=" + callback + "&state=" + state;
-		}
+		return "redirect:" + NAVER_OAUTH_URL + "/authorize?client_id=" + clientId
+				+ "&response_type=code&redirect_uri=" + callback + "&state=" + state;
 	}
 
 	@GetMapping("/oauth2callback")
@@ -68,17 +68,21 @@ public class NaverLoginController {
 		if (!state.equals(storedState)) {
 			return "redirect:/";
 		} else {
-			String url = "https://nid.naver.com/oauth2.0/token?client_id=" + clientId + "&client_secret=" + clientSecret
+			String url = NAVER_OAUTH_URL + "/token?client_id=" + clientId + "&client_secret=" + clientSecret
 					+ "&grant_type=authorization_code&state=" + storedState + "&code=" + code;
 			RestTemplate restTemplate = new RestTemplate();
 			NaverLoginResponse loginResponse = restTemplate.getForObject(url, NaverLoginResponse.class);
 
-			url = "https://openapi.naver.com/v1/nid/me";
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Authorization", loginResponse.getTokenType() + " " + loginResponse.getAccessToken());
 			HttpEntity<String> entity = new HttpEntity<String>(headers);
-			ResponseEntity<NaverProfileResponse> profileResponseEntity = restTemplate.exchange(url, HttpMethod.GET,
-					entity, NaverProfileResponse.class);
+			ResponseEntity<NaverProfileResponse> profileResponseEntity = 
+					restTemplate.exchange(
+						NAVER_GET_PROFILE_URL, 
+						HttpMethod.GET,
+						entity, 
+						NaverProfileResponse.class
+					);
 			NaverProfileResponse profileResponse = profileResponseEntity.getBody();
 			NaverProfile profile = profileResponse.getResponse();
 
@@ -88,8 +92,7 @@ public class NaverLoginController {
 			session.setAttribute("refreshToken", loginResponse.getRefreshToken());
 			session.setAttribute("login", true);
 			session.setAttribute("user", user);
-			
-			return "redirect:/myreservation";
+			return "redirect:" + session.getAttribute("pageAfterLogin");
 		}
 	}
 }

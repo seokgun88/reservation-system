@@ -29,7 +29,6 @@ public class PriceDao {
 	}
 
 	public List<Price> selectByProductIds(List<Integer> ids) {
-		// TODO Auto-generated method stub
 		Map<String, ?> params = Collections.singletonMap("ids", ids);
 		return jdbc.query(PriceSqls.SELECT_BY_PRODUCT_IDS, params, priceRowMapper);
 	}

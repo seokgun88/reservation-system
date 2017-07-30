@@ -10,6 +10,16 @@ public class MyReservationVo {
 	private int canceledReservationCount;
 	private Map<Integer, List<ReservationVo>> reservations;
 	
+	public MyReservationVo() {
+	}
+	public MyReservationVo(int totalReservationCount, int scheduledReservationCount, int completedReservationCount,
+			int canceledReservationCount, Map<Integer, List<ReservationVo>> reservations) {
+		this.totalReservationCount = totalReservationCount;
+		this.scheduledReservationCount = scheduledReservationCount;
+		this.completedReservationCount = completedReservationCount;
+		this.canceledReservationCount = canceledReservationCount;
+		this.reservations = reservations;
+	}
 	public int getTotalReservationCount() {
 		return totalReservationCount;
 	}

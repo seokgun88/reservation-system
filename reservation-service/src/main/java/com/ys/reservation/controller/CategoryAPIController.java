@@ -25,7 +25,6 @@ public class CategoryAPIController {
 
 	@Autowired
 	public CategoryAPIController(CategoryService categoryService, ProductService productService) {
-		super();
 		this.categoryService = categoryService;
 		this.productService = productService;
 	}
