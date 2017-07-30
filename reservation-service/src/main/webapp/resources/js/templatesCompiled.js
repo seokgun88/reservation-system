@@ -16,6 +16,15 @@ templates['mySummary'] = template({"compiler":[7,">= 4.0.0"],"main":function(con
 templates['nolist'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<div class=\"err\">\r\n    <i class=\"spr_book ico_info_nolist\"></i>\r\n    <h1 class=\"tit\">예약 리스트가 없습니다</h1>\r\n</div>";
 },"useData":true});
+templates['photoViewerTemplate'] = template({"1":function(container,depth0,helpers,partials,data) {
+    return "    <li style=\"display:inline-block; width:100%; height:100%; text-align:center;\">\r\n        <img src=\"http://220.230.112.236/api/images/"
+    + container.escapeExpression(container.lambda(depth0, depth0))
+    + "\" style=\"max-width:100%; max-hegiht:100%;\">\r\n    </li>\r\n";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),depth0,{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+},"useData":true});
 templates['reservationCardItem'] = template({"1":function(container,depth0,helpers,partials,data) {
     var helper;
 

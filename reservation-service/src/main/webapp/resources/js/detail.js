@@ -1,7 +1,4 @@
 var ProductDetail = (function(){
-    var mainImageFlicking = new Flicking();
-    var commentPhotoFlicking = new Flicking();
-
     var productId = $('#container').data('id');
     var productName;
     var productDesc;
@@ -29,6 +26,15 @@ var ProductDetail = (function(){
     var $photoViewer = $('#photoviwer');
     var $photoList = $('.photo_list');
     var $indexPhoto = $('.index_photo');
+
+    var mainImageFlicking = new Flicking($('#container ul.visual_img'), {
+        width: 414,
+        intervalFlag: false
+    });
+    var commentPhotoFlicking = new Flicking($photoList,{
+        width: $(window).width(),
+        intervalFlag: false
+    });
 
     var getProductDetailAjax = function(afterAjaxFn) {
         $.ajax({
@@ -254,9 +260,6 @@ var ProductDetail = (function(){
 
     return {
         init: function(){
-            mainImageFlicking.width = 414;
-            mainImageFlicking.$list = $('#container ul.visual_img');
-            mainImageFlicking.intervalFlag = false;
             mainImageFlicking.afterFlickFn = function(){
                 $curImgIdx.html(this.$list.data('curItem'));
             };
@@ -264,9 +267,6 @@ var ProductDetail = (function(){
             mainImageFlicking.detectClick($nextBtn, "next");
             mainImageFlicking.swipedetect($('.group_visual'));
 
-            commentPhotoFlicking.width = $(window).width();
-            commentPhotoFlicking.$list = $photoList;
-            commentPhotoFlicking.intervalFlag = false;
             commentPhotoFlicking.afterFlickFn = function(){
                 $indexPhoto.html(this.$list.data('curItem'));
             };

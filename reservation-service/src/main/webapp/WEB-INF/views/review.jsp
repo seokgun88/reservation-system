@@ -54,6 +54,12 @@
 	            <span class="copyright">© NAVER Corp.</span>
 	        </div>
 	    </footer>
+        <div id="photoviwer" style="display:none; position:absolute; top:0px; left:0px; background:#000000; z-index:1000000; overflow:hidden">
+            <button class="btnPhotoviwerExit" type="button">닫기</button>
+            <span style="color:#ffffff; float:right"><span class="index_photo">1</span>/<span class="total_photo">1</span></span>
+            <ul class="photo_list" style="overflow:visible; width:100%; height:100%; position:relative; white-space:nowrap; font-size:0;"></ul>
+        </div>
+
     <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
     <script src="/resources/js/node_modules/handlebars/dist/handlebars.runtime.js"></script>
     <script src="/resources/js/templatesCompiled.js"></script>

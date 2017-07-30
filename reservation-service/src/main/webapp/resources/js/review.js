@@ -1,6 +1,47 @@
 var Comment = (function(){
     var scrollFlag = true;
 
+    var $photoList = $('.photo_list');
+    var $indexPhoto = $('.index_photo');
+    var $photoViewer = $('#photoviwer');
+    var productName= $(".review_header .title").text();
+
+    var commentPhotoFlicking = new Flicking($photoList, {
+        width: $(window).width(),
+        intervalFlag: false
+    });
+    commentPhotoFlicking.afterFlickFn = function(){
+        $indexPhoto.html(this.$list.data('curItem'));
+    };
+    commentPhotoFlicking.swipedetect($photoList);
+
+    var getCommentImagesAjax = function(listInit, e){
+        $.ajax({
+            url: '/api/comments/' + $(e.target).closest('li').data('id') + '/images',
+            type: 'GET'
+        })
+            .done(function(data){
+                $photoList.empty();
+                $photoList.data('curItem', 1);
+
+                var html = Handlebars.templates.photoViewerTemplate(data);
+                $photoList.append(html);
+
+                $('.total_photo').html(data.length);
+
+                $photoViewer.css({
+                    width: $(document).width(),
+                    height: $(document).height()
+                })
+                $photoViewer.fadeIn();
+                listInit();
+            })
+            .fail(function(error){
+                console.log(error.responseJSON);
+                alert('Comment photos load를 실패했습니다.');
+            });
+    };
+
     var init = function (){
         requestComment();
         $(window).on("scroll", scrollViewMoreProductList);
@@ -28,6 +69,12 @@ var Comment = (function(){
         }
         var ajaxrequestComment = $.ajax(apiUrl, options);
         ajaxrequestComment.then(addComments.bind($('.list_short_review')));
+        ajaxrequestComment.then(function (){
+            $('.thumb').on('click', getCommentImagesAjax.bind(this, commentPhotoFlicking.listInit.bind(commentPhotoFlicking)));
+            $('.btnPhotoviwerExit').on('click', function(){
+                $photoViewer.fadeOut();
+            });
+        });
     };
 
     var scrollViewMoreProductList = function(){
