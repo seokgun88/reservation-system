@@ -295,5 +295,6 @@
 	<script src="/resources/js/flicking.js"></script>
 	<script src="/resources/js/lazy.js"></script>
 	<script src="/resources/js/detail.js"></script>
+	<script src="/resources/js/gnb.js"></script>
 </body>
 </html>
