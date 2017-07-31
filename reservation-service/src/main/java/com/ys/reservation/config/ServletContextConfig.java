@@ -9,14 +9,20 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.ys.reservation.interceptor.LoginInterceptor;
+import com.ys.reservation.view.ImageDownloadView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "com.ys.reservation.controller", "com.ys.reservaition.interceptor" })
+@ComponentScan(basePackages = {
+		"com.ys.reservation.controller", 
+		"com.ys.reservaition.interceptor",
+		"com.ys.reservation.view" 
+})
 public class ServletContextConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public ViewResolver viewResolver() {
@@ -24,7 +30,20 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
 		viewResolver.setViewClass(JstlView.class);
 		viewResolver.setPrefix("/WEB-INF/views/");
 		viewResolver.setSuffix(".jsp");
+		viewResolver.setOrder(1);
 		return viewResolver;
+	}
+	
+	@Bean
+	public ImageDownloadView imageDownloadView() {
+		return new ImageDownloadView();
+	}
+	
+	@Bean
+	public ViewResolver beanNameViewResolver() {
+		BeanNameViewResolver resolver = new BeanNameViewResolver();
+		resolver.setOrder(0);
+		return resolver;
 	}
 
 	@Override
