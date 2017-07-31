@@ -116,8 +116,8 @@ var CardItem = extend(eg.Component, {
         this.$usedReservationList = $("li.card:eq(2)");
         this.$canceledReservationList = $("li.card:eq(3)");
 
-        this.$root.find(".btn:contains(\"취소\")").on("click", this.fadeInPopup.bind(this));
-        this.$root.find(".btn:contains(\"예매자 리뷰 남기기\")").on("click", this.goReviewWrite.bind(this));
+        this.$root.find(".btn.btn_cancel").on("click", this.fadeInPopup.bind(this));
+        this.$root.find(".btn.btn_review").on("click", this.goReviewWrite.bind(this));
     },
     goReviewWrite: function(evt){
         evt.preventDefault();
@@ -235,8 +235,10 @@ var MyReservationModule = (function(){
 
         if(type === RESERVATION_TYPES.NOT_USED_RESERVATION || type === RESERVATION_TYPES.CONFIRMED_RESERVATION){
             myReservation.btnCancelText = "취소";
+            myReservation.btnCancelTextClass = "btn_cancel";
         } else if(type === RESERVATION_TYPES.USED_RESERVATION){
             myReservation.btnCancelText = "예매자 리뷰 남기기";
+            myReservation.btnCancelTextClass = "btn_review";
         }
 
         return myReservation;
