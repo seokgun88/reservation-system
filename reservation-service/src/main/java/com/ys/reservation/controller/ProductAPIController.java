@@ -58,11 +58,12 @@ public class ProductAPIController {
 	}
 	
 	@GetMapping("/{id:[\\d]+}/comments")
-	public List<UserCommentVo> getUserComment(@PathVariable int id, @RequestParam(required=false) Integer size) {
-		if(size == null) {
-			size = 3;
+	public List<UserCommentVo> getUserComment(@PathVariable int id,
+			@RequestParam(required=false) Integer page, @RequestParam(required=false) Integer limit) {
+		if(page==null || limit==null) {
+			return productService.getLimitedUserComment(id, 1, 3);
 		}
-		return productService.getUserComment(id, size);
+		return productService.getLimitedUserComment(id, page, limit);
 	}
 	
 	@GetMapping("/{id:[\\d]+}/comments/summary")

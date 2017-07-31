@@ -1,6 +1,7 @@
 package com.ys.reservation.dao;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,8 +40,12 @@ public class UserCommentDao {
 				.usingGeneratedKeyColumns("id");
 	}
 
-	public List<UserCommentVo> selectByProductId(int id) {
-		Map<String, ?> params = Collections.singletonMap("id", id);
+	public List<UserCommentVo> selectLimitedByProductId(int id, int offset, int limit) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("id", id);
+		params.put("offset", offset);
+		params.put("limit", limit);
+		
 		return jdbc.query(UserCommentSqls.SELECT_BY_PRODUCT_ID, params, userCommentRowMapper);
 	}
 	
