@@ -179,6 +179,13 @@ var CardItem = extend(eg.Component, {
 
 var MyReservationModule = (function(){
     const PATH_NAME = window.location.pathname;
+    const RESERVATION_TYPES = {
+        NOT_USED_RESERVATION : "1",
+        CONFIRMED_RESERVATION : "2",
+        USED_RESERVATION : "3",
+        CANCELD_RESERVATION : "4"
+    }
+
 
     var apiBaseUrl = "/api/reservations";
     var userId = $('body').data('user-id');
@@ -197,6 +204,18 @@ var MyReservationModule = (function(){
             .then(createCardComponent);
     }
 
+    function getTicketCountString(ticketCountObj){
+        var totalTicketCount = 0;
+        var ticketCountString = $.map(ticketCountObj, function(count, ticketType){
+            if(count > 0) {
+                totalTicketCount += count;
+                return ticketType + "(" + count + ")";
+            }
+        }).join(",");
+        ticketCountString += " - 합계(" + totalTicketCount + ")";
+        return ticketCountString;
+    }
+
     function formattingMyReservation(type, myReservation){
         var startDate = new Date(myReservation.displayStart);
         var endDate = new Date(myReservation.displayEnd);
@@ -204,33 +223,19 @@ var MyReservationModule = (function(){
 
         myReservation.formattedTotalPrice = Number(myReservation.totalPrice).toLocaleString('ko');
 
-        var str = "";
-        var totalTicketCount = 0;
-        var generalTicketCount = myReservation.generalTicketCount,
-            youthTicketCount = myReservation.youthTicketCount,
-            childTicketCount = myReservation.childTicketCount;
+        var ticketCountObj = {
+            "일반" : myReservation.generalTicketCount,
+            "청소년" : myReservation.youthTicketCount,
+            "어린이" : myReservation.childTicketCount
+        }
 
-        if(generalTicketCount > 0){
-            str += "일반(" + generalTicketCount + "),";
-            totalTicketCount += generalTicketCount;
-        }
-        if(youthTicketCount > 0){
-            str += "청소년(" + youthTicketCount + "),";
-            totalTicketCount += youthTicketCount;
-        }
-        if(childTicketCount > 0){
-            str += "어린이(" + childTicketCount + "),";
-            totalTicketCount += childTicketCount;
-        }
-        if(totalTicketCount > 0){
-            str = str.slice(0,-1);
-            str += " - 합계(" + totalTicketCount + ")";
-        }
-        myReservation.formattedReservationContents = str;
+        var ticketCountString = getTicketCountString(ticketCountObj);
 
-        if(type === "1" || type === "2"){
+        myReservation.formattedReservationContents = ticketCountString;
+
+        if(type === RESERVATION_TYPES.NOT_USED_RESERVATION || type === RESERVATION_TYPES.CONFIRMED_RESERVATION){
             myReservation.btnCancelText = "취소";
-        } else if(type === "3"){
+        } else if(type === RESERVATION_TYPES.USED_RESERVATION){
             myReservation.btnCancelText = "예매자 리뷰 남기기";
         }
 
