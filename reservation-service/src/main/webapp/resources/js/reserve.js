@@ -13,12 +13,6 @@ TicketValidator.prototype.validate = function(){
         && regexTel.test(validator.elementMap.$tel.val())
         && regexEmail.test(validator.elementMap.$email.val())
         && validator.elementMap.$chkAgree.prop("checked");
-    // console.log(Number(validator.elementMap.$totalCnt.html()) >= 0);
-    // console.log(validator.elementMap.$name.val() ? true : false);
-    // console.log(regexTel.test(validator.elementMap.$tel.val()));
-    // console.log(regexEmail.test(validator.elementMap.$email.val()));
-    // console.log(validator.elementMap.$chkAgree.prop("checked"));
-    console.log(isValid);
 
     if(isValid){
         validator.elementMap.$wrapBtnBk.removeClass("disable");

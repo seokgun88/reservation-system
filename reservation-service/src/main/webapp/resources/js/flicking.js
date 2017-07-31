@@ -10,6 +10,8 @@ function Flicking($list, options){
     this.$list = $list;
     this.options = $.extend({}, defaultOptions, options);
 
+    this.afterFlickFn = this.options.afterFlickFn;
+
     //getter, setter
     this.getWidth = function(){
         return this.options.width;
@@ -30,7 +32,7 @@ function Flicking($list, options){
         return this.options.intervalFlag;
     }
 }
-Flicking.prototype.swipedetect = function($el, swipeHandler) {
+Flicking.prototype.swipedetect = function($el) {
     var swipeStart = function(e){
         var eventObj = e.type === "mousedown" ? e : e.originalEvent.changedTouches[0];
         this.setStartX(eventObj.pageX);
@@ -40,7 +42,6 @@ Flicking.prototype.swipedetect = function($el, swipeHandler) {
         var eventObj = e.type === "mouseup" ? e : e.originalEvent.changedTouches[0];
         var distX = eventObj.pageX - this.getStartX();
         var distY = eventObj.pageY - this.getStartY();
-        var swipedir;
         if (Math.abs(distX) >= 50 && Math.abs(distY) <= 150){
             (distX < 0) ? this.flick("next") : this.flick("prev");
         }

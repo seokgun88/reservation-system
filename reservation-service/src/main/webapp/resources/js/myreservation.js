@@ -123,7 +123,7 @@ var CardItem = extend(eg.Component, {
         evt.preventDefault();
         var productId = this.myReservation.productId;
         var userId = $('body').data('user-id');
-        window.location.href = window.location.origin + "/products/" + productId + "/comments/users/" + userId;
+        window.location.href = "/products/" + productId + "/comments/users/" + userId;
     },
     fadeInPopup: function (evt) {
         evt.preventDefault();
@@ -136,8 +136,7 @@ var CardItem = extend(eg.Component, {
         this.$popBottomBtnArea = this.$popupBookingWrapper.find('.pop_bottom_btnarea');
 
         this.$popupBookingWrapper.on("click", '.popup_btn_close', this.fadeOutPopupHandler);
-        this.$popBottomBtnArea.on("click", ".btn_gray", this.fadeOutPopupHandler);
-        this.$popBottomBtnArea.on("click", ".btn_green", this.fadeOutPopupHandler);
+        this.$popBottomBtnArea.on("click", ".btn_green, .btn_gray", this.fadeOutPopupHandler);
         this.$popBottomBtnArea.on("click", ".btn_green", this.cancelMyReservationHandler);
     },
     updateCancelPopup: function () {
@@ -150,12 +149,7 @@ var CardItem = extend(eg.Component, {
         this.$popBottomBtnArea.off("click", ".btn_green", this.cancelMyReservationHandler);
 
         MySummary.updateSummary(this.myReservation.type);
-
-        var apiUrl = window.location.origin + "/api/reservations/" + this.myReservation.id;
-        var ajaxCancelMyReservation = $.ajax(apiUrl, {
-            type: "PUT"
-        });
-        ajaxCancelMyReservation.then(function(){console.log("update success!")});
+        this.sendMyReservationUpdateRequest();
 
         this.$root.find('.booking_cancel').remove();
         this.$root.appendTo("li.card.used:last");
@@ -173,16 +167,35 @@ var CardItem = extend(eg.Component, {
     fadeOutPopup: function(evt) {
         evt.preventDefault();
         this.$popupBookingWrapper.fadeOut();
+    },
+    sendMyReservationUpdateRequest: function(){
+        var apiUrl = "/api/reservations/" + this.myReservation.id;
+        var ajaxCancelMyReservation = $.ajax(apiUrl, {
+            type: "PUT"
+        });
+        ajaxCancelMyReservation.then(function(){console.log("update success!")});
     }
 });
 
 var MyReservationModule = (function(){
-    const BASE_URL = window.location.origin;
     const PATH_NAME = window.location.pathname;
-    var apiBaseUrl = BASE_URL + "/api/reservations";
+
+    var apiBaseUrl = "/api/reservations";
     var userId = $('body').data('user-id');
 
     var weekday = ["일", "월", "화", "수", "목", "금", "토"];
+
+    var apiUrl = apiBaseUrl + "/users/" + userId;
+    var myReservationData = {};
+
+    function init(){
+        var ajaxReservations = $.ajax(apiUrl, {
+            type: "GET"
+        });
+        ajaxReservations.then(loadMyReseravationData)
+            .then(showFormattedMyReservations)
+            .then(createCardComponent);
+    }
 
     function formattingMyReservation(type, myReservation){
         var startDate = new Date(myReservation.displayStart);
@@ -229,18 +242,6 @@ var MyReservationModule = (function(){
             + "~" + endDate.getFullYear()+"."+(endDate.getMonth()+1)+"."+endDate.getDate() + "(" + weekday[endDate.getDay()] + ")";
     }
 
-    var apiUrl = apiBaseUrl + "/users/" + userId;
-    var myReservationData = {};
-
-    function init(){
-        var ajaxReservations = $.ajax(apiUrl, {
-            type: "GET"
-        });
-        ajaxReservations.then(loadMyReseravationData);
-        ajaxReservations.then(showFormattedMyReservations);
-        ajaxReservations.then(createCardComponent);
-    }
-
     function loadMyReseravationData(data) {
         myReservationData = $.extend({}, reservatinosForTest, data);
         MySummary.init(myReservationData);
@@ -248,7 +249,7 @@ var MyReservationModule = (function(){
 
     function showFormattedMyReservations (){
         var reservations = myReservationData.reservations;
-        console.log(myReservationData);
+
         if(myReservationData.totalReservationCount > 0){
             var index = 0;
             for (var [type, reservation] of Object.entries(reservations)) {
@@ -280,5 +281,3 @@ var MyReservationModule = (function(){
         init: init
     }
 })();
-
-
