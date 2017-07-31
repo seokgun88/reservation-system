@@ -126,14 +126,23 @@ public class ProductService {
 		return imageDao.selectSubImage(id).getId();
 	}
 	
-	public List<UserCommentVo> getUserComment(int id) {
+	public List<UserCommentVo> getLimitedUserComment(int id, int page, int limit) {
 		if(id < 1) {
 			return null;
 		}
-		List<UserCommentVo> comments = userCommentDao.selectByProductId(id);
+		if(page<0) {
+			return null;
+		}
+		if(limit!=3 && limit!=10) {
+			return null;
+		}
+		
+		int offset = (page-1) * limit;
+		List<UserCommentVo> comments = userCommentDao.selectLimitedByProductId(id, offset, limit);
 		if(comments == null) {
 			return null;
 		}
+		
 		List<Integer> ids = comments.stream().map(c -> c.getId()).collect(Collectors.toList());
 		List<CommentImageVo> commentImageList = imageDao.selectIdByCommentIds(ids);
 		Map<Integer, List<Integer>> commentImageMap = commentImageList.stream()
@@ -146,9 +155,7 @@ public class ProductService {
 				comment.setImagesNum(imageList.size());
 			}
 		}
-		if(comments.size() > 3) {
-			return comments.subList(0, 3);
-		}
+
 		return comments;
 	}
 	

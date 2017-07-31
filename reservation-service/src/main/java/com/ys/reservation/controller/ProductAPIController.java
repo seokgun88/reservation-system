@@ -40,7 +40,7 @@ public class ProductAPIController {
 	}
 
 	@GetMapping
-	public List<ProductVo> getByPage(@RequestParam(value="page", required=false) Integer page) {
+	public List<ProductVo> getByPage(@RequestParam(required=false) Integer page) {
 		if(page == null) {
 			return productService.getAll();			
 		}
@@ -58,8 +58,12 @@ public class ProductAPIController {
 	}
 	
 	@GetMapping("/{id:[\\d]+}/comments")
-	public List<UserCommentVo> getUserComment(@PathVariable int id) {
-		return productService.getUserComment(id);
+	public List<UserCommentVo> getUserComment(@PathVariable int id, 
+			@RequestParam(required=false) Integer page, @RequestParam(required=false) Integer limit) {
+		if(page==null || limit==null) {
+			return productService.getLimitedUserComment(id, 1, 3);	
+		}
+		return productService.getLimitedUserComment(id, page, limit);	
 	}
 	
 	@GetMapping("/{id:[\\d]+}/comments/summary")
