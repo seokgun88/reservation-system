@@ -61,7 +61,8 @@ public class ProductAPIController {
 	public List<UserCommentVo> getUserComment(@PathVariable int id, 
 			@RequestParam(required=false) Integer page, @RequestParam(required=false) Integer limit) {
 		if(page==null || limit==null) {
-			return productService.getLimitedUserComment(id, 1, 3);	
+			page = 1;
+			limit = 3;
 		}
 		return productService.getLimitedUserComment(id, page, limit);	
 	}
