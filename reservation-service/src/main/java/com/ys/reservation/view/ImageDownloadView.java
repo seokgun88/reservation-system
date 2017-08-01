@@ -17,6 +17,9 @@ public class ImageDownloadView extends AbstractView {
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		Image image = (Image) model.get("image");
+		if(image == null) {
+			return;
+		}
 		response.setContentLengthLong(image.getFileLength());
 		response.setContentType(image.getContentType());
 		response.setHeader("Content-Disposition", "inline; filename=\"" + image.getFileName() + "\";");
