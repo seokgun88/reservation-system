@@ -1,5 +1,7 @@
 package com.ys.reservation.interceptor;
 
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,9 +20,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 				|| session.getAttribute("login") == null 
 				|| session.getAttribute("user") == null) {
 			session.invalidate();
-			session = request.getSession();
-			session.setAttribute("pageAfterLogin", request.getRequestURI());
-			response.sendRedirect("/login");
+			String pageAfterLogin = URLEncoder.encode(request.getRequestURI(), "UTF-8");
+			response.sendRedirect("/login?pageAfterLogin=" + pageAfterLogin);
 			return false;
 		}
 		return true;
