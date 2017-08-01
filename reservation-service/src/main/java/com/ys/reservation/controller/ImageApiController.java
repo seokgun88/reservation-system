@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ys.reservation.dao.ImageDao;
 import com.ys.reservation.domain.Image;
 import com.ys.reservation.service.ImageService;
 
@@ -25,17 +24,15 @@ import com.ys.reservation.service.ImageService;
 @RequestMapping("/api/images")
 @PropertySource("classpath:/application.properties")
 public class ImageApiController {
-	private ImageDao imageDao;
 	private ImageService imageService;
 	@Value("${file.basedir}")
 	private String baseDir;
 
 	@Autowired
-	public ImageApiController(ImageService imageService, ImageDao imageDao) {
+	public ImageApiController(ImageService imageService) {
 		this.imageService = imageService;
-		this.imageDao = imageDao;
 	}
-	
+
 	@DeleteMapping("/{id:[\\d]+}")
 	public void delete(@PathVariable int id) {
 		imageService.delete(id);
@@ -43,7 +40,7 @@ public class ImageApiController {
 
 	@GetMapping("/{id:[\\d]+}")
 	public ModelAndView getFile(@PathVariable int id, HttpServletResponse response) {
-		Image image = imageDao.select(id);
+		Image image = imageService.get(id);
 		return new ModelAndView("imageDownloadView", "image", image);
 	}
 

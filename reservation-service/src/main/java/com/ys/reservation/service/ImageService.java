@@ -30,6 +30,13 @@ public class ImageService {
 		super();
 		this.imageDao = imageDao;
 	}
+	
+	public Image get(int id) {
+		if(id < 1) {
+			return null;
+		}
+		return imageDao.select(id);
+	}
 
 	public List<Integer> create(int userId, MultipartFile[] files){
 		if (files != null && files.length > 0) {
