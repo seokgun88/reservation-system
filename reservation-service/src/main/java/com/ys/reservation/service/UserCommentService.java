@@ -3,6 +3,7 @@ package com.ys.reservation.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ public class UserCommentService {
 				|| userComment.getProductId() < 1
 				|| userComment.getUserId() < 1
 				|| userComment.getScore() < 0 || userComment.getScore() > 5
-				|| userComment.getComment() == null || userComment.getComment().trim().isEmpty()) {
+				|| StringUtils.isBlank(userComment.getComment())) {
 			return;
 		}
 		int commentId = userCommentDao.insert(userComment);
@@ -58,7 +59,7 @@ public class UserCommentService {
 		if(userComment == null
 				|| userComment.getId() < 1
 				|| userComment.getScore() < 0 || userComment.getScore() > 5
-				|| userComment.getComment() == null || userComment.getComment().trim().isEmpty()) {
+				|| StringUtils.isBlank(userComment.getComment())) {
 			return;
 		}
 		userCommentDao.update(userComment);
