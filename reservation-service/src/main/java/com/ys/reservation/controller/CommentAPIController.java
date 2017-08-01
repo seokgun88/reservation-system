@@ -20,7 +20,6 @@ public class CommentAPIController {
 
 	@Autowired
 	public CommentAPIController(UserCommentService userCommentService) {
-		super();
 		this.userCommentService = userCommentService;
 	}
 	

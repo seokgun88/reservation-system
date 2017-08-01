@@ -127,19 +127,13 @@ public class ProductService {
 	}
 	
 	public List<UserCommentVo> getLimitedUserComment(int id, int page, int limit) {
-		if(id < 1) {
-			return null;
-		}
-		if(page<0) {
-			return null;
-		}
-		if(limit!=3 && limit!=10) {
+		if (id < 1 || page < 0 || (limit != 3 && limit != 10)) {
 			return null;
 		}
 		
 		int offset = (page-1) * limit;
 		List<UserCommentVo> comments = userCommentDao.selectLimitedByProductId(id, offset, limit);
-		if(comments == null) {
+		if(comments == null || comments.size() == 0) {
 			return null;
 		}
 		
