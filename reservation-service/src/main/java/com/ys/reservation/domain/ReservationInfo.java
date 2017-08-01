@@ -2,6 +2,8 @@ package com.ys.reservation.domain;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class ReservationInfo {
 	private int id;
 	private int productId;
@@ -94,5 +96,16 @@ public class ReservationInfo {
 	}
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+	public boolean hasRequiredFields() {
+		if(productId == 0
+				|| userId == 0 
+				|| StringUtils.isBlank(reservationName)
+				|| StringUtils.isBlank(reservationTel)
+				|| StringUtils.isBlank(reservationEmail)
+				|| reservationDate == null) {
+			return false;
+		}
+		return true;
 	}
 }
