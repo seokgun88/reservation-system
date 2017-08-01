@@ -111,10 +111,12 @@ var CardItem = extend(eg.Component, {
         this.myReservation = myReservation;
         this.$root = $(root);
         this.$popupBookingWrapper = $('.popup_booking_wrapper');
-        this.$proccessingReservationList = $("li.card:eq(0)");
-        this.$confirmedReservationList = $("li.card:eq(1)");
-        this.$usedReservationList = $("li.card:eq(2)");
-        this.$canceledReservationList = $("li.card:eq(3)");
+        this.listHeaders = {
+            $proccessingReservationList : $("li.card:eq(0)"),
+            $confirmedReservationList : $("li.card:eq(1)"),
+            $usedReservationList : $("li.card:eq(2)"),
+            $canceledReservationList : $("li.card:eq(3)")
+        }
 
         this.$root.find(".btn.btn_cancel").on("click", this.fadeInPopup.bind(this));
         this.$root.find(".btn.btn_review").on("click", this.goReviewWrite.bind(this));
@@ -154,15 +156,11 @@ var CardItem = extend(eg.Component, {
         this.$root.find('.booking_cancel').remove();
         this.$root.appendTo("li.card.used:last");
 
-        if(this.$proccessingReservationList.find('article').length === 0){
-            this.$proccessingReservationList.hide();
-        }
-        if(this.$confirmedReservationList.find('article').length === 0){
-            this.$confirmedReservationList.hide();
-        }
-        if(this.$canceledReservationList.find('article').length === 0){
-            this.$canceledReservationList.show();
-        }
+        $.each(this.listHeaders, function(index, $header){
+            if($header.find("article").length === 0){
+                $header.hide();
+            }
+        });
     },
     fadeOutPopup: function(evt) {
         evt.preventDefault();
@@ -184,8 +182,7 @@ var MyReservationModule = (function(){
         CONFIRMED_RESERVATION : "2",
         USED_RESERVATION : "3",
         CANCELD_RESERVATION : "4"
-    }
-
+    };
 
     var apiBaseUrl = "/api/reservations";
     var userId = $('body').data('user-id');
@@ -259,6 +256,7 @@ var MyReservationModule = (function(){
 
         if(myReservationData.totalReservationCount > 0){
             var index = 0;
+            // es6 -> es5로 바꾸기
             for (var [type, reservation] of Object.entries(reservations)) {
                 for(var resItem of reservation){
                     formattingMyReservation(type, resItem);
