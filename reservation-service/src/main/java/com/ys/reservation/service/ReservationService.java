@@ -58,9 +58,9 @@ public class ReservationService {
 			reservationCounts[0]++;
 			reservationCounts[reservation.getReservationType()]++;
 			Map<Integer, Integer> typeToPrice = productIdToPrice.get(reservation.getProductId());
-			int generalPrice = typeToPrice.get(1) != null ? reservation.getGeneralTicketCount() * typeToPrice.get(1) : 0;
-			int youthPrice = typeToPrice.get(2) != null ? reservation.getYouthTicketCount() * typeToPrice.get(2) : 0;
-			int childPrice = typeToPrice.get(3) != null ? reservation.getChildTicketCount() * typeToPrice.get(3) : 0;
+			int generalPrice = typeToPrice.getOrDefault(1, 0) * reservation.getGeneralTicketCount();
+			int youthPrice = typeToPrice.getOrDefault(2, 0) * reservation.getYouthTicketCount();
+			int childPrice = typeToPrice.getOrDefault(3, 0) * reservation.getChildTicketCount();
 			reservation.setTotalPrice(generalPrice, youthPrice, childPrice);
 		}
 		
