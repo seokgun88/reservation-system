@@ -12,5 +12,8 @@
     "@egjs/component": "^2.0.0-rc",
     "handlebars": "^4.0.10",
     "jquery": "^3.2.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
   }
 }
