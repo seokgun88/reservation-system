@@ -12,7 +12,7 @@ var Navigation = (function(){
 
     var goMyReservation = function(evt){
         evt.preventDefault();
-        window.location.href = window.location.origin + "/login";
+        window.location.href = window.location.origin + "/myreservation";
     }
 
     var init = function(rootElement){
