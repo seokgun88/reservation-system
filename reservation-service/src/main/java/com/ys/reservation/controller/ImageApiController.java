@@ -3,6 +3,7 @@ package com.ys.reservation.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ys.reservation.domain.Image;
+import com.ys.reservation.domain.User;
 import com.ys.reservation.service.ImageService;
 
 @RestController
@@ -33,19 +35,21 @@ public class ImageApiController {
 		this.imageService = imageService;
 	}
 
-	@DeleteMapping("/{id:[\\d]+}")
-	public void delete(@PathVariable int id) {
-		imageService.delete(id);
-	}
-
 	@GetMapping("/{id:[\\d]+}")
 	public ModelAndView getFile(@PathVariable int id, HttpServletResponse response) {
 		Image image = imageService.get(id);
 		return new ModelAndView("imageDownloadView", "image", image);
 	}
 
-	@PostMapping("/users/{id:[\\d]+}")
-	public List<Integer> create(@PathVariable int id, @RequestBody MultipartFile[] files) {
-		return imageService.create(id, files); 
+	@PostMapping
+	public List<Integer> create(@RequestBody MultipartFile[] files, 
+			HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		return imageService.create(user.getId(), files); 
+	}
+
+	@DeleteMapping("/{id:[\\d]+}")
+	public void delete(@PathVariable int id) {
+		imageService.delete(id);
 	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ys.reservation.domain.Product;
+import com.ys.reservation.domain.User;
 import com.ys.reservation.service.ProductService;
 
 @Controller
@@ -44,11 +45,12 @@ public class ProductController {
 		return "reserve";
 	}
 
-	@GetMapping("/{productId:[\\d]+}/comments/users/{userId:[\\d]+}")
-	public String comment(@PathVariable int productId, @PathVariable int userId, Model model) {
+	@GetMapping("/{productId:[\\d]+}/comments/form")
+	public String comment(@PathVariable int productId, HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
 		Product p = productService.get(productId);
 		model.addAttribute("productId", productId);
-		model.addAttribute("userId", userId);
+		model.addAttribute("userId", user.getId());
 		model.addAttribute("productName", p.getName());
 		return "reviewWrite";
 	}
