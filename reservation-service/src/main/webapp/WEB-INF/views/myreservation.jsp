@@ -148,7 +148,5 @@
     <script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
 	<script src="/resources/js/util.js"></script>
 	<script src="/resources/js/myreservation.js" ></script>
-    <script src="/resources/js/gnb.js"></script>
-
     </body>
 </html>
