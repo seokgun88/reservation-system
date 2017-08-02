@@ -213,7 +213,7 @@
 					<div class="detail_location hide">
 						<div class="box_store_info no_topline">
 							<a href="#" class="store_location" title="지도웹으로 연결">
-								<div id="map" style="width:374px;height:200px;"></div>
+								<div id="map" style="width:374px;max-width:100%;height:200px;"></div>
 								<span class="img_border"></span>
 								<span class="btn_map"><i class="spr_book2 ico_mapview"></i></span>
 							</a>
