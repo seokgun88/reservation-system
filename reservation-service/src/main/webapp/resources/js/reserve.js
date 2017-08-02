@@ -229,7 +229,7 @@ var Reserve = (function(){
         })
             .done(function(data){
                 alert("예약을 성공했습니다.");
-                location.href = "/";
+                location.href = "/myreservation";
             })
             .fail(function(error){
                 console.log(error.responseJSON);
