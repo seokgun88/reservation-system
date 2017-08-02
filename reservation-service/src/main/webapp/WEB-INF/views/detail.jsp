@@ -148,7 +148,7 @@
 											<div class="thumb_area">
 												<a href="#" class="thumb" title="이미지 크게 보기">
 													<img width="90" height="90" class="img_vertical_top"
-													src="http://220.230.112.236/api/images//{{fileId}}"
+													src="/api/images//{{fileId}}"
 													alt="리뷰이미지">
 												</a> <span class="img_count">{{filesNum}}</span>
 											</div>
@@ -200,7 +200,7 @@
 									<li class="detail_info_lst"><strong class="in_tit">[상세정보]</strong>
 										<ul class="in_img_group">
 											<li class="in_img_lst">
-												<img alt="" class="img_thumb" data-lazy-image="http://220.230.112.236/api/images//{{this}}">
+												<img alt="" class="img_thumb" data-lazy-image="/api/images//{{this}}">
 											</li>
 										</ul>
 									</li>
@@ -284,7 +284,7 @@
 			<script id="photo-viewer-template" type="text/x-handlebars-template">
 			{{#each this}}
 			<li style="display:inline-block; width:100%; height:100%; text-align:center;">
-				<img src="http://220.230.112.236/api/images/{{this}}" style="max-width:100%; max-hegiht:100%;">
+				<img src="/api/images/{{this}}" style="max-width:100%; max-hegiht:100%;">
 			</li>
 			{{/each}}
 			</script>
