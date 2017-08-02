@@ -25,111 +25,67 @@ TicketValidator.prototype.validate = function(){
 var validator = new TicketValidator();
 validator.on("validate", validator.validate);
 
-var Ticket = extend(eg.Component, {
-    init: function($root, option){
-        this.setDefaultOption(option);
-        this.$root = $root;
-        this.countEl = $root.find(".count_control_input");
-
-        $root.on("click", ".ico_plus3", this.plus.bind(this));
-        $root.on("click", ".ico_minus3", this.minus.bind(this));
-    },
-    setDefaultOption: function(option){
-        option = option||{};
-        this.option = {
-            "price" : 1000
-        };
-        if(option.price !== undefined){
-            this.option.price = option.price
-        }
-    },
-    plus: function(e){
-        e.preventDefault();
-
-        var amount = this.getAmount() + 1;
-        this.countEl.val(amount);
-        this.trigger("change",{
-            "amount" : amount
-        });
-    },
-    minus: function(e){
-        e.preventDefault();
-
-        var amount = this.getAmount() - 1;
-        this.countEl.val(amount);
-        this.trigger("change",{
-            "amount" : amount
-        });
-    },
-    getAmount:function() {
-        return parseInt(this.countEl.val(), 10);
-    },
-    getTotalPrice: function () {
-        return this.getAmount() * this.option.price;
+function Ticket(){
+}
+Ticket.prototype = new eg.Component();
+Ticket.prototype.constructor = Ticket;
+Ticket.prototype.getElementMap = function($el){
+    var $qty = $el.closest(".qty");
+    var $cnt = $qty.find(".count_control_input");
+    var $totalCnt = $(".total_cnt");
+    return {
+        $qty: $qty,
+        $cnt: $cnt,
+        $totalPrice: $qty.find(".total_price"),
+        price: $qty.find(".discounted-price").html(),
+        cnt: Number($cnt.val()),
+        $plusBtn: $qty.find(".ico_plus3"),
+        $minusBtn: $qty.find(".ico_minus3"),
+        $totalCnt: $totalCnt,
+        totalCnt: Number($totalCnt.html())
     }
+};
+Ticket.prototype.add = function(elementMap){
+    console.log("add");
+    elementMap.$cnt.val(elementMap.cnt + 1);
+    elementMap.$totalPrice.html(elementMap.price * (elementMap.cnt + 1));
+    elementMap.$totalCnt.html(elementMap.totalCnt + 1);
+};
+Ticket.prototype.sub = function(elementMap){
+    console.log("sub");
+    elementMap.$cnt.val(elementMap.cnt - 1);
+    elementMap.$totalPrice.html(elementMap.price * (elementMap.cnt - 1));
+    elementMap.$totalCnt.html(elementMap.totalCnt - 1);
+};
+Ticket.prototype.activeMinusState = function(elementMap){
+    console.log("activeMinusState");
+    elementMap.$minusBtn.removeClass("disabled");
+    elementMap.$cnt.removeClass("disabled");
+    elementMap.$totalPrice.closest(".individual_price").addClass("on_color");
+};
+Ticket.prototype.inactiveMinusState = function(elementMap){
+    console.log("inactiveMinusState");
+    elementMap.$minusBtn.addClass("disabled");
+    elementMap.$cnt.addClass("disabled");
+    elementMap.$totalPrice.closest(".individual_price").removeClass("on_color");
+};
+var ticket = new Ticket();
+ticket.on("add", function($el){
+    var elementMap = ticket.getElementMap($el);
+    if(elementMap.cnt === 0){
+        ticket.activeMinusState(elementMap);
+    }
+    ticket.add(elementMap);
+    validator.trigger("validate");
 });
-
-// function Ticket(){
-// }
-// Ticket.prototype = new eg.Component();
-// Ticket.prototype.constructor = Ticket;
-// Ticket.prototype.getElementMap = function($el){
-//     var $qty = $el.closest(".qty");
-//     var $cnt = $qty.find(".count_control_input");
-//     var $totalCnt = $(".total_cnt");
-//     return {
-//         $qty: $qty,
-//         $cnt: $cnt,
-//         $totalPrice: $qty.find(".total_price"),
-//         price: $qty.find(".discounted-price").html(),
-//         cnt: Number($cnt.val()),
-//         $plusBtn: $qty.find(".ico_plus3"),
-//         $minusBtn: $qty.find(".ico_minus3"),
-//         $totalCnt: $totalCnt,
-//         totalCnt: Number($totalCnt.html())
-//     }
-// };
-// Ticket.prototype.add = function(elementMap){
-//     console.log("add");
-//     elementMap.$cnt.val(elementMap.cnt + 1);
-//     elementMap.$totalPrice.html(elementMap.price * (elementMap.cnt + 1));
-//     elementMap.$totalCnt.html(elementMap.totalCnt + 1);
-// };
-// Ticket.prototype.sub = function(elementMap){
-//     console.log("sub");
-//     elementMap.$cnt.val(elementMap.cnt - 1);
-//     elementMap.$totalPrice.html(elementMap.price * (elementMap.cnt - 1));
-//     elementMap.$totalCnt.html(elementMap.totalCnt - 1);
-// };
-// Ticket.prototype.activeMinusState = function(elementMap){
-//     console.log("activeMinusState");
-//     elementMap.$minusBtn.removeClass("disabled");
-//     elementMap.$cnt.removeClass("disabled");
-//     elementMap.$totalPrice.closest(".individual_price").addClass("on_color");
-// };
-// Ticket.prototype.inactiveMinusState = function(elementMap){
-//     console.log("inactiveMinusState");
-//     elementMap.$minusBtn.addClass("disabled");
-//     elementMap.$cnt.addClass("disabled");
-//     elementMap.$totalPrice.closest(".individual_price").removeClass("on_color");
-// };
-// var ticket = new Ticket();
-// ticket.on("add", function($el){
-//     var elementMap = ticket.getElementMap($el);
-//     if(elementMap.cnt === 0){
-//         ticket.activeMinusState(elementMap);
-//     }
-//     ticket.add(elementMap);
-//     validator.trigger("validate");
-// });
-// ticket.on("sub", function($el){
-//     var elementMap = ticket.getElementMap($el);
-//     if(elementMap.cnt === 1){
-//         ticket.inactiveMinusState(elementMap);
-//     }
-//     ticket.sub(elementMap);
-//     validator.trigger("validate");
-// });
+ticket.on("sub", function($el){
+    var elementMap = ticket.getElementMap($el);
+    if(elementMap.cnt === 1){
+        ticket.inactiveMinusState(elementMap);
+    }
+    ticket.sub(elementMap);
+    validator.trigger("validate");
+});
 
 var Reserve = (function(){
     var productId,
@@ -147,20 +103,20 @@ var Reserve = (function(){
     var $wrapBtnBk = $(".bk_btn_wrap");
     var $btnBk = $(".bk_btn");
 
-    var createTicketComponents = function(){
-        var tickets = [];
-
-        $(".qty").each(function(i, v){
-            var ticket = new Ticket($(v), {
-                price: $(v).find(".product_price > .price").text()
-            });
-            tickets.push(ticket);
-            ticket.on("change", function(e){
-                $(v).find(".total_price").text(ticket.getTotalPrice());
-            })
+    var setPlusMinusBtnEventHandler = function(){
+        var $plusBtn = $(".btn_plus_minus.ico_plus3");
+        var $minusBtn = $(".btn_plus_minus.ico_minus3");
+        $plusBtn.on("click", function(e){
+            ticket.trigger("add", $(this));
+            e.preventDefault();
         });
-
-    }
+        $minusBtn.on("click", function(e){
+            if(!$(this).hasClass("disabled")){
+                ticket.trigger("sub", $(this));
+            }
+            e.preventDefault();
+        });
+    };
 
     var getPricesAjax = function(){
         $.ajax({
@@ -196,7 +152,7 @@ var Reserve = (function(){
                 $priceDescList.append(priceDescHtml);
                 $ticketBody.append(ticketBodyHtml);
 
-                createTicketComponents();
+                setPlusMinusBtnEventHandler();
 
                 validator.elementMap = {
                     $totalCnt: $totalCnt,
