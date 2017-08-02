@@ -188,17 +188,20 @@ var ReservationMain = (function() {
 
     return {
         init: function() {
-            var promotionFlicking = new Flicking();
-            promotionFlicking.width = 338;
-            promotionFlicking.$list = $('#container ul.visual_img');
+            var promotionFlicking = new Flicking($('#container ul.visual_img'), {
+                width: 338
+            });
+
             getPromotionsAjax(promotionFlicking.listInit.bind(promotionFlicking));
             getProductsAjax();
             getCategoriesAjax();
             getProductsCountAjax();
-            $categoryList.on('click', 'a', categoryClickListener);
+
             promotionFlicking.detectClick($prevBtn, "prev");
             promotionFlicking.detectClick($nextBtn, "next");
             promotionFlicking.swipedetect($('.group_visual'));
+
+            $categoryList.on('click', 'a', categoryClickListener);
             $moreBtn.on('click', getMoreProductsAjax);
 
             $(window).scroll(function(){
