@@ -91,7 +91,7 @@
 								<a href="#" class="anchor">
 									<span class="spr_book ico_del">삭제</span>
 								</a>
-								<img src="http://220.230.112.236/api/images/{{this}}" width="130" alt="" class="item_thumb">
+								<img src="/api/images/{{this}}" width="130" alt="" class="item_thumb">
 								<span class="img_border"></span>
 							</li>
 							{{/each}}

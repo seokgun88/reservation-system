@@ -41,7 +41,7 @@ var ReviewWrite = (function(){
 
     var createImageAjax = function(formData){
         $.ajax({
-            url: "/api/images/users/" + userId,
+            url: "/api/images",
             type: "POST",
             data: formData,
             processData: false,
@@ -69,9 +69,8 @@ var ReviewWrite = (function(){
             "score" : score,
             "fileIds" : fileIds
         });
-        console.log(commentData);
         $.ajax({
-            url: "/api/products/" + productId + "/comments/users/" + userId,
+            url: "/api/products/" + productId + "/comments/form",
             type: "POST",
             data: commentData,
             contentType: "application/json"

@@ -33,7 +33,7 @@
                   <div class="container_visual" style="width: 414px;">
                       <ul class="visual_img">
                           <li class="item" style="width: 414px;">
-                            <img class="img_thumb" src="http://220.230.112.236/api/images/{{imgId}}">
+                            <img class="img_thumb" src="/api/images/{{imgId}}">
                             <span class="img_bg"></span>
                             <div class="preview_txt">
                               <h2 class="preview_txt_tit">{{name}}</h2>

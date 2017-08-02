@@ -22,7 +22,7 @@
 					class="spr_bi ico_bk_logo">예약</span>
 				</a>
 			</h1>
-			<a href="/login" class="btn_my"> <span
+			<a href="/myreservation" class="btn_my"> <span
 				title="내 예약">MY</span>
 			</a> </header>
 		</div>
@@ -37,7 +37,7 @@
 							class="spr_bi ico_bk_logo">예약</span>
 						</a>
 					</h1>
-					<a href="/login" class="btn_my"> <span
+					<a href="/myreservation" class="btn_my"> <span
 						title="내 예약">MY</span>
 					</a> </header>
 					<div class="pagination">
@@ -53,7 +53,7 @@
                   <script id="main-images-template" type="text/x-handlebars-template">
                   {{#each this}}
                   <li class="item" style="width: 414px;">
-                    <img alt="" class="img_thumb" src="http://220.230.112.236/api/images//{{this}}">
+                    <img alt="" class="img_thumb" src="/api/images//{{this}}">
                     <span class="img_bg"></span>
                     <div class="visual_txt">
                       <div class="visual_txt_inn">

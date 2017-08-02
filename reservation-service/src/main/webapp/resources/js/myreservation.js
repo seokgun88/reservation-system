@@ -125,7 +125,7 @@ var CardItem = extend(eg.Component, {
         evt.preventDefault();
         var productId = this.myReservation.productId;
         var userId = $('body').data('user-id');
-        window.location.href = "/products/" + productId + "/comments/users/" + userId;
+        window.location.href = "/products/" + productId + "/comments/form";
     },
     fadeInPopup: function (evt) {
         evt.preventDefault();
@@ -189,7 +189,7 @@ var MyReservationModule = (function(){
 
     var weekday = ["일", "월", "화", "수", "목", "금", "토"];
 
-    var apiUrl = apiBaseUrl + "/users/" + userId;
+    var apiUrl = apiBaseUrl;
     var myReservationData = {};
 
     function init(){
