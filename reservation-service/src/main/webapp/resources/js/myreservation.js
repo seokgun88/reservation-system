@@ -1,3 +1,7 @@
+$(function(){
+    MyReservationModule.init();
+})
+
 var reservatinosForTest = {
     canceledReservationCount: 1,
     completedReservationCount: 1,
@@ -68,13 +72,146 @@ var reservatinosForTest = {
 var cardItems = [];
 var cardData = [];
 
+// 전체 요약 영역
+var MySummary = (function(){
+    var $mySummary = $('.my_summary');
+    var defaultCounts = {
+        canceledReservationCount: 0,
+        completedReservationCount: 0,
+        scheduledReservationCount: 0,
+        totalReservationCount: 0
+    };
+
+    var summaryCounts = {};
+
+    function init(myReservationData){
+        summaryCounts = $.extend({}, defaultCounts, myReservationData);
+        appendMySummaryTemplate();
+    }
+
+    function appendMySummaryTemplate(){
+        $mySummary.html(Handlebars.templates['mySummary'](summaryCounts));
+    }
+
+    function updateSummary(type){
+        summaryCounts.canceledReservationCount++;
+        summaryCounts.scheduledReservationCount--;
+        $mySummary.find('.item:eq(1) span').text(summaryCounts.scheduledReservationCount);
+        $mySummary.find('.item:last span').text(summaryCounts.canceledReservationCount);
+    }
+
+    return {
+        init: init,
+        updateSummary: updateSummary
+    }
+})();
+
+var CardItem = extend(eg.Component, {
+    init: function (root, myReservation) {
+        this.myReservation = myReservation;
+        this.$root = $(root);
+        this.$popupBookingWrapper = $('.popup_booking_wrapper');
+        this.listHeaders = {
+            $proccessingReservationList : $("li.card:eq(0)"),
+            $confirmedReservationList : $("li.card:eq(1)"),
+            $usedReservationList : $("li.card:eq(2)"),
+            $canceledReservationList : $("li.card:eq(3)")
+        }
+
+        this.$root.find(".btn.btn_cancel").on("click", this.fadeInPopup.bind(this));
+        this.$root.find(".btn.btn_review").on("click", this.goReviewWrite.bind(this));
+    },
+    goReviewWrite: function(evt){
+        evt.preventDefault();
+        var productId = this.myReservation.productId;
+        var userId = $('body').data('user-id');
+        window.location.href = "/products/" + productId + "/comments/users/" + userId;
+    },
+    fadeInPopup: function (evt) {
+        evt.preventDefault();
+        this.updateCancelPopup();
+        this.$popupBookingWrapper.fadeIn();
+
+        this.cancelMyReservationHandler = this.cancelMyReservation.bind(this);
+        this.fadeOutPopupHandler = this.fadeOutPopup.bind(this);
+
+        this.$popBottomBtnArea = this.$popupBookingWrapper.find('.pop_bottom_btnarea');
+
+        this.$popupBookingWrapper.on("click", '.popup_btn_close', this.fadeOutPopupHandler);
+        this.$popBottomBtnArea.on("click", ".btn_green, .btn_gray", this.fadeOutPopupHandler);
+        this.$popBottomBtnArea.on("click", ".btn_green", this.cancelMyReservationHandler);
+    },
+    updateCancelPopup: function () {
+        this.$popupBookingWrapper.find('.pop_tit > span').text(this.myReservation.productName);
+        this.$popupBookingWrapper.find('.pop_tit > small').text(this.myReservation.displayPeriod);
+    },
+    cancelMyReservation: function(evt){
+        evt.preventDefault();
+
+        this.$popBottomBtnArea.off("click", ".btn_green", this.cancelMyReservationHandler);
+
+        MySummary.updateSummary(this.myReservation.type);
+        this.sendMyReservationUpdateRequest();
+
+        this.$root.find('.booking_cancel').remove();
+        this.$root.appendTo("li.card.used:last");
+
+        $.each(this.listHeaders, function(index, $header){
+            if($header.find("article").length === 0){
+                $header.hide();
+            }
+        });
+    },
+    fadeOutPopup: function(evt) {
+        evt.preventDefault();
+        this.$popupBookingWrapper.fadeOut();
+    },
+    sendMyReservationUpdateRequest: function(){
+        var apiUrl = "/api/reservations/" + this.myReservation.id;
+        var ajaxCancelMyReservation = $.ajax(apiUrl, {
+            type: "PUT"
+        });
+        ajaxCancelMyReservation.then(function(){console.log("update success!")});
+    }
+});
+
 var MyReservationModule = (function(){
-    const BASE_URL = window.location.origin;
     const PATH_NAME = window.location.pathname;
-    var apiBaseUrl = BASE_URL + "/api/reservations";
+    const RESERVATION_TYPES = {
+        NOT_USED_RESERVATION : "1",
+        CONFIRMED_RESERVATION : "2",
+        USED_RESERVATION : "3",
+        CANCELD_RESERVATION : "4"
+    };
+
+    var apiBaseUrl = "/api/reservations";
     var userId = $('body').data('user-id');
 
     var weekday = ["일", "월", "화", "수", "목", "금", "토"];
+
+    var apiUrl = apiBaseUrl + "/users/" + userId;
+    var myReservationData = {};
+
+    function init(){
+        var ajaxReservations = $.ajax(apiUrl, {
+            type: "GET"
+        });
+        ajaxReservations.then(loadMyReseravationData)
+            .then(showFormattedMyReservations)
+            .then(createCardComponent);
+    }
+
+    function getTicketCountString(ticketCountObj){
+        var totalTicketCount = 0;
+        var ticketCountString = $.map(ticketCountObj, function(count, ticketType){
+            if(count > 0) {
+                totalTicketCount += count;
+                return ticketType + "(" + count + ")";
+            }
+        }).join(",");
+        ticketCountString += " - 합계(" + totalTicketCount + ")";
+        return ticketCountString;
+    }
 
     function formattingMyReservation(type, myReservation){
         var startDate = new Date(myReservation.displayStart);
@@ -83,34 +220,22 @@ var MyReservationModule = (function(){
 
         myReservation.formattedTotalPrice = Number(myReservation.totalPrice).toLocaleString('ko');
 
-        var str = "";
-        var totalTicketCount = 0;
-        var generalTicketCount = myReservation.generalTicketCount,
-            youthTicketCount = myReservation.youthTicketCount,
-            childTicketCount = myReservation.childTicketCount;
+        var ticketCountObj = {
+            "일반" : myReservation.generalTicketCount,
+            "청소년" : myReservation.youthTicketCount,
+            "어린이" : myReservation.childTicketCount
+        }
 
-        if(generalTicketCount > 0){
-            str += "일반(" + generalTicketCount + "),";
-            totalTicketCount += generalTicketCount;
-        }
-        if(youthTicketCount > 0){
-            str += "청소년(" + youthTicketCount + "),";
-            totalTicketCount += youthTicketCount;
-        }
-        if(childTicketCount > 0){
-            str += "어린이(" + childTicketCount + "),";
-            totalTicketCount += childTicketCount;
-        }
-        if(totalTicketCount > 0){
-            str = str.slice(0,-1);
-            str += " - 합계(" + totalTicketCount + ")";
-        }
-        myReservation.formattedReservationContents = str;
+        var ticketCountString = getTicketCountString(ticketCountObj);
 
-        if(type === "1" || type === "2"){
+        myReservation.formattedReservationContents = ticketCountString;
+
+        if(type === RESERVATION_TYPES.NOT_USED_RESERVATION || type === RESERVATION_TYPES.CONFIRMED_RESERVATION){
             myReservation.btnCancelText = "취소";
-        } else if(type === "3"){
+            myReservation.btnCancelTextClass = "btn_cancel";
+        } else if(type === RESERVATION_TYPES.USED_RESERVATION){
             myReservation.btnCancelText = "예매자 리뷰 남기기";
+            myReservation.btnCancelTextClass = "btn_review";
         }
 
         return myReservation;
@@ -121,17 +246,6 @@ var MyReservationModule = (function(){
             + "~" + endDate.getFullYear()+"."+(endDate.getMonth()+1)+"."+endDate.getDate() + "(" + weekday[endDate.getDay()] + ")";
     }
 
-    var apiUrl = apiBaseUrl + "/users/" + userId;
-    var myReservationData = {};
-    function init(){
-        var ajaxReservations = $.ajax(apiUrl, {
-            type: "GET"
-        });
-        ajaxReservations.then(loadMyReseravationData);
-        ajaxReservations.then(showFormattedMyReservations);
-        ajaxReservations.then(createCardComponent);
-    }
-
     function loadMyReseravationData(data) {
         myReservationData = $.extend({}, reservatinosForTest, data);
         MySummary.init(myReservationData);
@@ -139,9 +253,10 @@ var MyReservationModule = (function(){
 
     function showFormattedMyReservations (){
         var reservations = myReservationData.reservations;
-        console.log(myReservationData);
+
         if(myReservationData.totalReservationCount > 0){
             var index = 0;
+            // es6 -> es5로 바꾸기
             for (var [type, reservation] of Object.entries(reservations)) {
                 for(var resItem of reservation){
                     formattingMyReservation(type, resItem);
@@ -162,132 +277,12 @@ var MyReservationModule = (function(){
 
     function createCardComponent(){
         $.each($(".card_item"), function(index){
-            cardItems[index] = new CardItem(this, cardData[index]);
-            cardItems[index].init();
+            cardItems[index] = new CardItem();
+            cardItems[index].init(this, cardData[index]);
         });
     }
-
-    function CardItem(root, options){
-        var defaultValues = {
-            id: 1,
-            productName: "Young Graduates",
-            displayPeriod: "2017.07.27.(목)-2017.07.28.(금)",
-            popUpCls: '.popup_booking_wrapper',
-            type: 1
-        };
-        this.$root = $(root);
-        this.values = $.extend({}, defaultValues, options);
-        this.events = {};
-    }
-    CardItem.prototype = new eg.Component();
-    CardItem.prototype.constructor = CardItem;
-    var cardFn = {
-        init: function(){
-            this.bindEvents();
-        },
-        bindEvents: function(){
-            this.$root.find(".btn:contains(\"취소\")").on("click", this.fadeInPopup.bind(this));
-            this.$root.find(".btn:contains(\"예매자 리뷰 남기기\")").on("click", this.goReviewWrite.bind(this));
-        },
-        goReviewWrite: function(evt){
-            evt.preventDefault();
-            var productId = this.values.productId;
-            window.location.href = BASE_URL + "/products/" + productId + "/comments/users/" + userId;
-        },
-        fadeInPopup: function(evt){
-            evt.preventDefault();
-            this.updateCancelPopup();
-            $(this.values.popUpCls).fadeIn();
-        },
-        updateCancelPopup: function(){
-            this.events.fadeInPopUp = this.fadeInPopup.bind(this);
-            this.events.cancelMyReservation = this.cancelMyReservation.bind(this);
-            this.events.fadeOutPopup = this.fadeOutPopup.bind(this);
-            this.events.updateSummaryEvt = this.updateSummary.bind(this);
-
-            $(this.values.popUpCls).find('.pop_bottom_btnarea').off();
-            $(this.values.popUpCls).find('.popup_btn_close').off();
-
-            $(this.values.popUpCls).find('.pop_bottom_btnarea').on("click", ".btn_green", this.events.cancelMyReservation);
-            $(this.values.popUpCls).find('.pop_bottom_btnarea').on("click", ".btn_green", this.events.updateSummaryEvt);
-            $(this.values.popUpCls).find('.pop_bottom_btnarea').on("click", ".btn_green", this.events.fadeOutPopup);
-            $(this.values.popUpCls).find('.pop_bottom_btnarea').on("click", ".btn_gray", this.events.fadeOutPopup);
-            $(this.values.popUpCls).find('.pop_bottom_btnarea').on("click", ".btn_gray", this.events.fadeOutPopup);
-            $(this.values.popUpCls).find('.popup_btn_close').on("click", this.events.fadeOutPopup);
-            $(this.values.popUpCls).find('.pop_tit > span').text(this.values.productName);
-            $(this.values.popUpCls).find('.pop_tit > small').text(this.values.displayPeriod);
-        },
-        updateSummary: function(evt){
-            console.log(this);
-            MySummary.updateSummary(this.values.type);
-        },
-        cancelMyReservation: function(evt){
-            evt.preventDefault();
-            this.$root.find('.booking_cancel').remove();
-            this.$root.appendTo("li.card.used:last");
-            $("li.card.used:last").show();
-        },
-        fadeOutPopup: function(evt){
-            evt.preventDefault();
-            $(this.values.popUpCls).fadeOut();
-        }
-    };
-    for (var fnName in cardFn){
-        CardItem.prototype[fnName] = cardFn[fnName];
-    }
-
-    // 예약 상단 네비게이션 영역
-    var Navigation = (function(){
-
-    })();
-
-    // 전체 요약 영역
-    var MySummary = (function(){
-        var $mySummary = $('.my_summary');
-        var defaultCounts = {
-            canceledReservationCount: 0,
-            completedReservationCount: 0,
-            scheduledReservationCount: 0,
-            totalReservationCount: 0
-        };
-
-        var summaryCounts = {};
-
-        function init(myReservationData){
-            summaryCounts = $.extend({}, defaultCounts, myReservationData);
-            appendMySummaryTemplate();
-        }
-
-        function appendMySummaryTemplate(){
-            $mySummary.html(Handlebars.templates['mySummary'](summaryCounts));
-        }
-
-        function updateSummary(type){
-            var count = Number($mySummary.find('.item:last span').text()) + 1;
-            console.log(count);
-            $mySummary.find('.item:last span').text(count);
-            if(type === 1 || type === 2){
-                var count = Number($mySummary.find('.item:eq(1) span').text()) - 1;
-                var clsSeletor = '.item:eq(1) span';
-                $mySummary.find(clsSeletor).text(count);
-            } else if(type === 3){
-                var count = Number($mySummary.find('.item:eq(2) span').text()) - 1;
-                var clsSeletor = '.item:eq(2) span';
-                $mySummary.find(clsSeletor).text(count);
-            }
-        }
-
-        return {
-            init: init,
-            updateSummary: updateSummary
-        }
-    })();
 
     return {
         init: init
     }
 })();
-
-$(function(){
-    MyReservationModule.init();
-})

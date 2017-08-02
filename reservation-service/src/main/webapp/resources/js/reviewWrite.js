@@ -16,13 +16,13 @@ var ReviewWrite = (function(){
             url: "/api/images/" + id,
             type: "DELETE"
         })
-        .done(function(){
-            $el.remove();
-        })
-        .fail(function(error){
-            console.log(error.responseJSON);
-            alert("Image delete를 실패했습니다.");
-        });
+            .done(function(){
+                $el.remove();
+            })
+            .fail(function(error){
+                console.log(error.responseJSON);
+                alert("Image delete를 실패했습니다.");
+            });
     };
 
     var addImageRemoveHandler = function($imageList){
@@ -47,14 +47,14 @@ var ReviewWrite = (function(){
             processData: false,
             contentType: false
         })
-        .done(function(data){
-            drawImage(data);
-            $imageFileInput.val("");
-        })
-        .fail(function(error){
-            console.log(error.responseJSON);
-            alert("Image upload를 실패했습니다.");
-        });
+            .done(function(data){
+                drawImage(data);
+                $imageFileInput.val("");
+            })
+            .fail(function(error){
+                console.log(error.responseJSON);
+                alert("Image upload를 실패했습니다.");
+            });
     };
 
     var createCommentAjax = function(e){
@@ -76,13 +76,13 @@ var ReviewWrite = (function(){
             data: commentData,
             contentType: "application/json"
         })
-        .done(function(){
-            location.href = "/myreservation";
-        })
-        .fail(function(error){
-            console.log(error.responseJSON);
-            alert("Comment create를 실패했습니다.");
-        });
+            .done(function(){
+                location.href = "/myreservation";
+            })
+            .fail(function(error){
+                console.log(error.responseJSON);
+                alert("Comment create를 실패했습니다.");
+            });
     };
 
     return {
@@ -123,7 +123,7 @@ var ReviewWrite = (function(){
                 var files = e.target.files,
                     idx = 0,
                     formData = new FormData();
-                    
+
                 if($imageList.children("li.item").length + files.length > 5){
                     alert("이미지는 최대 5개 업로드 가능합니다.");
                     return;

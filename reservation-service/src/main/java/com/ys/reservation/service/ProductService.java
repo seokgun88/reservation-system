@@ -130,13 +130,13 @@ public class ProductService {
 		if (id < 1 || page < 0 || (limit != 3 && limit != 10)) {
 			return null;
 		}
-		
+
 		int offset = (page-1) * limit;
 		List<UserCommentVo> comments = userCommentDao.selectLimitedByProductId(id, offset, limit);
 		if(comments == null || comments.size() == 0) {
 			return null;
 		}
-		
+
 		List<Integer> ids = comments.stream().map(c -> c.getId()).collect(Collectors.toList());
 		List<CommentImageVo> commentImageList = imageDao.selectIdByCommentIds(ids);
 		Map<Integer, List<Integer>> commentImageMap = commentImageList.stream()
