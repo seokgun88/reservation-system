@@ -98,8 +98,8 @@ public class ReservationInfo {
 		this.modifyDate = modifyDate;
 	}
 	public boolean hasRequiredFields() {
-		if(productId == 0
-				|| userId == 0 
+		if(productId < 1
+				|| userId < 1 
 				|| StringUtils.isBlank(reservationName)
 				|| StringUtils.isBlank(reservationTel)
 				|| StringUtils.isBlank(reservationEmail)

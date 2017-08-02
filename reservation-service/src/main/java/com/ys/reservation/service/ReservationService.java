@@ -27,7 +27,8 @@ public class ReservationService {
 	}
 	
 	public ReservationInfo create(ReservationInfo reservationInfo) {
-		if(reservationInfo == null || reservationInfo.hasRequiredFields()) {
+		System.out.println(reservationInfo.hasRequiredFields());
+		if(reservationInfo == null || !reservationInfo.hasRequiredFields()) {
 			return null;
 		}
 		ReservationInfo ret = new ReservationInfo();
