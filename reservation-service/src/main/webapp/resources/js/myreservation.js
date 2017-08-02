@@ -93,7 +93,7 @@ var MySummary = (function(){
         $mySummary.html(Handlebars.templates['mySummary'](summaryCounts));
     }
 
-    function updateSummary(type){
+    function updateSummary(){
         summaryCounts.canceledReservationCount++;
         summaryCounts.scheduledReservationCount--;
         $mySummary.find('.item:eq(1) span').text(summaryCounts.scheduledReservationCount);
@@ -105,6 +105,13 @@ var MySummary = (function(){
         updateSummary: updateSummary
     }
 })();
+
+// var storage = { value : "" };
+// storage.on("click", function(e){
+//     storage.value = e;
+//     console.log(e);
+//     console.log(storage.value);
+// })
 
 var CardItem = extend(eg.Component, {
     init: function (root, myReservation) {
@@ -132,6 +139,8 @@ var CardItem = extend(eg.Component, {
         this.updateCancelPopup();
         this.$popupBookingWrapper.fadeIn();
 
+        this.trigger("click", this.$root);
+
         this.cancelMyReservationHandler = this.cancelMyReservation.bind(this);
         this.fadeOutPopupHandler = this.fadeOutPopup.bind(this);
 
@@ -150,7 +159,8 @@ var CardItem = extend(eg.Component, {
 
         this.$popBottomBtnArea.off("click", ".btn_green", this.cancelMyReservationHandler);
 
-        MySummary.updateSummary(this.myReservation.type);
+        this.trigger("cancel");
+
         this.sendMyReservationUpdateRequest();
 
         this.$root.find('.booking_cancel').remove();
@@ -199,6 +209,7 @@ var MyReservationModule = (function(){
         ajaxReservations.then(loadMyReseravationData)
             .then(showFormattedMyReservations)
             .then(createCardComponent);
+        // then안에 함수 셋. then안은 합쳐있으면 동기다. 분리돼있으면 비동기다.
     }
 
     function getTicketCountString(ticketCountObj){
@@ -277,8 +288,10 @@ var MyReservationModule = (function(){
 
     function createCardComponent(){
         $.each($(".card_item"), function(index){
-            cardItems[index] = new CardItem();
-            cardItems[index].init(this, cardData[index]);
+            cardItems[index] = new CardItem(this, cardData[index]);
+            cardItems[index].on("cancel", function(e){
+                console.log(e);
+            })
         });
     }
 

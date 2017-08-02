@@ -137,9 +137,10 @@
           <span class="copyright">© NAVER Corp.</span>
       </div>
   </footer>
-	<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
-	<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
-  <script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
-  <script src="/resources/js/reserve.js"></script>
+    <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
+    <script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
+    <script src="/resources/js/util.js"></script>
+    <script src="/resources/js/reserve.js"></script>
 </body>
 </html>
