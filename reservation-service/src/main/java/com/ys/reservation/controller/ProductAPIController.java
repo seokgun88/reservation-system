@@ -3,6 +3,7 @@ package com.ys.reservation.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ys.reservation.domain.Price;
 import com.ys.reservation.domain.Product;
+import com.ys.reservation.domain.User;
 import com.ys.reservation.domain.UserComment;
 import com.ys.reservation.service.ProductService;
 import com.ys.reservation.service.UserCommentService;
@@ -72,10 +74,12 @@ public class ProductAPIController {
 		return productService.getAvgCommentScore(id);
 	}
 	
-	@PostMapping("/{id:[\\d]+}/comments/users/{userId:[\\d]+}")
-	public void createUserComment(@PathVariable int id, @PathVariable int userId, 
-			@RequestBody CommentCreationVo commentCreationVo) {
-		UserComment userComment = new UserComment(id, userId, 
+	@PostMapping("/{id:[\\d]+}/comments/form")
+	public void createUserComment(@PathVariable int id,
+			@RequestBody CommentCreationVo commentCreationVo, 
+			HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		UserComment userComment = new UserComment(id, user.getId(), 
 				commentCreationVo.getScore(), commentCreationVo.getComment());
 		userCommentService.create(userComment, commentCreationVo.getFileIds());
 	}

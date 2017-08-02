@@ -1,5 +1,7 @@
 package com.ys.reservation.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ys.reservation.domain.ReservationInfo;
+import com.ys.reservation.domain.User;
 import com.ys.reservation.service.ReservationService;
 import com.ys.reservation.vo.MyReservationVo;
 
@@ -23,6 +26,11 @@ public class ReservationAPIController {
 		this.reservationService = reservationService;
 	}
 
+	@GetMapping
+	public MyReservationVo getMyReservation(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		return reservationService.getMyReservation(user.getId());
+	}
 	@PostMapping
 	public ReservationInfo create(@RequestBody ReservationInfo reservationInfo) {
 		return reservationService.create(reservationInfo);
@@ -30,9 +38,5 @@ public class ReservationAPIController {
 	@PutMapping("/{id:[\\d]+}")
 	public void update(@PathVariable int id) {
 		reservationService.update(id);
-	}
-	@GetMapping("/users/{id:[\\d]+}")
-	public MyReservationVo getMyReservation(@PathVariable int id) {
-		return reservationService.getMyReservation(id);
 	}
 }
