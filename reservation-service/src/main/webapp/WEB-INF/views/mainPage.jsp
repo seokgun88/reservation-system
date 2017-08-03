@@ -128,8 +128,8 @@
 		<span class="copyright">© NAVER Corp.</span>
 	</div>
 	</footer>
-	<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
-	<script src="/resources/js/node_modules/handlebars/dist/handlebars.js"></script>
+	<script src="/node_modules/jquery/dist/jquery.js"></script>
+	<script src="/node_modules/handlebars/dist/handlebars.js"></script>
 	<script src="/resources/js/flicking.js"></script>
 	<script src="/resources/js/mainPage.js"></script>
 </body>

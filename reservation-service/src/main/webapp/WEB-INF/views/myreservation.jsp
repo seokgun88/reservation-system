@@ -142,10 +142,10 @@
     </div>
     <!--// 취소 팝업 -->
 
-	<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
-	<script src="/resources/js/node_modules/handlebars/dist/handlebars.runtime.js"></script>
+	<script src="/node_modules/jquery/dist/jquery.js"></script>
+	<script src="/node_modules/handlebars/dist/handlebars.runtime.js"></script>
 	<script src="/resources/js/templatesCompiled.js"></script>
-    <script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
+    <script src="/node_modules/@egjs/component/dist/component.js"></script>
 	<script src="/resources/js/util.js"></script>
 	<script src="/resources/js/myreservation.js" ></script>
     <script src="/resources/js/gnb.js"></script>

@@ -54,7 +54,7 @@ var categoryAdmin = (function() {
                 }).done(function() {
                     li.parentNode.removeChild(li);
                 }).fail(function(error) {
-                    console.log(error.responseJSON)
+                    console.log(error.responseJSON);
                     alert('Category 삭제를 실패했습니다.');
                 });
             }

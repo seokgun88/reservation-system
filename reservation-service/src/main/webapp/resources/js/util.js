@@ -1,3 +1,5 @@
+"use strict";
+
 function extend(superClass, def) {
     var extendClass = function extendClass() {
         // Call a parent constructor

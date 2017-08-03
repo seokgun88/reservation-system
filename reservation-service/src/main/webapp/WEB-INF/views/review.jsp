@@ -60,10 +60,11 @@
             <ul class="photo_list" style="overflow:visible; width:100%; height:100%; position:relative; white-space:nowrap; font-size:0;"></ul>
         </div>
 
-    <script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
-    <script src="/resources/js/node_modules/handlebars/dist/handlebars.runtime.js"></script>
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/node_modules/handlebars/dist/handlebars.runtime.js"></script>
+    <script src="/node_modules/@egjs/component/dist/component.js"></script>
+
     <script src="/resources/js/templatesCompiled.js"></script>
-    <script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
     <script src="/resources/js/flicking.js"></script>
     <script src="/resources/js/lazy.js"></script>
     <script src="/resources/js/review.js"></script>

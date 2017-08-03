@@ -1,9 +1,11 @@
-const CURRENT_URL = window.location.href;
+"use strict";
+
+var CURRENT_URL = window.location.href;
 
 var productName;
 var productDesc;
 
-var ProductDetail = (function(){
+var ProductDetail = (function(F){
     var productId = $('#container').data('id');
 
     var $mainImageList = $('#container ul.visual_img');
@@ -107,7 +109,7 @@ var ProductDetail = (function(){
             });
 
             $map.on('click', function(e){
-                url = 'http://map.naver.com/index.nhn?enc=utf8&level=2&lng='+ point.x +'&lat='+ point.y
+                var url = 'http://map.naver.com/index.nhn?enc=utf8&level=2&lng='+ point.x +'&lat='+ point.y
                     +'&pinTitle=' + $('.store_addr.addr_detail').html() +'&pinType=SITE';
                 window.open(url);
             });
@@ -117,7 +119,7 @@ var ProductDetail = (function(){
                 +'&elat=' + point.y
                 +'&eText=' + $('.store_addr.addr_detail').html();
             $pathBtn.on('click', function(e){
-                url = pathUrl;
+                var url = pathUrl;
                 window.open(url);
             });
             $gotoPathBtn.attr('href', pathUrl);

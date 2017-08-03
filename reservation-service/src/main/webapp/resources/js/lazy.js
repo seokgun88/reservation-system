@@ -1,3 +1,5 @@
+"use strict";
+
 var Lazy = (function(){
     var isInViewport = function(el) {
         var rect = el.getBoundingClientRect();

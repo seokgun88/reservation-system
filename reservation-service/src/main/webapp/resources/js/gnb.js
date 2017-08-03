@@ -1,3 +1,5 @@
+"use strict";
+
 // 예약 상단 네비게이션 영역
 var Navigation = (function(){
     var goReservationMain = function(evt){

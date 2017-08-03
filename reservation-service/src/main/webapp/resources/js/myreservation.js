@@ -1,3 +1,5 @@
+"use strict";
+
 $(function(){
     MyReservationModule.init();
 })
@@ -176,8 +178,8 @@ var CardItem = extend(eg.Component, {
 });
 
 var MyReservationModule = (function(){
-    const PATH_NAME = window.location.pathname;
-    const RESERVATION_TYPES = {
+    var PATH_NAME = window.location.pathname;
+    var RESERVATION_TYPES = {
         NOT_USED_RESERVATION : "1",
         CONFIRMED_RESERVATION : "2",
         USED_RESERVATION : "3",
