@@ -99,9 +99,9 @@ public class ProductService {
 		if(images == null) {
 			return null;
 		}
-		for(Image image : images) {
+		images.stream().forEach(image -> {
 			ids.add(image.getId());
-		}
+		});
 		return ids;
 	}
 	
