@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ys.reservation.dao.PriceDao;
 import com.ys.reservation.dao.ReservationDao;
 import com.ys.reservation.domain.Price;
-import com.ys.reservation.domain.ReservationInfo;
+import com.ys.reservation.domain.Reservation;
 import com.ys.reservation.vo.MyReservationVo;
 import com.ys.reservation.vo.ReservationVo;
 
@@ -26,13 +26,13 @@ public class ReservationService {
 		this.priceDao = priceDao;
 	}
 	
-	public ReservationInfo create(ReservationInfo reservationInfo) {
-		System.out.println(reservationInfo.hasRequiredFields());
-		if(reservationInfo == null || !reservationInfo.hasRequiredFields()) {
+	public Reservation create(Reservation reservation) {
+		System.out.println(reservation.hasRequiredFields());
+		if(reservation == null || !reservation.hasRequiredFields()) {
 			return null;
 		}
-		ReservationInfo ret = new ReservationInfo();
-		ret.setId(reservationDao.insert(reservationInfo));
+		Reservation ret = new Reservation();
+		ret.setId(reservationDao.insert(reservation));
 		return ret;
 	}
 

@@ -2,7 +2,7 @@ package com.ys.reservation.vo;
 
 import java.util.Date;
 
-public class ProductReservationInfoVo {
+public class ProductReservationVo {
 	private String name;
 	private String placeName;
 	private Date displayStart;

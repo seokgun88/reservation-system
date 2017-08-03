@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ys.reservation.domain.ReservationInfo;
+import com.ys.reservation.domain.Reservation;
 import com.ys.reservation.domain.User;
 import com.ys.reservation.security.AuthUser;
 import com.ys.reservation.service.ReservationService;
@@ -30,8 +30,8 @@ public class ReservationAPIController {
 		return reservationService.getMyReservation(user.getId());
 	}
 	@PostMapping
-	public ReservationInfo create(@RequestBody ReservationInfo reservationInfo) {
-		return reservationService.create(reservationInfo);
+	public Reservation create(@RequestBody Reservation reservation) {
+		return reservationService.create(reservation);
 	}
 	@PutMapping("/{id:[\\d]+}")
 	public void update(@PathVariable int id) {

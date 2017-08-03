@@ -16,16 +16,16 @@ import org.springframework.stereotype.Repository;
 
 import com.ys.reservation.dao.sqls.ProductJoinSqls;
 import com.ys.reservation.dao.sqls.ReservationSqls;
-import com.ys.reservation.domain.ReservationInfo;
-import com.ys.reservation.vo.ProductReservationInfoVo;
+import com.ys.reservation.domain.Reservation;
+import com.ys.reservation.vo.ProductReservationVo;
 import com.ys.reservation.vo.ReservationVo;
 
 @Repository
 public class ReservationDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
-	private RowMapper<ProductReservationInfoVo> reservationInfoRowMapper = BeanPropertyRowMapper.newInstance(ProductReservationInfoVo.class);
-	private RowMapper<ReservationVo> reservationRowMapper = BeanPropertyRowMapper.newInstance(ReservationVo.class);
+	private RowMapper<ProductReservationVo> reservationRowMapper = BeanPropertyRowMapper.newInstance(ProductReservationVo.class);
+	private RowMapper<ReservationVo> reservationVoRowMapper = BeanPropertyRowMapper.newInstance(ReservationVo.class);
 
 	public ReservationDao(DataSource dataSource) {
 		jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -34,19 +34,19 @@ public class ReservationDao {
 				.usingGeneratedKeyColumns("id");
 	}
 
-	public ProductReservationInfoVo selectByProductId(int id) {
+	public ProductReservationVo selectByProductId(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return DaoUtil.getFirstOrNull(jdbc, ProductJoinSqls.SELECT_RESERVATION_INFO, params, reservationInfoRowMapper);
+		return DaoUtil.getFirstOrNull(jdbc, ProductJoinSqls.SELECT_RESERVATION_INFO, params, reservationRowMapper);
 	}
 	
-	public int insert(ReservationInfo reservationInfo) {
-		SqlParameterSource params = new BeanPropertySqlParameterSource(reservationInfo);
+	public int insert(Reservation reservation) {
+		SqlParameterSource params = new BeanPropertySqlParameterSource(reservation);
 		return insertAction.executeAndReturnKey(params).intValue();
 	}
 	
 	public List<ReservationVo> selectReservations(int userId){
 		Map<String, ?> params = Collections.singletonMap("id", userId);
-		return jdbc.query(ReservationSqls.SELECT_BY_USER_ID, params, reservationRowMapper);
+		return jdbc.query(ReservationSqls.SELECT_BY_USER_ID, params, reservationVoRowMapper);
 	}
 	
 	public int update(int reservationId) {

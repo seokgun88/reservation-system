@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class ReservationInfo {
+public class Reservation {
 	private int id;
 	private int productId;
 	private int userId;

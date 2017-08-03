@@ -21,7 +21,7 @@ import com.ys.reservation.vo.CommentImageVo;
 import com.ys.reservation.vo.CommentsSummaryVo;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
-import com.ys.reservation.vo.ProductReservationInfoVo;
+import com.ys.reservation.vo.ProductReservationVo;
 import com.ys.reservation.vo.ProductVo;
 import com.ys.reservation.vo.UserCommentVo;
 
@@ -160,7 +160,7 @@ public class ProductService {
 		return userCommentDao.selectAvgScoreByProductId(id);
 	}
 	
-	public ProductReservationInfoVo getReservationInfo(int id) {
+	public ProductReservationVo getReservation(int id) {
 		if(id < 1) {
 			return null;
 		}

@@ -24,7 +24,7 @@ import com.ys.reservation.vo.CommentCreationVo;
 import com.ys.reservation.vo.CommentsSummaryVo;
 import com.ys.reservation.vo.DisplayInfoVo;
 import com.ys.reservation.vo.ProductDetailVo;
-import com.ys.reservation.vo.ProductReservationInfoVo;
+import com.ys.reservation.vo.ProductReservationVo;
 import com.ys.reservation.vo.ProductVo;
 import com.ys.reservation.vo.UserCommentVo;
 
@@ -110,8 +110,8 @@ public class ProductAPIController {
 	}
 	
 	@GetMapping("/{id:[\\d]+}/reservationInfo")
-	public ProductReservationInfoVo getReservationInfo(@PathVariable int id) {
-		return productService.getReservationInfo(id);
+	public ProductReservationVo getReservation(@PathVariable int id) {
+		return productService.getReservation(id);
 	}
 	
 	@GetMapping("/{id:[\\d]+}/subImage")
