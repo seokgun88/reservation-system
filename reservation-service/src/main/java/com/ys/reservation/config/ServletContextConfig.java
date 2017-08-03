@@ -13,6 +13,7 @@ import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.ys.reservation.interceptor.LoggingHandlerInterceptor;
 import com.ys.reservation.interceptor.LoginInterceptor;
 import com.ys.reservation.view.ImageDownloadView;
 
@@ -64,10 +65,17 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
     	return new LoginInterceptor();
     }
     
+    @Bean
+    public LoggingHandlerInterceptor loggingHandlerInterceptor() {
+    	return new LoggingHandlerInterceptor();
+    }
+    
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
     	registry.addInterceptor(loginInterceptor())
     		.excludePathPatterns("/login", "/oauth2callback", "/", "/products/*", "/api/**");
+    	registry.addInterceptor(loggingHandlerInterceptor())
+    		.addPathPatterns("/**/*");
     }
 }
 

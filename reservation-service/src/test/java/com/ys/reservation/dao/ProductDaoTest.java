@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -22,12 +24,13 @@ import com.ys.reservation.vo.ProductVo;
 public class ProductDaoTest {
 	@Autowired
 	ProductDao productDao;
+	private static final Logger log = LoggerFactory.getLogger(ProductDaoTest.class);
 
 	@Test
 	public void shouldSelectAllLimit10() {
 		List<ProductVo> productList = productDao.selectLimited(0);
 		productList.forEach( item -> {
-			System.out.println(item);
+			log.info(item.toString());
 		});
 	}
 	
@@ -35,7 +38,6 @@ public class ProductDaoTest {
 	public void shouldSelectById() {
 		List<ProductVo> productList = productDao.selectAll();
 		productList.forEach( item -> {
-			System.out.println(item);
 			Product product = productDao.select(item.getId());
 			assertThat(product.getId(), is(item.getId()));
 		});

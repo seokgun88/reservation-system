@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,20 +23,21 @@ import com.ys.reservation.domain.Category;
 public class CategoryDaoTest {
 	@Autowired
 	CategoryDao categoryDao;
+	private static final Logger log = LoggerFactory.getLogger(ProductDaoTest.class);
 	
 	@Test
 	public void shouldInsert() {
 		Category category = new Category();
 		category.setName("새 카테고리");
 		Integer categoryPk = categoryDao.insert(category);
-		System.out.println(categoryPk);
+		log.info("{}", categoryPk);
 	}
 	
 	@Test
 	public void shouldSelect() {		
 		List<Category> categoryList = categoryDao.selectAll();
 		categoryList.forEach( item -> {
-			System.out.println(item);
+			log.info("{}", item);
 		});
 	}
 	
