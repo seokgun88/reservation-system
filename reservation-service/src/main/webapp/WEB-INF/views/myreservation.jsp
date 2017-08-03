@@ -141,12 +141,7 @@
 
     </div>
     <!--// 취소 팝업 -->
-
-	<script src="/resources/js/node_modules/jquery/dist/jquery.js"></script>
-	<script src="/resources/js/node_modules/handlebars/dist/handlebars.runtime.js"></script>
-	<script src="/resources/js/templatesCompiled.js"></script>
-    <script src="/resources/js/node_modules/@egjs/component/dist/component.js"></script>
-	<script src="/resources/js/util.js"></script>
-	<script src="/resources/js/myreservation.js" ></script>
+	<script data-main="/resources/js/myreservation.js"
+	 src="/resources/js/node_modules/requirejs/require.js"></script>
     </body>
 </html>

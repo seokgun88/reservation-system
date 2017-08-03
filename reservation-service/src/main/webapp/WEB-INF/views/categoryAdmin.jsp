@@ -26,7 +26,6 @@
 		</c:forEach>
 	</ul>
 </div>
-<script src="/resources/js/node_modules/requirejs/require.js"></script>
-<script src="/resources/js/categoryAdmin.js"></script>
+<script data-main="/resources/js/categoryAdmin.js" src="/resources/js/node_modules/requirejs/require.js"></script>
 </body>
 </html>
