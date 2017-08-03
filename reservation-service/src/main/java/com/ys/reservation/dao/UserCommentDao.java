@@ -51,7 +51,7 @@ public class UserCommentDao {
 	
 	public CommentsSummaryVo selectAvgScoreByProductId(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return jdbc.queryForObject(UserCommentSqls.SELECT_AVG_SCORE_BY_PRODUCT_ID, params, userCommentVoRowMapper);
+		return DaoUtil.getFirstOrNull(jdbc, UserCommentSqls.SELECT_AVG_SCORE_BY_PRODUCT_ID, params, userCommentVoRowMapper);
 	}
 	
 	public int insert(UserComment userComment) {

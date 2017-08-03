@@ -43,7 +43,7 @@ public class ImageDao {
 	
 	public Image select(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return jdbc.queryForObject(ImageSqls.SELECT, params, imageRowMapper);
+		return DaoUtil.getFirstOrNull(jdbc, ImageSqls.SELECT, params, imageRowMapper);
 	}
 	
 	public List<Image> selectByProductId(int id, int type) {

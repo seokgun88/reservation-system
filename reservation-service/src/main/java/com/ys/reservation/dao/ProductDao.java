@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -44,16 +43,12 @@ public class ProductDao {
 
 	public Product select(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		try {
-			return jdbc.queryForObject(ProductSqls.SELECT_BY_ID, params, productRowMapper);
-		} catch(EmptyResultDataAccessException e) {
-			return null;
-		}
+		return DaoUtil.getFirstOrNull(jdbc, ProductSqls.SELECT_BY_ID, params, productRowMapper);
 	}
 	
 	public int countAll() {
 		Map<String, ?> params = Collections.emptyMap();
-		return jdbc.queryForObject(ProductSqls.COUNT_ALL, params, Integer.class);
+		return DaoUtil.getFirstOrNull(jdbc, ProductSqls.COUNT_ALL, params, Integer.class);
 	}
 	
 	public List<ProductVo> selectLimitedByCategoryId(int categoryId, int offset) {
@@ -65,11 +60,11 @@ public class ProductDao {
 	
 	public ProductDetailVo selectDetail(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return jdbc.queryForObject(ProductJoinSqls.SELECT_DETAIL, params, detailRowMapper);
+		return DaoUtil.getFirstOrNull(jdbc, ProductJoinSqls.SELECT_DETAIL, params, detailRowMapper);
 	}
 	
 	public DisplayInfoVo selectDisplayInfo(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return jdbc.queryForObject(ProductJoinSqls.SELECT_DISPLAY_INFO, params, displayInfoRowMapper);
+		return DaoUtil.getFirstOrNull(jdbc, ProductJoinSqls.SELECT_DISPLAY_INFO, params, displayInfoRowMapper);
 	}
 }

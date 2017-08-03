@@ -40,12 +40,13 @@ public class CategoryDao {
 		return jdbc.query(CategorySqls.SELECT_ALL, rowMapper);
 	}
 	
-	public int countProducts(int categoryId) {
+	public Integer countProducts(int categoryId) {
 		Map<String, ?> params = Collections.singletonMap("categoryId", categoryId);
-		return jdbc.queryForObject(ProductSqls.COUNT_BY_CATEGORY_ID, params, Integer.class);
+		return DaoUtil.getFirstOrNull(jdbc, 
+				ProductSqls.COUNT_BY_CATEGORY_ID, params, Integer.class);
 	}
 	
-	public int delete(Integer id) { //객체 생성 메모리 릭
+	public int delete(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
 		return jdbc.update(CategorySqls.DELETE_BY_ID, params);
 	}

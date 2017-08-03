@@ -36,7 +36,7 @@ public class ReservationDao {
 
 	public ProductReservationInfoVo selectByProductId(int id) {
 		Map<String, ?> params = Collections.singletonMap("id", id);
-		return jdbc.queryForObject(ProductJoinSqls.SELECT_RESERVATION_INFO, params, reservationInfoRowMapper);
+		return DaoUtil.getFirstOrNull(jdbc, ProductJoinSqls.SELECT_RESERVATION_INFO, params, reservationInfoRowMapper);
 	}
 	
 	public int insert(ReservationInfo reservationInfo) {
