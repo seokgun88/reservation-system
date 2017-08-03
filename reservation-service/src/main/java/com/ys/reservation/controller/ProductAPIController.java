@@ -18,6 +18,7 @@ import com.ys.reservation.domain.Price;
 import com.ys.reservation.domain.Product;
 import com.ys.reservation.domain.User;
 import com.ys.reservation.domain.UserComment;
+import com.ys.reservation.security.AuthUser;
 import com.ys.reservation.service.ProductService;
 import com.ys.reservation.service.UserCommentService;
 import com.ys.reservation.vo.CommentCreationVo;
@@ -77,8 +78,7 @@ public class ProductAPIController {
 	@PostMapping("/{id:[\\d]+}/comments/form")
 	public void createUserComment(@PathVariable int id,
 			@RequestBody CommentCreationVo commentCreationVo, 
-			HttpSession session) {
-		User user = (User) session.getAttribute("user");
+			@AuthUser User user) {
 		UserComment userComment = new UserComment(id, user.getId(), 
 				commentCreationVo.getScore(), commentCreationVo.getComment());
 		userCommentService.create(userComment, commentCreationVo.getFileIds());

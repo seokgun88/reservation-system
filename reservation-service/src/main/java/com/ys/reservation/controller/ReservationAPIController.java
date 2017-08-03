@@ -1,7 +1,5 @@
 package com.ys.reservation.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ys.reservation.domain.ReservationInfo;
 import com.ys.reservation.domain.User;
+import com.ys.reservation.security.AuthUser;
 import com.ys.reservation.service.ReservationService;
 import com.ys.reservation.vo.MyReservationVo;
 
@@ -27,8 +26,7 @@ public class ReservationAPIController {
 	}
 
 	@GetMapping
-	public MyReservationVo getMyReservation(HttpSession session) {
-		User user = (User) session.getAttribute("user");
+	public MyReservationVo getMyReservation(@AuthUser User user) {
 		return reservationService.getMyReservation(user.getId());
 	}
 	@PostMapping

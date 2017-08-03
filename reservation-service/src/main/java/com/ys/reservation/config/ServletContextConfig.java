@@ -1,8 +1,11 @@
 package com.ys.reservation.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -15,6 +18,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 import com.ys.reservation.interceptor.LoggingHandlerInterceptor;
 import com.ys.reservation.interceptor.LoginInterceptor;
+import com.ys.reservation.security.AuthUserWebArgumentResolver;
 import com.ys.reservation.view.ImageDownloadView;
 
 @Configuration
@@ -76,6 +80,12 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
     		.excludePathPatterns("/login", "/oauth2callback", "/", "/products/*", "/api/**");
     	registry.addInterceptor(loggingHandlerInterceptor())
     		.addPathPatterns("/**/*");
+    }
+    
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new AuthUserWebArgumentResolver());
+
     }
 }
 

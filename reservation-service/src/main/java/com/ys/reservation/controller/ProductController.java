@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ys.reservation.domain.Product;
 import com.ys.reservation.domain.User;
+import com.ys.reservation.security.AuthUser;
 import com.ys.reservation.service.ProductService;
 
 @Controller
@@ -37,17 +38,13 @@ public class ProductController {
 
 	@GetMapping("/{id:[\\d]+}/reservation")
 	public String reservation(@PathVariable int id, Model model, HttpSession session) {
-		if(session.getAttribute("login") == null) {
-			return "redirect:/";
-		}
 		model.addAttribute("profile", session.getAttribute("profile"));
 		model.addAttribute("id", id);
 		return "reserve";
 	}
 
 	@GetMapping("/{productId:[\\d]+}/comments/form")
-	public String comment(@PathVariable int productId, HttpSession session, Model model) {
-		User user = (User) session.getAttribute("user");
+	public String comment(@PathVariable int productId, @AuthUser User user, Model model) {
 		Product p = productService.get(productId);
 		model.addAttribute("productId", productId);
 		model.addAttribute("userId", user.getId());
