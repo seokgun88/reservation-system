@@ -29,7 +29,7 @@ public class DaoUtil {
 		return getFirstOrNullFromList(list);
 	}
 	public static <T> T getFirstOrNullFromList(List<T> list) {
-		if(list == null || list.size() < 1) {
+		if(list == null || list.isEmpty()) {
 			return null;
 		}
 		return list.get(0);
