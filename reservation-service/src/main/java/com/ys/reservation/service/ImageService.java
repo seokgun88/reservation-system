@@ -30,7 +30,6 @@ public class ImageService {
 	
 	@Autowired
 	public ImageService(ImageDao imageDao) {
-		super();
 		this.imageDao = imageDao;
 	}
 	
