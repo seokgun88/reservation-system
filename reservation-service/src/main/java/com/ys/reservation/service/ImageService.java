@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -24,6 +26,7 @@ public class ImageService {
 	private ImageDao imageDao;
 	@Value("${file.basedir}")
 	private String baseDir;
+	private static Logger logger = LoggerFactory.getLogger(ImageService.class);
 	
 	@Autowired
 	public ImageService(ImageDao imageDao) {
@@ -64,7 +67,7 @@ public class ImageService {
 						fos.write(buffer, 0, readCnt);
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+	            	logger.error("File IO error!", e);
 				}
 				Image image = new Image();
 				image.setFileName(originalFilename);
