@@ -36,7 +36,6 @@ public class ProductAPIController {
 
 	@Autowired
 	public ProductAPIController(ProductService productService, UserCommentService userCommentService) {
-		super();
 		this.productService = productService;
 		this.userCommentService = userCommentService;
 	}

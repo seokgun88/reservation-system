@@ -21,7 +21,6 @@ public class ReservationService {
 
 	@Autowired
 	public ReservationService(ReservationDao reservationDao, PriceDao priceDao) {
-		super();
 		this.reservationDao = reservationDao;
 		this.priceDao = priceDao;
 	}
