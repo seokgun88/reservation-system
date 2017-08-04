@@ -12,7 +12,6 @@ public class UserComment {
 	private Date modifyDate;
 	
 	public UserComment(int productId, int userId, float score, String comment) {
-		super();
 		this.productId = productId;
 		this.userId = userId;
 		this.score = score;

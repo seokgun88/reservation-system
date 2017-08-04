@@ -6,7 +6,6 @@ public class UserCommentImage {
 	private int fileId;
 	
 	public UserCommentImage(int reservationUserCommentId, int fileId) {
-		super();
 		this.reservationUserCommentId = reservationUserCommentId;
 		this.fileId = fileId;
 	}
