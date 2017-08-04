@@ -7,6 +7,6 @@ public class CommentSqls {
 			+ "WHERE product_id = :id";
 	public static final String SELECT_COMMENT_IMG = 
 			"SELECT file_name, save_file_name, file_length, content_type "
-			+ "FROM reservation_user_comment_image c, file f "
-			+ "WHERE c.reservation_user_comment_id = :id AND c.file_id = f.id";
+			+ "FROM reservation_user_comment_image c INNER JOIN file f ON c.file_id = f.id "
+			+ "WHERE c.reservation_user_comment_id = :id";
 }
