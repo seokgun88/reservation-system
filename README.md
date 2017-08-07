@@ -1,29 +1,44 @@
-# 예약 서비스 만들기
+# 네이버 예약 서비스 만들기
 이 프로젝트는 기본적인 웹프로그래밍 지식으로 Front-End에서 Back-End까지 전문화된 개발을 한다.
 
-## 목표
--  Back-End/Front-End 지식을 기반으로 예약 서비스를 구현할 수 있다.
--  Back-End : Spring을 활용하여 API을 추축하여 개발할 수 있다.
--  Front-End : jQuery을 기반으로 요구 사항을 개발할 수 있다.
+# REST API
+## Product
+| Title                 | URL                             | Method | URL params   | Data params | Response |
+|-----------------------|---------------------------------|--------|--------------|-------------|----------|
+| 프로모션 목록         | /api/products/promotions        | GET    |              |             |          |
+| 상품 상세 정보        | /api/products/:id               | GET    | id=[integer] |             |          |
+| 상품 상세 설명 이미지 | /api/products/:id/detailedImage | GET    | id=[integer] |             |          |
+| 상품 예약 정보        | /api/proudcts/:id/reservation   | GET    | id=[integer] |             |          |
+| 상품 리뷰 전체 보기   | /api/products/:id/reviews       | GET    | id=[integer] |             |          |
+| 상품명                | /api/products/:id/name          | GET    | id=[integer] |             |          |  
 
-## Task
-### [학습 스케쥴 시간표](https://docs.google.com/spreadsheets/d/1Lrs7SXr0j2byBHOml5ljEpT2dmEkN6o17ZdtOpurp9E/edit#gid=0)
-- [1.프로젝트 시작전 준비단계](/task/01_프로젝트_시작전_준비단계.md)
-- [2.관리자 : 카테고리 등록/수정/삭제](/task/카테고리등록수정삭제.md)
-- [3.예약 메인페이지](/task/예약메인페이지.md)
-  - [3-1.상단 프로모션 영역](/task/상단_프로모션_영역.md)
-  - [3-2.하단 리스트 영역](/task/하단_리스트_영역.md)
-- [4.개선하기1-FE](/task/개선하기_FE.md)
-- [5.예약 상품 상세 페이지](/task/예약상세페이지.md)
-  - [5-1.상품 타이틀 영역](/task/상품_타이틀_영역.md)
-  - [5-2.예매자 한줄평](/task/예매자_한줄평.md)
-  - [5-3.하단 상세 설명](/task/하단_상세_설명.md)
-- [6.로그인 하기 (네이버 로그인)](/task/네이버로그인.md)
-- [7.사용자 로그인 check](/task/사용자로그인check.md)
-- [8.사용자 예약 등록하기](/task/상품_예약하기.md)
-- [9.나의 예약 메인화면](/task/나의_예약_메인.md)
-- [10.한줄평등록](/task/한줄평_등록.md)
-- [11.전체 리뷰 보기](/task/전체_리뷰_보기.md)
-- 12.개선하기
-  - [12-1.FE](/task/개선하기_FE2.md)
-  - [12-2.BE](/task/개선하기_BE.md)
+ ## Category  
+ | Title              | URL                                     | Method | URL parms                    |  Data params | Response |
+ |--------------------|-----------------------------------------|--------|------------------------------|--------------|----------|
+ | 카테고리 목록      | /api/categories                         | GET    |                              |              |          |
+ | 카테고리 상품 목록 | /api/categories/:id/products?page=:page | GET    | id=[integer], page=[integer] |              |          |  
+
+## Reservation
+| Title        | URL                  | Method | URL parms |  Data params | Response |
+|--------------|----------------------|--------|-----------|--------------|----------|
+| 예약 등록    | /api/reservations    | POST   |           |              |          |
+| 내 예약 보기 | /api/reservations/my | GET    |           |              |          |  
+
+
+## Review
+| Title                 | URL                     | Method | URL parms    |  Data params | Response |
+|-----------------------|-------------------------|--------|--------------|--------------|----------|
+| 리뷰 등록             | /api/reviews            | POST   |              |              |          |
+| 해당 리뷰 이미지 목록 | /api/reviews/:id/images | GET    | id=[integer] |              |          |
+
+
+## Image
+| Title          | URL         | Method | URL parms |  Data params | Response |
+|----------------|-------------|--------|-----------|--------------|----------|
+| 리뷰 사진 등록 | /api/images | POST   |           |              |          |
+
+
+## User
+| Title   | URL           | Method | URL parms |  Data params | Response |
+|---------|---------------|--------|-----------|--------------|----------|
+| 내 정보 | /api/users/my | GET    |           |              |          | |
