@@ -12,7 +12,7 @@
 | 상품 리뷰 전체 보기   | /api/products/:id/reviews       | GET    | id=[integer] |             |          |
 | 상품명                | /api/products/:id/name          | GET    | id=[integer] |             |          |  
 
- ## Category  
+## Category  
  | Title              | URL                                     | Method | URL parms                    |  Data params | Response |
  |--------------------|-----------------------------------------|--------|------------------------------|--------------|----------|
  | 카테고리 목록      | /api/categories                         | GET    |                              |              |          |
