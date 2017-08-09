@@ -38,7 +38,7 @@
 ## Product
 | Title                 | URL                             | Method | URL params   | Data params | Response |
 |-----------------------|---------------------------------|--------|--------------|-------------|----------|
-| 프로모션 목록         | /api/products/promotions        | GET    |              |             |          |
+| 프로모션 목록         | /api/products/promotions        | GET    |              |             | { [ { id=[int], name=[str], description=[str], placeName=[str] }, ... ] } |
 | 상품 상세 정보        | /api/products/:id               | GET    | id=[integer] |             |          |
 | 상품 상세 설명 이미지 | /api/products/:id/detailedImage | GET    | id=[integer] |             |          |
 | 상품 예약 정보        | /api/proudcts/:id/reservation   | GET    | id=[integer] |             |          |
@@ -47,8 +47,8 @@
 ## Category  
  | Title              | URL                                     | Method | URL parms                    |  Data params | Response |
  |--------------------|-----------------------------------------|--------|------------------------------|--------------|----------|
- | 카테고리 목록      | /api/categories                         | GET    |                              |              |          |
- | 카테고리 상품 목록 | /api/categories/:id/products?page=:page | GET    | id=[integer], page=[integer] |              |          |  
+ | 카테고리 목록      | /api/categories                         | GET    |                              |              | { [ { id=[int], name=[str], productCount=[int] }, ... ] } |
+ | 카테고리 상품 목록 | /api/categories/:id/products?page=:page | GET    | id=[integer], page=[integer] |              | { [ { id=[int], name=[str], description=[str], placeName=[str] }, ... ] } |  
 
 ## Reservation
 | Title        | URL                  | Method | URL parms |  Data params | Response |
