@@ -16,12 +16,12 @@ import com.yg.reservation.vo.ProductSummaryVo;
 
 @Controller
 @RequestMapping("/api/categories")
-public class CategoryAPIController {
+public class CategoryApiController {
 	private CategoryService categoryService;
 	private ProductService productService;
 
 	@Autowired
-	public CategoryAPIController(CategoryService categoryService,
+	public CategoryApiController(CategoryService categoryService,
 			ProductService productService) {
 		this.categoryService = categoryService;
 		this.productService = productService;
