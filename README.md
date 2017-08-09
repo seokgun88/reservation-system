@@ -42,8 +42,7 @@
 | 상품 상세 정보        | /api/products/:id               | GET    | id=[integer] |             |          |
 | 상품 상세 설명 이미지 | /api/products/:id/detailedImage | GET    | id=[integer] |             |          |
 | 상품 예약 정보        | /api/proudcts/:id/reservation   | GET    | id=[integer] |             |          |
-| 상품 리뷰 전체 보기   | /api/products/:id/reviews       | GET    | id=[integer] |             |          |
-| 상품명                | /api/products/:id/name          | GET    | id=[integer] |             |          |  
+| 상품 리뷰 전체 보기   | /api/products/:id/reviews       | GET    | id=[integer] |             |          |  
 
 ## Category  
  | Title              | URL                                     | Method | URL parms                    |  Data params | Response |
