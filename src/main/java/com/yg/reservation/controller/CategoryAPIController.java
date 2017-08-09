@@ -28,8 +28,8 @@ public class CategoryAPIController {
 	}
 
 	@GetMapping
-	public List<Category> getCategories() {
-		return categoryService.getCategories();
+	public List<Category> getAll() {
+		return categoryService.getAll();
 	}
 
 	@GetMapping("/{categoryId}/products")

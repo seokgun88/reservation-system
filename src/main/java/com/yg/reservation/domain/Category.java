@@ -1,5 +1,8 @@
 package com.yg.reservation.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Category {
 	private int id;
 	private String name;
@@ -27,6 +30,12 @@ public class Category {
 
 	public void setProductCount(int productCount) {
 		this.productCount = productCount;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.JSON_STYLE);
 	}
 
 }
