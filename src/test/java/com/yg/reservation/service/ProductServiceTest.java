@@ -32,7 +32,7 @@ public class ProductServiceTest {
 	@Test
 	public void shouldGetPromotions() {
 		List<ProductSummaryVo> productSummaryVos = productService
-				.getPromotions();
+				.getPromotion();
 
 		assertThat(productSummaryVos, is(notNullValue()));
 

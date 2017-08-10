@@ -23,8 +23,8 @@ public class ProductService {
 		this.imageDao = imageDao;
 	}
 
-	public List<ProductSummaryVo> getPromotions() {
-		return mainImageMapper(productDao.selectPromotions());
+	public List<ProductSummaryVo> getPromotion() {
+		return mainImageMapper(productDao.selectPromotion());
 	}
 
 	public List<ProductSummaryVo> getSummaries(int categoryId, int page) {

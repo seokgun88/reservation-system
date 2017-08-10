@@ -25,7 +25,7 @@ public class ProductDao {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 
-	public List<ProductSummaryVo> selectPromotions() {
+	public List<ProductSummaryVo> selectPromotion() {
 		return jdbc.query(ProductSqls.SELECT_PROMOTION,
 				productSummaryRowMapper);
 	}

@@ -20,8 +20,8 @@ public class ProductApiController {
 		this.productService = productService;
 	}
 
-	@GetMapping("/promotions")
-	public List<ProductSummaryVo> getPromotions() {
-		return productService.getPromotions();
+	@GetMapping("/promotion")
+	public List<ProductSummaryVo> getPromotion() {
+		return productService.getPromotion();
 	}
 }
