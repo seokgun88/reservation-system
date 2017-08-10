@@ -15,8 +15,8 @@
         <div class="header">
             <header class="header_tit">
                 <h1 class="logo">
-                    <a href="#" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
-                    <a href="#" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
+                    <a href="/" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
+                    <a href="/" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
                 </h1>
                 <a href="#" class="btn_my"> <span title="내 예약">MY</span> </a>
             </header>
@@ -40,33 +40,6 @@
                             <div class="container_visual">
                                 <!-- [D] 이전,다음 버튼을 클릭할때마다 캐러셀 형태로 순환 됨 --->
                                 <ul class="visual_img">
-                                    <li class="item" style="background-image: url(http://naverbooking.phinf.naver.net/20170209_66/1486628146913la6nC_JPEG/image.jpg); width: 338px;">
-                                        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
-                                            <div class="event_txt">
-                                                <h4 class="event_txt_tit"></h4>
-                                                <p class="event_txt_adr"></p>
-                                                <p class="event_txt_dsc"></p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="item" style="background-image: url(http://naverbooking.phinf.naver.net/20170119_48/1484802596907hmVDm_JPEG/image.jpg); width: 338px;">
-                                        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
-                                            <div class="event_txt">
-                                                <h4 class="event_txt_tit">뮤지컬-김종욱찾기 네이버 예약</h4>
-                                                <p class="event_txt_adr">대학로 쁘띠첼씨어터</p>
-                                                <p class="event_txt_dsc">네이버 예매시, 손크림/발크림(중 래덤)을 드립니다</p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="item" style="background-image: url(http://naverbooking.phinf.naver.net/20170209_66/1486628146913la6nC_JPEG/image.jpg); width: 338px;">
-                                        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
-                                            <div class="event_txt">
-                                                <h4 class="event_txt_tit"></h4>
-                                                <p class="event_txt_adr"></p>
-                                                <p class="event_txt_dsc"></p>
-                                            </div>
-                                        </a>
-                                    </li>
                                 </ul>
                             </div>
                             <span class="nxt_fix"></span>
@@ -103,6 +76,19 @@
             <span class="copyright">© NAVER Corp.</span>
         </div>
     </footer>
+    <script type="text/handlebars-template" id="promotions-template">
+      {{#each this}}
+        <li class="item" style="background-image: url(/api/images/{{mainImageId}}); width: 338px;">
+          <a href="/products/{{id}}"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
+            <div class="event_txt">
+              <h4 class="event_txt_tit">{{name}}</h4>
+              <p class="event_txt_adr">{{placeName}}</p>
+              <p class="event_txt_dsc">{{description}}</p>
+            </div>
+          </a>
+        </li>
+      {{/each}}
+    </script>
     <script type="text/handlebars-template" id="categories-template">
       {{#each this}}
         <li class="item" data-category={{id}} data-count={{productCount}}>
@@ -127,7 +113,9 @@
     </script>
     <script src="/resources/js/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
-    <script src="/resources/js/AjaxRequest.js"></script>
+    <script src="/resources/js/node_modules/@egjs/component/dist/component.min.js"></script>
+    <script src="/resources/js/util.js"></script>
+    <script src="/resources/js/flicking.js"></script>
     <script src="/resources/js/mainPage.js"></script>
 </body>
 
