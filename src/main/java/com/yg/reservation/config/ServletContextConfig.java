@@ -8,8 +8,11 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+
+import com.yg.reservation.view.ImageDownloadView;
 
 @Configuration
 @EnableWebMvc
@@ -39,5 +42,17 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
         multipartResolver.setMaxUploadSize(1073741824); // 1024 * 1024 * 1024
         return multipartResolver;
     }
+    
+	@Bean
+	public ImageDownloadView imageDownloadView() {
+		return new ImageDownloadView();
+	}
+	
+	@Bean
+	public ViewResolver beanNameViewResolver() {
+		BeanNameViewResolver resolver = new BeanNameViewResolver();
+		resolver.setOrder(0);
+		return resolver;
+	}
 	
 }

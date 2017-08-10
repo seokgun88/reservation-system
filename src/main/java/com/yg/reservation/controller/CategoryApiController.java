@@ -32,7 +32,7 @@ public class CategoryApiController {
 		return categoryService.getAll();
 	}
 
-	@GetMapping("/{categoryId}/products")
+	@GetMapping("/{categoryId:[\\d]+}/products")
 	public List<ProductSummaryVo> getProducts(@PathVariable int categoryId,
 			@RequestParam int page) {
 		return productService.getSummaries(categoryId, page);

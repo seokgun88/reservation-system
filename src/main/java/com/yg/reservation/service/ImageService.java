@@ -29,38 +29,45 @@ public class ImageService {
 		this.imageDao = imageDao;
 	}
 	
-	public List<Integer> create(int userId, MultipartFile[] files) throws IllegalStateException, IOException{
-		if (files != null && files.length > 0) {
-			List<Integer> ids = new ArrayList<>();
-			String formattedDate = baseDir + File.separator
-					+ new SimpleDateFormat("yyyy" + File.separator + "MM" + File.separator + "dd")
-							.format(new Date());
-			File f = new File(formattedDate);
-			if (!f.exists()) {
-				f.mkdirs();
-			}
-			for (MultipartFile multipartFile : files) {
-				String contentType = multipartFile.getContentType();
-				String originalFilename = multipartFile.getOriginalFilename();
-				long size = multipartFile.getSize();
-
-				String uuid = UUID.randomUUID().toString();
-				String saveFileName = formattedDate + File.separator + uuid;
-				
-				f = new File(saveFileName);
-				multipartFile.transferTo(f);
-				
-				Image image = new Image();
-				image.setFileName(originalFilename);
-				image.setUserId(userId);
-				image.setSaveFileName(saveFileName);
-				image.setFileLength(size);
-				image.setContentType(contentType);
-				image.setDeleteFlag(1);
-				ids.add(imageDao.insert(image));
-			}
-			return ids;
+	public Image get(int id) {
+		if(id < 1) {
+			return null;
 		}
-		return null;
+		return imageDao.select(id);
+	}
+	
+	public List<Integer> create(int userId, MultipartFile[] files) throws IllegalStateException, IOException{
+		if (files == null || files.length < 1) {
+			return null;
+		}
+		List<Integer> ids = new ArrayList<>();
+		String formattedDate = baseDir + File.separator
+				+ new SimpleDateFormat("yyyy" + File.separator + "MM" + File.separator + "dd")
+						.format(new Date());
+		File f = new File(formattedDate);
+		if (!f.exists()) {
+			f.mkdirs();
+		}
+		for (MultipartFile multipartFile : files) {
+			String contentType = multipartFile.getContentType();
+			String originalFilename = multipartFile.getOriginalFilename();
+			long size = multipartFile.getSize();
+
+			String uuid = UUID.randomUUID().toString();
+			String saveFileName = formattedDate + File.separator + uuid;
+			
+			f = new File(saveFileName);
+			multipartFile.transferTo(f);
+			
+			Image image = new Image();
+			image.setFileName(originalFilename);
+			image.setUserId(userId);
+			image.setSaveFileName(saveFileName);
+			image.setFileLength(size);
+			image.setContentType(contentType);
+			image.setDeleteFlag(1);
+			ids.add(imageDao.insert(image));
+		}
+		return ids;
 	}
 }
