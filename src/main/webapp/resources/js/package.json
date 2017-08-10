@@ -1,0 +1,20 @@
+{
+  "name": "reservation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mainPage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@egjs/component": "^2.0.0-rc",
+    "handlebars": "^4.0.10",
+    "jquery": "^3.2.1",
+    "requirejs": "^2.3.4"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}

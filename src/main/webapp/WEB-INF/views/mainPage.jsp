@@ -76,34 +76,7 @@
             </div>
             <div class="section_event_tab">
                 <ul class="event_tab_lst tab_lst_min">
-                    <li class="item" data-category="1">
-                        <a class="anchor active"> <span>전체</span> </a>
-                    </li>
-                    <li class="item" data-category="2">
-                        <a class="anchor"> <span>전시</span> </a>
-                    </li>
-                    <li class="item" data-category="3">
-                        <!-- [D] 활성화 된 anchor는 active 추가 -->
-                        <a class="anchor"> <span>뮤지컬</span> </a>
-                    </li>
-                    <li class="item" data-category="4">
-                        <a class="anchor"> <span>콘서트</span> </a>
-                    </li>
-                    <li class="item" data-category="5">
-                        <a class="anchor"> <span>클래식</span> </a>
-                    </li>
-                    <li class="item" data-category="6">
-                        <a class="anchor"> <span>연극</span> </a>
-                    </li>
-                    <li class="item" data-category="7">
-                        <a class="anchor"> <span>클래스</span> </a>
-                    </li>
-                    <li class="item" data-category="8">
-                        <a class="anchor"> <span>체험</span> </a>
-                    </li>
-                    <li class="item" data-category="9">
-                        <a class="anchor last"> <span>키즈</span> </a>
-                    </li>
+
                 </ul>
             </div>
             <div class="section_event_lst">
@@ -176,6 +149,16 @@
             <span class="copyright">© NAVER Corp.</span>
         </div>
     </footer>
+    <script type="text/handlebars-template" id="category-template">
+      {{#each this}}
+        <li class="item" data-category={{id}} data-count={{productCount}}>
+            <a class="anchor"> <span>{{name}}</span> </a>
+        </li>
+      {{/each}}
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+    <script src="/resources/js/mainPage.js"></script>
 </body>
 
 </html>
