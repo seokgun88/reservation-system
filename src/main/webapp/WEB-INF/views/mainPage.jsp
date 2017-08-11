@@ -111,12 +111,8 @@
         </li>
       {{/each}}
     </script>
-    <script src="/resources/js/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js"></script>
-    <script src="/resources/js/node_modules/@egjs/component/dist/component.min.js"></script>
-    <script src="/resources/js/util.js"></script>
-    <script src="/resources/js/flicking.js"></script>
-    <script src="/resources/js/mainPage.js"></script>
+    <script data-main="/resources/js/mainPage.js"
+     src="/resources/js/node_modules/requirejs/require.js"></script>
 </body>
 
 </html>
