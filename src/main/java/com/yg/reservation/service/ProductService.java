@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yg.reservation.dao.ImageDao;
 import com.yg.reservation.dao.ProductDao;
+import com.yg.reservation.domain.ProductPrice;
 import com.yg.reservation.vo.MainImageVo;
+import com.yg.reservation.vo.ProductReservationVo;
 import com.yg.reservation.vo.ProductSummaryVo;
 
 @Service
@@ -61,5 +63,13 @@ public class ProductService {
 					.getOrDefault(productSummary.getId(), 0));
 		}
 		return productSummaryVos;
+	}
+
+	public ProductReservationVo getReservation(int id) {
+		return productDao.selectReservation(id);
+	}
+
+	public List<ProductPrice> getPrices(int id) {
+		return productDao.selectPrices(id);
 	}
 }

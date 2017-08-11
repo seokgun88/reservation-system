@@ -17,6 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yg.reservation.config.RootApplicationContextConfig;
+import com.yg.reservation.domain.ProductPrice;
+import com.yg.reservation.vo.ProductReservationVo;
 import com.yg.reservation.vo.ProductSummaryVo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -60,4 +62,25 @@ public class ProductServiceTest {
 			logger.info(promotion.toString());
 		});
 	}
+	
+	@Test
+	public void shouldGetReservation() {
+		ProductReservationVo productReservationVo = productService.getReservation(2);
+
+		assertThat(productReservationVo, is(notNullValue()));
+
+		logger.info(productReservationVo.toString());
+	}
+
+	@Test
+	public void shouldGetPrices() {
+		List<ProductPrice> productPrices = productService.getPrices(1);
+
+		assertThat(productPrices, is(notNullValue()));
+
+		productPrices.stream().forEach(price -> {
+			logger.info(price.toString());
+		});
+	}
+
 }
