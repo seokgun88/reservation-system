@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yg.reservation.dao.ImageDao;
 import com.yg.reservation.dao.ProductDao;
@@ -27,6 +28,7 @@ public class ProductService {
 		return mainImageMapper(productDao.selectPromotion());
 	}
 
+	@Transactional
 	public List<ProductSummaryVo> getSummaries(int categoryId, int page) {
 		if (categoryId < 0 || page < 1) {
 			return null;
