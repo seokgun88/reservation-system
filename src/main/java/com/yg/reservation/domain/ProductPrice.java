@@ -11,5 +11,5 @@ public class ProductPrice {
 	private int productId;
 	private int priceType;
 	private int price;
-	private float discountRate;
+	private int discountRate;
 }
