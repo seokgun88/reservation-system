@@ -28,7 +28,7 @@ public class ProductSqls {
 			+ "FROM products AS p "
 			+ "INNER JOIN product_displays AS d ON p.id=d.product_id "
 			+ "INNER JOIN product_details AS detail ON p.id=detail.product_id "
-			+ "INNER JOIN product_images AS i ON p.id=i.product_id AND i.type=1 "
+			+ "LEFT JOIN product_images AS i ON p.id=i.product_id AND i.type=1 "
 			+ "WHERE p.id=:id";
 	
 	public static final String SELECT_DISPLAY = 
