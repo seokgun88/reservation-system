@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yg.reservation.config.RootApplicationContextConfig;
 import com.yg.reservation.domain.ProductPrice;
+import com.yg.reservation.vo.ProductDetailVo;
 import com.yg.reservation.vo.ProductReservationVo;
 import com.yg.reservation.vo.ProductSummaryVo;
 
@@ -61,6 +62,13 @@ public class ProductServiceTest {
 		productSummaryVos.stream().forEach(promotion -> {
 			logger.info(promotion.toString());
 		});
+	}
+	
+	@Test
+	public void shouldGetDetail() {
+		ProductDetailVo productDetailVo = productService.getDetail(1);
+		assertThat(productDetailVo, is(notNullValue()));
+		logger.info(productDetailVo.toString());
 	}
 	
 	@Test

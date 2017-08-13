@@ -12,6 +12,7 @@ import com.yg.reservation.dao.ImageDao;
 import com.yg.reservation.dao.ProductDao;
 import com.yg.reservation.domain.ProductPrice;
 import com.yg.reservation.vo.MainImageVo;
+import com.yg.reservation.vo.ProductDetailVo;
 import com.yg.reservation.vo.ProductReservationVo;
 import com.yg.reservation.vo.ProductSummaryVo;
 
@@ -63,6 +64,20 @@ public class ProductService {
 					.getOrDefault(productSummary.getId(), 0));
 		}
 		return productSummaryVos;
+	}
+
+	@Transactional(readOnly=true)
+	public ProductDetailVo getDetail(int id) {
+		if(id < 1) {
+			return null;
+		}
+		ProductDetailVo productDetailVo = productDao.selectDetail(id);
+		if(productDetailVo == null) {
+			return null;
+		}
+		List<Integer> images = imageDao.selectByProductId(id);
+		productDetailVo.setImages(images);
+		return productDetailVo;
 	}
 
 	public ProductReservationVo getReservation(int id) {

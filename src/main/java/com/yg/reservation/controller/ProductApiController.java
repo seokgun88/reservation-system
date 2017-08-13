@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yg.reservation.domain.ProductPrice;
 import com.yg.reservation.service.ProductService;
+import com.yg.reservation.vo.ProductDetailVo;
 import com.yg.reservation.vo.ProductReservationVo;
 import com.yg.reservation.vo.ProductSummaryVo;
 
@@ -21,6 +22,11 @@ public class ProductApiController {
 	@Autowired
 	public ProductApiController(ProductService productService) {
 		this.productService = productService;
+	}
+	
+	@GetMapping("/{id:[\\d]+}")
+	public ProductDetailVo getDetail(@PathVariable int id) {
+		return productService.getDetail(id);
 	}
 
 	@GetMapping("/promotion")

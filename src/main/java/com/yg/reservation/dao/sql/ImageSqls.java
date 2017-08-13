@@ -10,4 +10,6 @@ public class ImageSqls {
 			+ "FROM product_images "
 			+ "WHERE product_id IN (:productIds) "
 			+ "GROUP BY product_id";
+	public static final String SELECT_BY_PRODUCT_ID = 
+			"SELECT file_id FROM product_images WHERE product_id=:productId AND type=0";
 }
