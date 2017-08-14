@@ -14,12 +14,12 @@ import com.yg.reservation.domain.Category;
 
 @Repository
 public class CategoryDao {
-	private NamedParameterJdbcTemplate jdbc;
+	private NullableNamedParameterJdbcTemplate jdbc;
 	private RowMapper<Category> categoryRowMapper = BeanPropertyRowMapper
 			.newInstance(Category.class);
 
 	public CategoryDao(DataSource dataSource) {
-		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+		this.jdbc = new NullableNamedParameterJdbcTemplate(dataSource);
 	}
 
 	public List<Category> selectAll() {

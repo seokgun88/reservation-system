@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/products")
 public class ProductController {
+	@GetMapping("/{id:[\\d]+}")
+	public String detail() {
+		return "detail";
+	}
+	
 	@GetMapping("/{id:[\\d]+}/reservation")
 	public String reservation() {
 		return "reserve";

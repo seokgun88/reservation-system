@@ -47,4 +47,9 @@ public class ImageDao {
 		Map<String, ?> params = Collections.singletonMap("productIds", productIds);
 		return jdbc.query(ImageSqls.SELECT_MIN_IDS_BY_PRODUCT_IDS, params, mainImageVoRowMapper);
 	}
+
+	public List<Integer> selectByProductId(int productId) {
+		Map<String, Integer> param = Collections.singletonMap("productId", productId);
+		return jdbc.queryForList(ImageSqls.SELECT_BY_PRODUCT_ID, param, Integer.class);
+	}
 }
