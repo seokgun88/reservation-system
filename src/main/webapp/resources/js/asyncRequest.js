@@ -1,10 +1,10 @@
-define(["jquery"], function($){
-  function ajaxRequest(url, method, data){
+define(["jquery"], function($) {
+  function ajaxRequest(url, method, data) {
     return $.ajax({
-      url : url,
-      method : method,
-      data : data,
-      contentType : "application/json; charset=UTF-8"
+      url: url,
+      method: method,
+      data: data,
+      contentType: "application/json; charset=UTF-8"
     });
   }
 

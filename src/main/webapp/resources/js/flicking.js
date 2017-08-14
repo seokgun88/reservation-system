@@ -1,4 +1,4 @@
-define(["jquery", "egComponent", "util"], function($, egComponent, Util){
+define(["jquery", "egComponent", "util"], function($, egComponent, Util) {
   var Flicking = Util.extend(egComponent, {
     init: function(ele, options) {
       var defaultOptions = {
@@ -13,7 +13,7 @@ define(["jquery", "egComponent", "util"], function($, egComponent, Util){
       this._$ele = $(ele);
       this._index = 1;
       this._slideLock = false;
-      this._intervalId=0;
+      this._intervalId = 0;
 
       this._$ele.find(this.options.btnNextClass).on("click", this._slideHandler.bind(this, 1));
       this._$ele.find(this.options.btnPrevClass).on("click", this._slideHandler.bind(this, -1));
