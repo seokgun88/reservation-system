@@ -44,9 +44,9 @@ public class ImageService {
 		String formattedDate = baseDir + File.separator
 				+ new SimpleDateFormat("yyyy" + File.separator + "MM" + File.separator + "dd")
 						.format(new Date());
-		File f = new File(formattedDate);
-		if (!f.exists()) {
-			f.mkdirs();
+		File directory = new File(formattedDate);
+		if (!directory.exists()) {
+			directory.mkdirs();
 		}
 		for (MultipartFile multipartFile : files) {
 			String contentType = multipartFile.getContentType();
@@ -54,15 +54,14 @@ public class ImageService {
 			long size = multipartFile.getSize();
 
 			String uuid = UUID.randomUUID().toString();
-			String saveFileName = formattedDate + File.separator + uuid;
 			
-			f = new File(saveFileName);
+			File f = new File(directory, uuid);
 			multipartFile.transferTo(f);
 			
 			Image image = new Image();
 			image.setFileName(originalFilename);
 			image.setUserId(userId);
-			image.setSaveFileName(saveFileName);
+			image.setSaveFileName(f.getCanonicalPath());
 			image.setFileLength(size);
 			image.setContentType(contentType);
 			image.setDeleteFlag(1);

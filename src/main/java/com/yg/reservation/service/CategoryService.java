@@ -19,15 +19,18 @@ public class CategoryService {
 
 	public List<Category> getAll() {
 		List<Category> categories = categoryDao.selectAll();
+		if (categories == null || categories.isEmpty()) {
+			return null;
+		}
 		int productsTotalCount = categories.stream()
 				.mapToInt(Category::getProductCount).sum();
 		Category totalCategory = new Category();
 		totalCategory.setId(0);
 		totalCategory.setName("전체");
 		totalCategory.setProductCount(productsTotalCount);
-		
+
 		categories.add(0, totalCategory);
-		
+
 		return categories;
 	}
 }
