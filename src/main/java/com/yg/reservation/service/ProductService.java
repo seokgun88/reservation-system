@@ -35,9 +35,9 @@ public class ProductService {
 		int offset = (page - 1) * 10;
 		List<ProductSummaryVo> productSummaryVos = null;
 		if (categoryId == 0) {
-			productSummaryVos = productDao.selectProducts(offset);
+			productSummaryVos = productDao.selectLimitedWithOffset(offset);
 		} else {
-			productSummaryVos = productDao.selectProducts(categoryId, offset);
+			productSummaryVos = productDao.selectLimitedWithOffsetByCategoryId(categoryId, offset);
 		}
 		return productSummaryVos;
 	}

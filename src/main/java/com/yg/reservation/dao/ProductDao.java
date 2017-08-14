@@ -39,14 +39,14 @@ public class ProductDao {
 				productSummaryRowMapper);
 	}
 
-	public List<ProductSummaryVo> selectProducts(int offset) {
+	public List<ProductSummaryVo> selectLimitedWithOffset(int offset) {
 		Map<String, Integer> param = Collections.singletonMap("offset", offset);
 
 		return jdbc.query(ProductSqls.SELECT_SUMMARY_LIMITED_10, param,
 				productSummaryRowMapper);
 	}
 
-	public List<ProductSummaryVo> selectProducts(int categoryId, int offset) {
+	public List<ProductSummaryVo> selectLimitedWithOffsetByCategoryId(int categoryId, int offset) {
 		Map<String, Integer> params = new HashMap<String, Integer>();
 		params.put("categoryId", categoryId);
 		params.put("offset", offset);

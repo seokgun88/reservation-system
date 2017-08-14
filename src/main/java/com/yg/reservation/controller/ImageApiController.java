@@ -28,7 +28,7 @@ public class ImageApiController {
 	}
 	
 	@GetMapping("/{id:[\\d]+}")
-	public ModelAndView getImage(@PathVariable int id) {
+	public ModelAndView get(@PathVariable int id) {
 		Image image = imageService.get(id);
 		return new ModelAndView("imageDownloadView", "image", image);
 	}
