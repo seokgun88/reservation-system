@@ -35,4 +35,9 @@ public class ProductController {
 
 		return "reserve";
 	}
+
+	@GetMapping("/{id:[\\d]+}/review")
+	public String reviewWrite() {
+		return "reviewWrite";
+	}
 }
