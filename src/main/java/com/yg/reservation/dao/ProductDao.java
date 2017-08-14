@@ -65,4 +65,10 @@ public class ProductDao {
 		return jdbc.query(ProductPriceSqls.SELECT_BY_PRODUCT_ID, param,
 				productPriceRowMapper);
 	}
+
+	public String selectName(int id) {
+		Map<String, Integer> param = Collections.singletonMap("id", id);
+		return jdbc.queryForObject(ProductSqls.SELECT_NAME, param,
+				String.class);
+	}
 }

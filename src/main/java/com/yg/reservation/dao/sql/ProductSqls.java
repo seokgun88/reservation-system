@@ -28,4 +28,7 @@ public class ProductSqls {
 			+ "INNER JOIN product_images AS i ON p.id=i.product_id "
 			+ "WHERE p.id=:id "
 			+ "GROUP BY p.id";
+
+	public static final String SELECT_NAME = 
+			"SELECT name FROM products WHERE id=:id";
 }

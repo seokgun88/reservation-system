@@ -32,8 +32,8 @@ public class ProductApiController {
 	public ProductReservationVo getReservation(@PathVariable int id){
 		return productService.getReservation(id);
 	}
-	
-	@GetMapping("/{id:[\\d]+}/price")
+	 
+	@GetMapping("/{id:[\\d]+}/prices")
 	public List<ProductPrice> getPrices(@PathVariable int id){
 		return productService.getPrices(id);
 	}

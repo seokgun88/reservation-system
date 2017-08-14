@@ -29,6 +29,10 @@ public class ProductService {
 	public List<ProductSummaryVo> getPromotion() {
 		return mainImageMapper(productDao.selectPromotion());
 	}
+	
+	public String getName(int id) {
+		return productDao.selectName(id);
+	}
 
 	@Transactional
 	public List<ProductSummaryVo> getSummaries(int categoryId, int page) {
