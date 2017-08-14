@@ -27,7 +27,11 @@ public class ProductService {
 	public List<ProductSummaryVo> getPromotion() {
 		return productDao.selectPromotion();
 	}
-	
+
+	public String getName(int id) {
+		return productDao.selectName(id);
+	}
+
 	public List<ProductSummaryVo> getSummaries(int categoryId, int page) {
 		if (categoryId < 0 || page < 1) {
 			return null;

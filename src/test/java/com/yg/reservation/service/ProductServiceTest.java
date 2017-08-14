@@ -90,5 +90,14 @@ public class ProductServiceTest {
 			logger.info(price.toString());
 		});
 	}
+	
+	@Test
+	public void shouldGetName() {
+		String productName = productService.getName(1);
+		
+		assertThat(productName, is(notNullValue()));
+		
+		logger.info("productName: " + productName);
+	}
 
 }
