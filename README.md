@@ -39,10 +39,9 @@
 | Title                 | URL                             | Method | URL params   | Data params | Response |
 |-----------------------|---------------------------------|--------|--------------|-------------|----------|
 | 프로모션 목록         | /api/products/promotions        | GET    |              |             | { [ { id=[int], name=[str], description=[str], placeName=[str], mainImageId=[int] }, ... ] } |
-| 상품 상세 정보        | /api/products/:id               | GET    | id=[integer] |             |          |
-| 상품 상세 설명 이미지 | /api/products/:id/detailedImage | GET    | id=[integer] |             |          |
-| 상품 예약 정보        | /api/proudcts/:id/reservation   | GET    | id=[integer] |             |          |
-| 상품 리뷰 전체 보기   | /api/products/:id/reviews       | GET    | id=[integer] |             |          |  
+| 상품 상세 정보        | /api/products/:id               | GET    | id=[integer] |             | { nema=[str], images=[[int], ...], description=[str], event=[str], content=[str], subImage=[int], placeName=[str], placeLot=[str], placeStreet=[str], tel=[str], homepage=[str], email=[str], reviewCount=[int], reviewTotalScore=[int] } |
+| 상품 예약 정보        | /api/proudcts/:id/reservation   | GET    | id=[integer] |             | { name=[str], placeName=[str], displayStart=[Date], displayEnd=[Date], observationTime=[str], mainImageId=[int] } |
+| 상품 리뷰 보기   | /api/products/:id/reviews?limit=:limit&page=:page | GET    | id=[integer], limit=[integer], page=[integer] |             | { [ { review=[str], score=[int], modifyDate=[Date], userEmail=[str] }, ... ] } |  
 
 ## Category  
  | Title              | URL                                     | Method | URL parms                    |  Data params | Response |
@@ -61,7 +60,6 @@
 | Title                 | URL                     | Method | URL parms    |  Data params | Response |
 |-----------------------|-------------------------|--------|--------------|--------------|----------|
 | 리뷰 등록             | /api/reviews            | POST   |              |              |          |
-| 해당 리뷰 이미지 목록 | /api/reviews/:id/images | GET    | id=[integer] |              |          |
 
 
 ## Image
