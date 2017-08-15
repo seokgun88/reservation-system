@@ -111,7 +111,12 @@
             <span class="copyright">© NAVER Corp.</span>
         </div>
     </footer>
-    <div id="photoviwer"></div>
+  	<div id="imageviewer" class="hide" style="height:100vh; position:fixed; top:0px; left:0px; background:#000000; z-index:1000000;">
+  		<button class="btn_close" type="button">닫기</button>
+  		<span style="color:#ffffff; float:right"><span class="index_image">1</span>/<span class="total_image">1</span></span>
+  		<ul class="image_list" style="overflow:visible; width:100%; height:100%; position:relative; white-space:nowrap; font-size:0;">
+      </ul>
+  	</div>
     <script type="text/handlebars-template" id="topimages-template">
       {{#each this}}
         <li class="item" style="width: 414px;">
@@ -131,7 +136,7 @@
         <a class="btn_goto_home" title="홈페이지" href="{{homepage}}" target="siteUrl"> <i class="fn fn-home1"></i> </a>
         <a class="btn_goto_tel" title="전화" href="tel:{{tel}}"> <i class="fn fn-call1"></i> </a>
         <a class="btn_goto_mail" title="이메일" href="mailto:{{email}}"> <i class="fn fn-mail1"></i> </a>
-        <a href="#" class="btn_goto_path" title="길찾기"> <i class="fn fn-path-find1"></i> </a>
+        <a href="#" class="btn_goto_path" title="길찾기" target="_blank"> <i class="fn fn-path-find1"></i> </a>
         <a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
       </div>
     </script>
@@ -142,7 +147,7 @@
       </div>
       <!-- [D] 토글 상황에 따라 bk_more에 display:none 추가 -->
       <a href="#" class="bk_more _open"> <span class="bk_more_txt">펼쳐보기</span> <i class="fn fn-down2"></i> </a>
-      <a href="#" class="bk_more _close" style="display: none;"> <span class="bk_more_txt">접기</span> <i class="fn fn-up2"></i> </a>
+      <a href="#" class="bk_more _close hide"> <span class="bk_more_txt">접기</span> <i class="fn fn-up2"></i> </a>
     </script>
     <script type="text/handlebars-template" id="topevent-template">
       <div class="event_info_box">
@@ -162,7 +167,7 @@
     </script>
     <script type="text/handlebars-template" id="reviews-template">
       {{#each this}}
-        <li class="list_item">
+        <li class="list_item" data-id={{id}}>
           <div>
             <div class="review_area">
               <div class="thumb_area{{hasImage}}">
@@ -204,11 +209,12 @@
     </script>
     <script type="text/handlebars-template" id="location-template">
       <div class="box_store_info no_topline">
-          <a href="#" class="store_location" title="지도웹으로 연결">
-              <img class="store_map img_thumb" alt="map" src="{{naverMapSrc}}">
+          <div id="map" style="width:374px;height:200px;">
+            <a href="#" class="store_location" title="지도웹으로 연결">
               <span class="img_border"></span>
               <span class="btn_map"><i class="spr_book2 ico_mapview"></i></span>
-          </a>
+            </a>
+          </div>
           <h3 class="store_name">엔에이치엔티켓링크(주)</h3>
           <div class="store_info">
               <div class="store_addr_wrap">
@@ -243,14 +249,23 @@
                   </ul>
               </div>
           </div>
-      <!-- [D] 모바일 브라우저에서 접근 시 column2 추가와 btn_navigation 요소 추가 -->
+          <!-- [D] 모바일 브라우저에서 접근 시 column2 추가와 btn_navigation 요소 추가 -->
           <div class="bottom_common_path column2">
-              <a href="#" class="btn_path"> <i class="fn fn-path-find2"></i> <span>길찾기</span> </a>
-      <a hewf="#" class="btn_navigation before"> <i class="fn fn-navigation2"></i> <span>내비게이션</span> </a>
+              <a href="#" target="_blank" class="btn_path"> <i class="fn fn-path-find2"></i> <span>길찾기</span> </a>
+              <a hewf="#" class="btn_navigation before"> <i class="fn fn-navigation2"></i> <span>내비게이션</span> </a>
           </div>
       </div>
     </script>
+    <script type="text/x-handlebars-template" id="imageviewer-template">
+      {{#each this}}
+        <li style="display:inline-block; width:100%; height:100%; text-align:center;">
+          <img src="/api/images/{{this}}" style="max-width:100%; max-hegiht:100%;">
+        </li>
+      {{/each}}
+    </script>
+    <script type="text/javascript"
+      src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=${clientId}&submodules=geocoder"></script>
     <script data-main="/resources/js/detail.js"
-     src="/resources/js/node_modules/requirejs/require.js"></script>
+      src="/resources/js/node_modules/requirejs/require.js"></script>
 </body>
 </html>

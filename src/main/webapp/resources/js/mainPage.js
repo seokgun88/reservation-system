@@ -1,14 +1,14 @@
 require.config({
-    paths : {
-      "jquery" : "node_modules/jquery/dist/jquery.min",
-      "Handlebars" : "node_modules/handlebars/dist/handlebars.min",
-      "egComponent" : "node_modules/@egjs/component/dist/component.min"
-    }
+  paths: {
+    "jquery": "node_modules/jquery/dist/jquery.min",
+    "Handlebars": "node_modules/handlebars/dist/handlebars.min",
+    "egComponent": "node_modules/@egjs/component/dist/component.min"
+  }
 });
 
 require([
   "jquery", "Handlebars", "egComponent", "util", "flicking", "asyncRequest"
-], function($, Handlebars, egComponent, Util, Flicking, ajaxRequest){
+], function($, Handlebars, egComponent, Util, Flicking, ajaxRequest) {
   var MainPage = (function() {
     "use strict";
 
@@ -31,7 +31,7 @@ require([
       $(window).on("scroll", scrollUpdate);
     }
 
-    function initFlicking(){
+    function initFlicking() {
       var options = {
         width: 338,
         size: $("ul.visual_img li").length,
@@ -75,13 +75,13 @@ require([
         rightData = [];
 
       for (var i = 0; i < data.length; i++) {
-        (i % 2 == 0) ? leftData.push(data[i]) : rightData.push(data[i]);
+        (i % 2 == 0) ? leftData.push(data[i]): rightData.push(data[i]);
       }
       $leftBox[option](productsTemplate(leftData));
       $rightBox[option](productsTemplate(rightData));
     }
 
-    function drawPromotions(data){
+    function drawPromotions(data) {
       $("ul.visual_img").html(promotionsTemplate(data));
     }
 
@@ -91,17 +91,21 @@ require([
     }
 
     function scrollUpdate() {
-      var productsCount = $(".event_tab_lst li.item[data-category=" + categoryIdx + "]").data("count");
-      // 전체개수 > 페이지 * 10
-      if (productsCount > page * 10) {
+      if (!isEndOfProducts()) {
         var moreTop = $(".more .btn").offset().top;
         var scrollY = window.scrollY;
         var windowHeight = window.innerHeight;
         if (windowHeight + scrollY > moreTop - 100) {
           page++;
           getProducts("append");
+          isEndOfProducts() && $(".more").addClass("hide");
         }
       }
+    }
+
+    function isEndOfProducts() {
+      var productsCount = $(".event_tab_lst li.item[data-category=" + categoryIdx + "]").data("count");
+      return productsCount <= page * 10;
     }
 
     function ajaxErrorHandler(error) {

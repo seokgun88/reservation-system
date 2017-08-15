@@ -1,6 +1,6 @@
 define(["jquery", "egComponent", "util"], function($, egComponent, Util) {
   var Flicking = Util.extend(egComponent, {
-    
+
     init: function(ele, options) {
       var defaultOptions = {
         width: 338,
@@ -15,6 +15,7 @@ define(["jquery", "egComponent", "util"], function($, egComponent, Util) {
       this._index = 1;
       this._slideLock = false;
       this._intervalId = 0;
+      this._timeoutId = 0;
 
       this._$ele.find(this.options.btnNextClass).on("click", this._slideHandler.bind(this, 1));
       this._$ele.find(this.options.btnPrevClass).on("click", this._slideHandler.bind(this, -1));
@@ -28,7 +29,8 @@ define(["jquery", "egComponent", "util"], function($, egComponent, Util) {
     _slideHandler: function(direction, e) {
       this._slide(direction);
       clearInterval(this._intervalId);
-      setTimeout(this._autoSlide.bind(this), 4000);
+      clearTimeout(this._timeoutId);
+      this._timeoutId = setTimeout(this._autoSlide.bind(this), 4000);
     },
 
     _slide: function(direction, e) {
@@ -42,6 +44,7 @@ define(["jquery", "egComponent", "util"], function($, egComponent, Util) {
           left: (this.options.width * this._index * -1) + "px"
         }, function() {
           this._slideLock = false;
+          this.trigger("afterAnimate", { index : this._index });
         }.bind(this));
       }
     },
