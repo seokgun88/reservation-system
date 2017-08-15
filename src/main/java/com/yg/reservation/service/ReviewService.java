@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yg.reservation.dao.ImageDao;
 import com.yg.reservation.dao.ReviewDao;
@@ -23,23 +24,26 @@ public class ReviewService {
 		this.imageDao = imageDao;
 	}
 
+	@Transactional(readOnly=true)
 	public List<Review> getLimitedByProductId(int productId, int limit) {
 		if(productId < 1 || limit < 1) {
 			return null;
 		}
 		List<Review> reviews = reviewDao.selectLimitedByProductId(productId, limit);
-		if(reviews == null) {
+		if(reviews == null || reviews.isEmpty()) {
 			return null;
 		}
 		List<Integer> ids = reviews.stream().map(Review::getId).collect(Collectors.toList());
 		List<ReviewImageVo> imageIds = imageDao.selectIdsByReviewIds(ids);
+		if(imageIds == null || imageIds.isEmpty()) {
+			return null;
+		}
 		Map<Integer, List<Integer>> idToImageIds = imageIds.stream().collect(
 				Collectors.groupingBy(ReviewImageVo::getReviewId, 
 						Collectors.mapping(ReviewImageVo::getImageId, Collectors.toList())));
 		for(Review review : reviews) {
 			review.setImages(idToImageIds.getOrDefault(review.getId(), null));
-		}
-		
+		}		
 		return reviews;
 	}
 
