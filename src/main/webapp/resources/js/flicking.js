@@ -1,5 +1,6 @@
 define(["jquery", "egComponent", "util"], function($, egComponent, Util) {
   var Flicking = Util.extend(egComponent, {
+    
     init: function(ele, options) {
       var defaultOptions = {
         width: 338,
@@ -27,7 +28,7 @@ define(["jquery", "egComponent", "util"], function($, egComponent, Util) {
     _slideHandler: function(direction, e) {
       this._slide(direction);
       clearInterval(this._intervalId);
-      setTimeout(this._autoSlide(), 4000);
+      setTimeout(this._autoSlide.bind(this), 4000);
     },
 
     _slide: function(direction, e) {
