@@ -54,7 +54,7 @@ public class ImageService {
 			long size = multipartFile.getSize();
 
 			String uuid = UUID.randomUUID().toString();
-			
+
 			File f = new File(directory, uuid);
 			multipartFile.transferTo(f);
 			
