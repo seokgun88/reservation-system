@@ -22,15 +22,12 @@ define(["util", "egComponent"], function(Util, egComponent) {
     _plus: function(e) {
       e.preventDefault();
       if (this.count === 0) {
-        this._$minusBtn.removeAttr("disabled");
-        this.$countEle.removeAttr("disabled");
+        this._$minusBtn.prop("disabled", false);
+        this.$countEle.prop("disabled", false);
+        this.$totalPriceEle.closest("div").addClass("on_color");
       }
       this.count++;
       this.isPlus = true;
-      if (!this._onColorFlag) {
-        this.$totalPriceEle.closest("div").addClass("on_color");
-        this._onColorFlag = true;
-      }
       this.trigger("change");
     },
     _minus: function(e) {
@@ -38,14 +35,16 @@ define(["util", "egComponent"], function(Util, egComponent) {
       if (this.count > 0) {
         this.count--;
         this.isPlus = false;
-        if (this._count === 0) {
-          this._$minusBtn.attr("disabled", true);
-          this.$countEle.attr("disabled", true);
+        if (this.count === 0) {
+          this._$minusBtn.prop("disabled", true);
+          this.$countEle.prop("disabled", true);
+          this.$totalPriceEle.closest("div").removeClass("on_color");
         }
-        this.$totalPriceEle.closest("div").removeClass("on_color");
-        this._onColorFlag = false;
         this.trigger("change");
       }
+    },
+    getCount: function() {
+      return this.count;
     }
   });
 
