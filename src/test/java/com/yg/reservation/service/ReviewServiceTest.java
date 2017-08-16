@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yg.reservation.config.RootApplicationContextConfig;
 import com.yg.reservation.domain.Review;
+import com.yg.reservation.vo.ReviewVo;
+import com.yg.reservation.vo.ReviewWriteVo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RootApplicationContextConfig.class)
@@ -24,15 +26,26 @@ import com.yg.reservation.domain.Review;
 public class ReviewServiceTest {
 	@Autowired
 	private ReviewService reviewService;
-	private Logger Logger = LoggerFactory.getLogger(ReviewServiceTest.class);
+	private Logger logger = LoggerFactory.getLogger(ReviewServiceTest.class);
 
 	@Test
 	public void shouldGetLimitedByProductId() {
-		List<Review> reviews = reviewService.getLimitedByProductId(1, 3);
+		List<ReviewVo> reviews = reviewService.getLimitedByProductId(1, 3);
 		assertThat(reviews, is(notNullValue()));
 		reviews.stream().forEach(r -> {
-			Logger.info(r.toString());
+			logger.info(r.toString());
 		});
 	}
 
+	@Test
+	public void shouldAdd() {
+		ReviewWriteVo reviewWriteVo = new ReviewWriteVo();
+		Review review = new Review();
+		review.setProductId(1);
+		review.setUserId(1);
+		review.setScore(30);
+		review.setReview("good!");
+		reviewWriteVo.setReview(review);
+		reviewService.addWithImageIds(reviewWriteVo);
+	}
 }

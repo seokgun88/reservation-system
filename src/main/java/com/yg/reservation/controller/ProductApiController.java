@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yg.reservation.domain.ProductPrice;
-import com.yg.reservation.domain.Review;
 import com.yg.reservation.service.ProductService;
 import com.yg.reservation.service.ReviewService;
 import com.yg.reservation.vo.ProductDetailVo;
 import com.yg.reservation.vo.ProductReservationVo;
 import com.yg.reservation.vo.ProductSummaryVo;
+import com.yg.reservation.vo.ReviewVo;
 
 @RestController
 @RequestMapping("/api/products")
@@ -41,7 +41,7 @@ public class ProductApiController {
 	}
 
 	@GetMapping("/{id:[\\d]+}/reviews")
-	public List<Review> getReviews(@PathVariable int id,
+	public List<ReviewVo> getReviews(@PathVariable int id,
 			@RequestParam(required = false) Integer limit) {
 		if (limit == null) {
 			return null;

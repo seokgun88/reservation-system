@@ -35,7 +35,7 @@ public class ImageApiController {
 	}
 
 	@PostMapping
-	public List<Integer> create(@AuthUser User user, @RequestBody MultipartFile[] files) throws IllegalStateException, IOException {
-		return imageService.create(user.getId(), files);
+	public List<Integer> add(@AuthUser User user, @RequestBody MultipartFile[] files) throws IllegalStateException, IOException {
+		return imageService.add(user.getId(), files);
 	}
 }

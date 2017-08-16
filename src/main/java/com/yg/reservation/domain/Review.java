@@ -1,7 +1,6 @@
 package com.yg.reservation.domain;
 
-import java.util.Date;
-import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,9 +11,16 @@ import lombok.ToString;
 @ToString
 public class Review {
 	private int id;
-	private String review;
+	private int productId;
+	private int userId;
 	private int score;
-	private Date modifyDate;
-	private String userEmail;
-	private List<Integer> images;
+	private String review;
+
+	public boolean hasRequiredValues() {
+		if (productId < 1 || userId < 1 || (score > 50 || score < 0)
+				|| StringUtils.isBlank(review)) {
+			return false;
+		}
+		return true;
+	}
 }

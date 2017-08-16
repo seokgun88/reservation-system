@@ -36,7 +36,7 @@ public class ImageService {
 		return imageDao.select(id);
 	}
 	
-	public List<Integer> create(int userId, MultipartFile[] files) throws IllegalStateException, IOException{
+	public List<Integer> add(int userId, MultipartFile[] files) throws IllegalStateException, IOException{
 		if (files == null || files.length < 1) {
 			return null;
 		}
