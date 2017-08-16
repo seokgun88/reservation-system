@@ -16,4 +16,6 @@ public class ImageSqls {
 			"SELECT reservation_user_review_id AS review_id, file_id AS image_id "
 			+ "FROM reservation_user_review_images "
 			+ "WHERE reservation_user_review_id IN (:reviewIds)";
+	public static final String UPDATE_DELETE_FLAG_TO_0 = 
+			"UPDATE files SET delete_flag=0 WHERE id IN(:ids)";
 }

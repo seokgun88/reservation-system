@@ -32,7 +32,7 @@ public class AdminController {
 	@PostMapping("/images")
 	public String create(@AuthUser User user, @RequestParam MultipartFile file) throws IllegalStateException, IOException {
 		MultipartFile[] files = { file };
-		imageService.create(user.getId(), files);
+		imageService.add(user.getId(), files);
 		return "redirect:/admin/images";
 	}
 }

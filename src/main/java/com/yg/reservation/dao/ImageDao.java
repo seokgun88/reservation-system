@@ -52,4 +52,9 @@ public class ImageDao {
 		Map<String, List<Integer>> param = Collections.singletonMap("reviewIds", reviewIds);
 		return jdbc.query(ImageSqls.SELECT_BY_REVIEW_IDS, param, reviewImageVoRowMapper);
 	}
+	
+	public int updateDeleteFlagTo0(List<Integer> ids) {
+		Map<String, List<Integer>> param = Collections.singletonMap("ids", ids);
+		return jdbc.update(ImageSqls.UPDATE_DELETE_FLAG_TO_0, param);
+	}
 }
