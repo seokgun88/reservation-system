@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yg.reservation.domain.User;
+import com.yg.reservation.security.AuthUser;
 import com.yg.reservation.service.ImageService;
 
 @Controller
@@ -28,9 +30,9 @@ public class AdminController {
 	}
 	
 	@PostMapping("/images")
-	public String create(@RequestParam int userId, @RequestParam MultipartFile file) throws IllegalStateException, IOException {
+	public String create(@AuthUser User user, @RequestParam MultipartFile file) throws IllegalStateException, IOException {
 		MultipartFile[] files = { file };
-		imageService.create(userId, files);
+		imageService.create(user.getId(), files);
 		return "redirect:/admin/images";
 	}
 }

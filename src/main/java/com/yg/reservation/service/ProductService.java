@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yg.reservation.dao.ImageDao;
 import com.yg.reservation.dao.ProductDao;
+import com.yg.reservation.dao.ProductPriceDao;
 import com.yg.reservation.domain.ProductPrice;
 import com.yg.reservation.vo.ProductDetailVo;
 import com.yg.reservation.vo.ProductReservationVo;
@@ -16,12 +17,14 @@ import com.yg.reservation.vo.ProductSummaryVo;
 @Service
 public class ProductService {
 	private ProductDao productDao;
+	private ProductPriceDao productPriceDao;
 	private ImageDao imageDao;
 
 	@Autowired
-	public ProductService(ProductDao productDao, ImageDao imageDao) {
+	public ProductService(ProductDao productDao, ImageDao imageDao, ProductPriceDao productPriceDao) {
 		this.productDao = productDao;
 		this.imageDao = imageDao;
+		this.productPriceDao = productPriceDao;
 	}
 
 	public List<ProductSummaryVo> getPromotion() {
@@ -65,6 +68,6 @@ public class ProductService {
 	}
 
 	public List<ProductPrice> getPrices(int id) {
-		return productDao.selectPrices(id);
+		return productPriceDao.selectPrices(id);
 	}
 }

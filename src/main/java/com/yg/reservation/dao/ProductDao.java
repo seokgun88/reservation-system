@@ -11,9 +11,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.yg.reservation.dao.sql.ProductPriceSqls;
 import com.yg.reservation.dao.sql.ProductSqls;
-import com.yg.reservation.domain.ProductPrice;
 import com.yg.reservation.vo.ProductDetailVo;
 import com.yg.reservation.vo.ProductReservationVo;
 import com.yg.reservation.vo.ProductSummaryVo;
@@ -23,12 +21,10 @@ public class ProductDao {
 	private NullableNamedParameterJdbcTemplate jdbc;
 	private RowMapper<ProductSummaryVo> productSummaryRowMapper = BeanPropertyRowMapper
 			.newInstance(ProductSummaryVo.class);
-	private RowMapper<ProductDetailVo> productDetailVoRowMapper = BeanPropertyRowMapper
-			.newInstance(ProductDetailVo.class);
 	private RowMapper<ProductReservationVo> productReservationRowMapper = BeanPropertyRowMapper
 			.newInstance(ProductReservationVo.class);
-	private RowMapper<ProductPrice> productPriceRowMapper = BeanPropertyRowMapper
-			.newInstance(ProductPrice.class);
+	private RowMapper<ProductDetailVo> productDetailVoRowMapper = BeanPropertyRowMapper
+			.newInstance(ProductDetailVo.class);
 
 	public ProductDao(DataSource dataSource) {
 		this.jdbc = new NullableNamedParameterJdbcTemplate(dataSource);
@@ -46,7 +42,8 @@ public class ProductDao {
 				productSummaryRowMapper);
 	}
 
-	public List<ProductSummaryVo> selectLimitedWithOffsetByCategoryId(int categoryId, int offset) {
+	public List<ProductSummaryVo> selectLimitedWithOffsetByCategoryId(
+			int categoryId, int offset) {
 		Map<String, Integer> params = new HashMap<String, Integer>();
 		params.put("categoryId", categoryId);
 		params.put("offset", offset);
@@ -65,12 +62,6 @@ public class ProductDao {
 		Map<String, Integer> param = Collections.singletonMap("id", id);
 		return jdbc.queryForObject(ProductSqls.SELECT_DISPLAY, param,
 				productReservationRowMapper);
-	}
-
-	public List<ProductPrice> selectPrices(int id) {
-		Map<String, Integer> param = Collections.singletonMap("productId", id);
-		return jdbc.query(ProductPriceSqls.SELECT_BY_PRODUCT_ID, param,
-				productPriceRowMapper);
 	}
 
 	public String selectName(int id) {
