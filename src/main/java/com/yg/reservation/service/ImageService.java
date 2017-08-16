@@ -55,7 +55,6 @@ public class ImageService {
 
 			String uuid = UUID.randomUUID().toString();
 			String saveFileName = formattedDate + File.separator + uuid;
-			
 			f = new File(saveFileName);
 			multipartFile.transferTo(f);
 			

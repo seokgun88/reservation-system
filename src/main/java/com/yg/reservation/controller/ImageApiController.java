@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.yg.reservation.domain.Image;
+import com.yg.reservation.domain.User;
+import com.yg.reservation.security.AuthUser;
 import com.yg.reservation.service.ImageService;
 
 @RestController
@@ -34,7 +35,7 @@ public class ImageApiController {
 	}
 
 	@PostMapping
-	public List<Integer> create(@RequestParam int userId, @RequestBody MultipartFile[] files) throws IllegalStateException, IOException {
-		return imageService.create(userId, files); 
+	public List<Integer> create(@AuthUser User user, @RequestBody MultipartFile[] files) throws IllegalStateException, IOException {
+		return imageService.create(user.getId(), files);
 	}
 }
