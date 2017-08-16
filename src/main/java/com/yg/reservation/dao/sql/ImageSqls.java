@@ -11,5 +11,9 @@ public class ImageSqls {
 			+ "WHERE product_id IN (:productIds) "
 			+ "GROUP BY product_id";
 	public static final String SELECT_BY_PRODUCT_ID = 
-			"SELECT file_id FROM product_images WHERE product_id=:productId AND type=0";
+			"SELECT file_id FROM product_images WHERE product_id=:productId AND (type=0 OR type=1) ";
+	public static final String SELECT_BY_REVIEW_IDS = 
+			"SELECT reservation_user_review_id AS review_id, file_id AS image_id "
+			+ "FROM reservation_user_review_images "
+			+ "WHERE reservation_user_review_id IN (:reviewIds)";
 }

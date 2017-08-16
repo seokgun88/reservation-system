@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MainImageVo {
-	private int productId;
-	private int mainImageId;
+public class ReviewImageVo {
+	private int reviewId;
+	private int imageId;
 }

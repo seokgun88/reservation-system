@@ -58,7 +58,7 @@ public class ProductService {
 		if(productDetailVo == null) {
 			return null;
 		}
-		List<Integer> images = imageDao.selectByProductId(id);
+		List<Integer> images = imageDao.selectIdsByProductId(id);
 		productDetailVo.setImages(images);
 		return productDetailVo;
 	}

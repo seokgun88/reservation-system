@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.yg.reservation.dao.sql.ImageSqls;
 import com.yg.reservation.domain.Image;
-import com.yg.reservation.vo.MainImageVo;
+import com.yg.reservation.vo.ReviewImageVo;
 
 @Repository
 public class ImageDao {
@@ -23,8 +23,8 @@ public class ImageDao {
 	private SimpleJdbcInsert insertAction;
 	private RowMapper<Image> imageRowMapper =
 			BeanPropertyRowMapper.newInstance(Image.class);
-	private RowMapper<MainImageVo> mainImageVoRowMapper = 
-			BeanPropertyRowMapper.newInstance(MainImageVo.class);
+	private RowMapper<ReviewImageVo> reviewImageVoRowMapper =
+			BeanPropertyRowMapper.newInstance(ReviewImageVo.class);
 	
 	public ImageDao(DataSource dataSource) {
 		this.jdbc = new NullableNamedParameterJdbcTemplate(dataSource);
@@ -42,14 +42,14 @@ public class ImageDao {
 		Map<String, ?> param = Collections.singletonMap("id", id);
 		return jdbc.queryForObject(ImageSqls.SELECT, param, imageRowMapper);
 	}
-	
-	public List<MainImageVo> selectMainImageByProductId(List<Integer> productIds) {
-		Map<String, ?> params = Collections.singletonMap("productIds", productIds);
-		return jdbc.query(ImageSqls.SELECT_MIN_IDS_BY_PRODUCT_IDS, params, mainImageVoRowMapper);
-	}
 
-	public List<Integer> selectByProductId(int productId) {
+	public List<Integer> selectIdsByProductId(int productId) {
 		Map<String, Integer> param = Collections.singletonMap("productId", productId);
 		return jdbc.queryForList(ImageSqls.SELECT_BY_PRODUCT_ID, param, Integer.class);
+	}
+	
+	public List<ReviewImageVo> selectIdsByReviewIds(List<Integer> reviewIds) {
+		Map<String, List<Integer>> param = Collections.singletonMap("reviewIds", reviewIds);
+		return jdbc.query(ImageSqls.SELECT_BY_REVIEW_IDS, param, reviewImageVoRowMapper);
 	}
 }

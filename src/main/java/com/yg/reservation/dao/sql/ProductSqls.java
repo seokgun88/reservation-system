@@ -26,7 +26,7 @@ public class ProductSqls {
 
 	public static final String SELECT_DETAIL =
 			"SELECT p.name, p.review_count, p.review_total_score, p.description, "
-			+ "p.event, d.place_name, d.place_lot, d.place_street, "
+			+ "p.event, p.sales_end, p.sales_flag, d.place_name, d.place_lot, d.place_street, "
 			+ "d.tel, d.homepage, d.email, detail.content, i.file_id AS sub_image "
 			+ "FROM products AS p "
 			+ "INNER JOIN product_displays AS d ON p.id=d.product_id "

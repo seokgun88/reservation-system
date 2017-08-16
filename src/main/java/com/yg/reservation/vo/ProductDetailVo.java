@@ -1,5 +1,6 @@
 package com.yg.reservation.vo;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.Getter;
@@ -14,6 +15,8 @@ public class ProductDetailVo {
 	private List<Integer> images;
 	private String description;
 	private String event;
+	private Date salesEnd;
+	private int salesFlag;
 	private String content;
 	private int subImage;
 	private String placeName;
