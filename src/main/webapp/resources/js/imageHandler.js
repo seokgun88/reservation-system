@@ -2,6 +2,7 @@ define(["jquery", "Handlebars"], function($, Handlebars){
   "use strict";
   function init(){
     $(".review_write_footer_wrap").on("change", "input.hidden_input", bindPostEvent);
+    $(".lst_thumb").on("click", "a.anchor", bindDeleteEvent);
   }
 
   function bindPostEvent(e){
@@ -21,41 +22,33 @@ define(["jquery", "Handlebars"], function($, Handlebars){
       }
     });
 
-    $.ajax({
-      url : "/api/images",
-      type : "POST",
-      data : formData,
-      contentType : false,
-      processData : false
-    }).done(function(data){
-      drawImage(data);
-      $("input.hidden_input").val("");
-    }).fail(function(error){
-      console.log(error.responseJSON);
-      alert("이미지 등록에 실패했습니다.");
-    }).then(function(){
-      $(".lst_thumb").on("click", "a.anchor", bindDeleteEvent);
-    });
+    postImage(formData).done(drawImage).fail(errorHandler);
   }
 
   function drawImage(ids){
     var imagesTemplate = Handlebars.compile($('#review-images-template').html());
     $(".lst_thumb").append(imagesTemplate(ids));
+    $("input.hidden_input").val("");
   }
 
   function bindDeleteEvent(e){
     e.preventDefault();
-    var $li = $(e.currentTarget).closest("li.item");
-    // $.ajax({
-    //   url : "/api/images/" + $li.data("id"),
-    //   type : "DELETE"
-    // }).done(function(){
-    //   $li.remove();
-    // }).fail(function(error){
-    //   console.log(error.responseJSON);
-    //   alert("이미지 삭제에 실패했습니다.");
-    // });
-    $li.remove();
+    $(e.currentTarget).closest("li.item").remove();
+  }
+
+  function postImage(formData){
+    return $.ajax({
+      url : "/api/images",
+      type : "POST",
+      data : formData,
+      contentType : false,
+      processData : false
+    });
+  }
+
+  function errorHandler(error){
+    console.log(error.responseJSON);
+    alert("이미지 등록에 실패했습니다.");
   }
 
   return {
