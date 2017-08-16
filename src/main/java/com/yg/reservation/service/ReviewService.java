@@ -57,16 +57,16 @@ public class ReviewService {
 	}
 
 	@Transactional
-	public void addWithImageIds(ReviewWriteVo reviewWriteVo) {
+	public boolean addWithImageIds(ReviewWriteVo reviewWriteVo) {
 		if (reviewWriteVo == null || reviewWriteVo.getReview() == null
 				|| !reviewWriteVo.getReview().hasRequiredValues()) {
-			return;
+			return false;
 		}
 		int reviewId = reviewDao.insert(reviewWriteVo.getReview());
 
 		List<Integer> imageIds = reviewWriteVo.getImageIds();
 		if (imageIds == null || imageIds.size() == 0) {
-			return;
+			return true;
 		}
 
 		ReviewImage reviewImage = new ReviewImage();
@@ -77,5 +77,7 @@ public class ReviewService {
 		}
 
 		imageDao.updateDeleteFlagTo0(imageIds);
+		
+		return true;
 	}
 }

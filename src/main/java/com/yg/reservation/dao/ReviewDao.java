@@ -27,7 +27,7 @@ public class ReviewDao {
 		this.jdbc = new NullableNamedParameterJdbcTemplate(dataSource);
 		this.insertAction = new SimpleJdbcInsert(dataSource)
 				.withTableName("reservation_user_reviews")
-				.usingGeneratedKeyColumns("id");
+				.usingGeneratedKeyColumns("id","create_date", "modify_date");
 	}
 
 	public List<ReviewVo> selectLimitedByProductId(int productId, int limit) {

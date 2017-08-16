@@ -23,9 +23,9 @@ public class ReviewApiController {
 	}	
 	
 	@PostMapping
-	public void add(@RequestBody ReviewWriteVo reviewWriteVo, @AuthUser User user) {
+	public boolean add(@RequestBody ReviewWriteVo reviewWriteVo, @AuthUser User user) {
 		reviewWriteVo.getReview().setUserId(user.getId());
-		reviewService.addWithImageIds(reviewWriteVo);
+		return reviewService.addWithImageIds(reviewWriteVo);
 	}
 
 }
