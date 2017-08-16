@@ -8,7 +8,7 @@ define(["jquery"], function($){
     var $ele = $(e.currentTarget),
         $eleDelegateTarget = $(e.delegateTarget),
 
-        $eleSibling = $eleDelegateTarget.(".rating_rdo"),
+        $eleSibling = $eleDelegateTarget.find(".rating_rdo"),
         ratingValue = parseInt($ele.val()),
         numOfCheckedSiblings = $eleSibling.find(":checked").length;
 
