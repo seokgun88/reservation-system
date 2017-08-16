@@ -22,7 +22,7 @@ define(["./productModel", "asyncRequest", "Handlebars"],
       var productPrice = priceAjaxResult[0];
 
       product = new ProductModel(productDetail, productPrice);
-
+      
       drawReservationPage(".section_product_detail", "#product-detail-template", product.getDetail());
       drawReservationPage(".section_booking_ticket", "#booking-ticket-template", product.getPrices());
       drawReservationPage(".inline_form.last  .inline_control", "#booking-form-template", product.getDetail());
@@ -35,7 +35,12 @@ define(["./productModel", "asyncRequest", "Handlebars"],
       $(container).html(templates[templateId](data));
     }
 
+    function getProduct(){
+      return product;
+    }
+
     return {
-      init: init
+      init: init,
+      getProduct: getProduct
     };
   });

@@ -27,8 +27,8 @@ define(["jquery", "util", "egComponent"],
         $(".ico_minus3").on("click", this.validate.bind(this));
         $(".ico_plus3").on("click", this.validate.bind(this));
       },
-      delay: function(time){
-        return new Promise(function(resolve){
+      delay: function(time) {
+        return new Promise(function(resolve) {
           setTimeout(function() {
             this.isValid = (parseInt(this.$totalCount.text()) > 0) &&
               (this.$name.val() ? true : false) &&
@@ -48,7 +48,7 @@ define(["jquery", "util", "egComponent"],
       validate: function() {
         if (this.validateFlag) {
           this.validateFlag = false;
-          this.delay(300).then(function(data){
+          this.delay(300).then(function(data) {
             this.validateFlag = true;
           }.bind(this));
         }
@@ -57,10 +57,10 @@ define(["jquery", "util", "egComponent"],
         return {
           userName: this.$name.val(),
           tel: this.$tel.val(),
-          email: this.$email.val(),
-          tickets: [],
-          totalCount: 0,
-          totalPrice: 0
+          email: this.$email.val()
+          // tickets: [],
+          // totalCount: 0,
+          // totalPrice: 0
         };
       }
     });

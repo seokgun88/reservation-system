@@ -125,14 +125,14 @@
     <script type="text/handlebars-template" id="booking-ticket-template">
         <div class="ticket_body">
           {{#each this}}
-            <div class="qty" data-price={{discountedPrice}}>
+            <div class="qty" data-price-type={{priceType}} data-price={{discountedPrice}}>
                 <div class="count_control">
                     <div class="clearfix">
                         <a href="#" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> <input type="tel" class="count_control_input" value="0" readonly title="수량">
                         <a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
                         </a>
                     </div>
-                    <div class="individual_price on_color"><span class="total_price">0</span><span class="price_type">원</span></div>
+                    <div class="individual_price"><span class="total_price">0</span><span class="price_type">원</span></div>
                 </div>
                 <div class="qty_info_icon">
                 <strong class="product_amount"> <span>{{typeName}}</span> </strong>
