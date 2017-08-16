@@ -30,7 +30,13 @@ require([
       imageIds : imageIds
     });
 
-    ajaxRequest("/api/reviews", "POST", data);
+    ajaxRequest("/api/reviews", "POST", data).done(function(data){
+      if(data){
+        window.history.back();
+      } else {
+        alert("리뷰 등록을 실패했습니다...");
+      }
+    });
   }
 
   $(init());
