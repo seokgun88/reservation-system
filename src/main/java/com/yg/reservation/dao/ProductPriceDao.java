@@ -8,10 +8,12 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.yg.reservation.dao.sql.ProductPriceSqls;
 import com.yg.reservation.domain.ProductPrice;
 
+@Repository
 public class ProductPriceDao {
 	private NullableNamedParameterJdbcTemplate jdbc;
 	private RowMapper<ProductPrice> productPriceRowMapper = BeanPropertyRowMapper
