@@ -35,6 +35,7 @@ define(["jquery", "Handlebars", "egComponent", "util", "asyncRequest"],
       var $ele = $(e.currentTarget);
       page = 1;
 
+      $(".more").removeClass("hide");
       $(".event_tab_lst li.item[data-category=" + categoryIdx + "] a.anchor").removeClass("active");
       categoryIdx = $ele.data("category");
       $ele.find(".anchor").addClass("active");
@@ -81,6 +82,8 @@ define(["jquery", "Handlebars", "egComponent", "util", "asyncRequest"],
           page++;
           getProducts("append");
         }
+      } else {
+        $(".more").addClass("hide");
       }
     }
 
