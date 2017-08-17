@@ -1,4 +1,4 @@
-define(["./productModel", "asyncRequest", "Handlebars"],
+define(["productModel", "asyncRequest", "Handlebars"],
   function(ProductModel, ajaxRequest, Handlebars) {
     "use strict";
 
@@ -22,7 +22,7 @@ define(["./productModel", "asyncRequest", "Handlebars"],
       var productPrice = priceAjaxResult[0];
 
       product = new ProductModel(productDetail, productPrice);
-      
+
       drawReservationPage(".section_product_detail", "#product-detail-template", product.getDetail());
       drawReservationPage(".section_booking_ticket", "#booking-ticket-template", product.getPrices());
       drawReservationPage(".inline_form.last  .inline_control", "#booking-form-template", product.getDetail());

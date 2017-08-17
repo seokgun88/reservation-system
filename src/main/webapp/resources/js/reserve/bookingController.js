@@ -1,4 +1,4 @@
-define(["jquery", "./ticket", "./bookingForm", "asyncRequest"],
+define(["jquery", "ticket", "bookingForm", "asyncRequest"],
   function($, Ticket, BookingForm, ajaxRequest) {
     "use strict";
 
