@@ -44,7 +44,9 @@ define(["jquery", "egComponent", "util"], function($, egComponent, Util) {
           left: (this.options.width * this._index * -1) + "px"
         }, function() {
           this._slideLock = false;
-          this.trigger("afterAnimate", { index : this._index });
+          this.trigger("afterAnimate", {
+            index: this._index
+          });
         }.bind(this));
       }
     },

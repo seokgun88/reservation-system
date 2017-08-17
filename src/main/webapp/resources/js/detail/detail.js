@@ -1,14 +1,17 @@
 require.config({
   paths: {
-    "jquery": "node_modules/jquery/dist/jquery.min",
-    "Handlebars": "node_modules/handlebars/dist/handlebars.min",
-    "egComponent": "node_modules/@egjs/component/dist/component.min"
+    "jquery": "../node_modules/jquery/dist/jquery.min",
+    "Handlebars": "../node_modules/handlebars/dist/handlebars.min",
+    "egComponent": "../node_modules/@egjs/component/dist/component.min",
+    "asyncRequest": "../asyncRequest",
+    "util": "../util",
+    "flicking": "../flicking"
   }
 });
 
 require([
-  "jquery", "Handlebars", "egComponent", "util", "flicking", "asyncRequest", "productDetail"
-], function($, Handlebars, egComponent, Util, Flicking, ajaxRequest, ProductDetail) {
+  "jquery", "Handlebars", "egComponent", "flicking", "productDetail"
+], function($, Handlebars, egComponent, Flicking, ProductDetail) {
 
   function init() {
     var options = {

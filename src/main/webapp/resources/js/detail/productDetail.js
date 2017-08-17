@@ -85,7 +85,6 @@ define(["jquery", "Handlebars", "egComponent", "util", "asyncRequest"],
     }
 
     function popupReviewImageViewer(ids) {
-      console.log(ids);
       $("#imageviewer").removeClass("hide");
       $(".total_image").text(ids.length);
       drawHandlerbarsTemplate("#imageviewer-template", ".image_list", ids);
@@ -202,9 +201,9 @@ define(["jquery", "Handlebars", "egComponent", "util", "asyncRequest"],
     }
 
     function booking() {
-      if(new Date() > salesEnd) {
+      if (new Date() > salesEnd) {
         alert("판매기간 종료되었습니다.");
-      } else if(!salesFlag) {
+      } else if (!salesFlag) {
         alert("매진 되었습니다.");
       } else {
         window.location.href = "/products/" + productId + "/reservation";
@@ -233,7 +232,6 @@ define(["jquery", "Handlebars", "egComponent", "util", "asyncRequest"],
       var scrollY = window.scrollY;
       var windowHeight = window.innerHeight;
       if (windowHeight + scrollY > subImageTop - 100) {
-        console.log("lazy loaded");
         var imgSrc = $lazyLoadedImage.data("lazyImage");
         $lazyLoadedImage.attr("src", imgSrc);
         $(window).off("scroll", lazyLoad);

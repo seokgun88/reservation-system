@@ -146,7 +146,7 @@
     <script type="text/handlebars-template" id="booking-form-template">
       <p class="inline_txt selected">{{displayPeriod}}, 총 <span class="total_count">0</span>매</p>
     </script>
-    <script data-main="/resources/js/reserve.js" src="/resources/js/node_modules/requirejs/require.js"></script>
+    <script data-main="/resources/js/reserve/reserve.js" src="/resources/js/node_modules/requirejs/require.js"></script>
 </body>
 
 </html>
