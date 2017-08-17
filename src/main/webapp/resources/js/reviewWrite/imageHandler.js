@@ -1,4 +1,4 @@
-define(["jquery", "Handlebars"], function($, Handlebars) {
+define(["jquery", "Handlebars", "asyncRequest"], function($, Handlebars, ajaxRequest) {
   "use strict";
 
   function init() {
@@ -38,13 +38,11 @@ define(["jquery", "Handlebars"], function($, Handlebars) {
   }
 
   function postImage(formData) {
-    return $.ajax({
-      url: "/api/images",
-      type: "POST",
-      data: formData,
+    var options = {
       contentType: false,
       processData: false
-    });
+    };
+    return ajaxRequest("/api/images", "POST", formData, options);
   }
 
   function errorHandler(error) {
