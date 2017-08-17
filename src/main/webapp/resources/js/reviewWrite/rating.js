@@ -7,11 +7,9 @@ define(["jquery"], function($) {
 
   function paintStars(e) {
     var $ele = $(e.currentTarget),
-      $eleDelegateTarget = $(e.delegateTarget),
-
-      $eleSibling = $eleDelegateTarget.find(".rating_rdo"),
+      $eleSibling = $(e.delegateTarget).find(".rating_rdo"),
       ratingValue = parseInt($ele.val()),
-      numOfCheckedSiblings = $eleSibling.find(":checked").length;
+      numOfCheckedSiblings = $(e.delegateTarget).find(":checked").length;
 
     if (numOfCheckedSiblings !== ratingValue) {
       $ele.prop("checked", true);
