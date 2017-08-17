@@ -1,5 +1,5 @@
-define(["productModel", "asyncRequest", "Handlebars"],
-  function(ProductModel, ajaxRequest, Handlebars) {
+define(["productModel", "asyncRequest", "Handlebars", "../handlebarsWrapper"],
+  function(ProductModel, ajaxRequest, Handlebars, HandlebarsWrapper) {
     "use strict";
 
     var productId = $("body").data("id");
@@ -23,19 +23,12 @@ define(["productModel", "asyncRequest", "Handlebars"],
 
       product = new ProductModel(productDetail, productPrice);
 
-      drawReservationPage(".section_product_detail", "#product-detail-template", product.getDetail());
-      drawReservationPage(".section_booking_ticket", "#booking-ticket-template", product.getPrices());
-      drawReservationPage(".inline_form.last  .inline_control", "#booking-form-template", product.getDetail());
+      HandlebarsWrapper.drawHandlerbarsTemplate("#product-detail-template", ".section_product_detail", product.getDetail());
+      HandlebarsWrapper.drawHandlerbarsTemplate("#booking-ticket-template", ".section_booking_ticket", product.getPrices());
+      HandlebarsWrapper.drawHandlerbarsTemplate("#booking-form-template", ".inline_form.last  .inline_control", product.getDetail());
     }
 
-    function drawReservationPage(container, templateId, data) {
-      if (!templates[templateId]) {
-        templates[templateId] = Handlebars.compile($(templateId).html());
-      }
-      $(container).html(templates[templateId](data));
-    }
-
-    function getProduct(){
+    function getProduct() {
       return product;
     }
 

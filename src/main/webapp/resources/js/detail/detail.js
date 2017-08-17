@@ -5,19 +5,24 @@ require.config({
     "egComponent": "../node_modules/@egjs/component/dist/component.min",
     "asyncRequest": "../asyncRequest",
     "util": "../util",
-    "flicking": "../flicking"
+    "flicking": "../flicking",
+    "formatter": "../formatter"
   }
 });
 
 require([
-  "jquery", "Handlebars", "egComponent", "flicking", "productDetail"
-], function($, Handlebars, egComponent, Flicking, ProductDetail) {
+  "jquery", "Handlebars", "egComponent", "flicking", "productDetail", "detailBuilder"
+], function($, Handlebars, egComponent, Flicking, ProductDetail, DetailBuilder) {
 
   function init() {
     var options = {
       popupReviewImageViewerCallback: initImageViewerFlicking
     };
-    ProductDetail.init(options).done(initProductFlickings);
+    DetailBuilder.init()
+      .done(function() {
+        ProductDetail.init(options);
+        initProductFlickings();
+      });
   }
 
   function initProductFlickings() {
