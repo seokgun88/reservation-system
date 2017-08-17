@@ -43,7 +43,8 @@ public class ProductController {
 	}
 
 	@GetMapping("/{id:[\\d]+}/review")
-	public String reviewWrite() {
+	public String reviewWrite(@PathVariable int id, Model model) {
+		model.addAttribute("productName", productService.getName(id));
 		return "reviewWrite";
 	}
 }
