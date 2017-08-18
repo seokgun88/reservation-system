@@ -18,7 +18,7 @@ import com.yg.reservation.service.ImageService;
 @RequestMapping("/admin")
 public class AdminController {
 	private ImageService imageService;
-	
+
 	@Autowired
 	public AdminController(ImageService imageService) {
 		this.imageService = imageService;
@@ -28,9 +28,10 @@ public class AdminController {
 	public String imageAdmin() {
 		return "imageAdmin";
 	}
-	
+
 	@PostMapping("/images")
-	public String create(@AuthUser User user, @RequestParam MultipartFile file) throws IllegalStateException, IOException {
+	public String create(@AuthUser User user, @RequestParam MultipartFile file)
+			throws IllegalStateException, IOException {
 		MultipartFile[] files = { file };
 		imageService.add(user.getId(), files);
 		return "redirect:/admin/images";

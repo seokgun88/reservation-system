@@ -11,31 +11,35 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 @Component
 public class LoggingInterceptor extends HandlerInterceptorAdapter {
-	private static Logger logger = LoggerFactory.getLogger(LoggingInterceptor.class);
-    private static final String ATTRIBUTE_BEGIN_TIME = "ATTR_BEGIN_TIME";
-	
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Long currentTime = System.currentTimeMillis();
-        request.setAttribute(ATTRIBUTE_BEGIN_TIME, currentTime);
+	private static Logger logger = LoggerFactory
+			.getLogger(LoggingInterceptor.class);
+	private static final String ATTRIBUTE_BEGIN_TIME = "ATTR_BEGIN_TIME";
 
-        return super.preHandle(request, response, handler);
-    }
+	@Override
+	public boolean preHandle(HttpServletRequest request,
+			HttpServletResponse response, Object handler) throws Exception {
+		Long currentTime = System.currentTimeMillis();
+		request.setAttribute(ATTRIBUTE_BEGIN_TIME, currentTime);
 
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        long beginTime = (long) request.getAttribute(ATTRIBUTE_BEGIN_TIME);
-        String uri = request.getRequestURI();
-        String method = request.getMethod();
+		return super.preHandle(request, response, handler);
+	}
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[").append(method).append("] ");
-        stringBuilder.append(uri).append(" ");
-        stringBuilder.append(System.currentTimeMillis() - beginTime);
-        stringBuilder.append(" ms");
+	@Override
+	public void postHandle(HttpServletRequest request,
+			HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception {
+		long beginTime = (long) request.getAttribute(ATTRIBUTE_BEGIN_TIME);
+		String uri = request.getRequestURI();
+		String method = request.getMethod();
 
-        logger.info("메소드 실행 시간 {}", stringBuilder.toString());
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("[").append(method).append("] ");
+		stringBuilder.append(uri).append(" ");
+		stringBuilder.append(System.currentTimeMillis() - beginTime);
+		stringBuilder.append(" ms");
 
-        super.postHandle(request, response, handler, modelAndView);
-    }
+		logger.info("메소드 실행 시간 {}", stringBuilder.toString());
+
+		super.postHandle(request, response, handler, modelAndView);
+	}
 }

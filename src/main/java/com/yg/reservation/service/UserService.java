@@ -18,14 +18,14 @@ public class UserService {
 
 	public User add(NaverProfile profile) {
 		User user = userDao.select(profile.getId());
-		if(user == null) {
+		if (user == null) {
 			user = new User();
 			user.setAdminFlag(0);
 			user.setEmail(profile.getEmail());
 			user.setNickname(profile.getNickname());
 			user.setSnsId(profile.getId());
 			user.setUsername(profile.getName());
-			
+
 			return userDao.insert(user);
 		}
 		return user;

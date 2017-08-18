@@ -23,9 +23,7 @@ import com.yg.reservation.view.ImageDownloadView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {
-		"com.yg.reservation.controller"
-})
+@ComponentScan(basePackages = { "com.yg.reservation.controller" })
 public class ServletContextConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public ViewResolver viewResolver() {
@@ -39,22 +37,22 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/"); // webapp/resources 경로를 의미
+		registry.addResourceHandler("/resources/**")
+				.addResourceLocations("/resources/"); // webapp/resources 경로를 의미
 	}
-	
-    @Bean
-    public MultipartResolver multipartResolver() {
-        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = 
-        		new org.springframework.web.multipart.commons.CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(1073741824); // 1024 * 1024 * 1024
-        return multipartResolver;
-    }
-    
+
+	@Bean
+	public MultipartResolver multipartResolver() {
+		org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
+		multipartResolver.setMaxUploadSize(1073741824); // 1024 * 1024 * 1024
+		return multipartResolver;
+	}
+
 	@Bean
 	public ImageDownloadView imageDownloadView() {
 		return new ImageDownloadView();
 	}
-	
+
 	@Bean
 	public ViewResolver beanNameViewResolver() {
 		BeanNameViewResolver resolver = new BeanNameViewResolver();
@@ -62,18 +60,19 @@ public class ServletContextConfig extends WebMvcConfigurerAdapter {
 		return resolver;
 	}
 
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new AuthUserArgumentResolver());
-    }
-    
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-    	registry.addInterceptor(new LoginInterceptor())
-    		.addPathPatterns("/**/*")
-    		.excludePathPatterns("/login", "/oauth2callback", "/", "/products/*", "/api/**");
-    	registry.addInterceptor(new LoggingInterceptor())
-    		.addPathPatterns("/**/*");
-    }
-	
+	@Override
+	public void addArgumentResolvers(
+			List<HandlerMethodArgumentResolver> argumentResolvers) {
+		argumentResolvers.add(new AuthUserArgumentResolver());
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**/*")
+				.excludePathPatterns("/login", "/oauth2callback", "/",
+						"/products/*", "/api/**");
+		registry.addInterceptor(new LoggingInterceptor())
+				.addPathPatterns("/**/*");
+	}
+
 }

@@ -23,27 +23,29 @@ public class ImageService {
 	private ImageDao imageDao;
 	@Value("${file.basedir}")
 	private String baseDir;
-	
+
 	@Autowired
 	public ImageService(ImageDao imageDao) {
 		this.imageDao = imageDao;
 	}
-	
+
 	public Image get(int id) {
-		if(id < 1) {
+		if (id < 1) {
 			return null;
 		}
 		return imageDao.select(id);
 	}
-	
-	public List<Integer> add(int userId, MultipartFile[] files) throws IllegalStateException, IOException{
+
+	public List<Integer> add(int userId, MultipartFile[] files)
+			throws IllegalStateException, IOException {
 		if (files == null || files.length < 1) {
 			return null;
 		}
 		List<Integer> ids = new ArrayList<>();
 		String formattedDate = baseDir + File.separator
-				+ new SimpleDateFormat("yyyy" + File.separator + "MM" + File.separator + "dd")
-						.format(new Date());
+				+ new SimpleDateFormat(
+						"yyyy" + File.separator + "MM" + File.separator + "dd")
+								.format(new Date());
 		File directory = new File(formattedDate);
 		if (!directory.exists()) {
 			directory.mkdirs();
@@ -57,7 +59,7 @@ public class ImageService {
 
 			File f = new File(directory, uuid);
 			multipartFile.transferTo(f);
-			
+
 			Image image = new Image();
 			image.setFileName(originalFilename);
 			image.setUserId(userId);

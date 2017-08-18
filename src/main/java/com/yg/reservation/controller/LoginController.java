@@ -44,8 +44,8 @@ public class LoginController {
 	}
 
 	@GetMapping("/login")
-	public String login(@RequestParam String pageAfterLogin, HttpSession session) 
-			throws UnsupportedEncodingException {
+	public String login(@RequestParam String pageAfterLogin,
+			HttpSession session) throws UnsupportedEncodingException {
 		// CSRF 방지를 위한 상태 토큰 생성 코드
 		// 상태 토큰은 추후 검증을 위해 세션에 저장되어야 한다.
 		// 상태 토큰으로 사용할 랜덤 문자열 생성
@@ -57,13 +57,15 @@ public class LoginController {
 		String callback = URLEncoder.encode(
 				oauth2callback + "?pageAfterLogin=" + pageAfterLogin, "UTF-8");
 
-		return "redirect:" + NAVER_OAUTH_URL + "/authorize?client_id=" + clientId
-				+ "&response_type=code&redirect_uri=" + callback + "&state=" + state;
+		return "redirect:" + NAVER_OAUTH_URL + "/authorize?client_id="
+				+ clientId + "&response_type=code&redirect_uri=" + callback
+				+ "&state=" + state;
 	}
 
 	@GetMapping("/oauth2callback")
-	public String oauth2callback(HttpSession session, @RequestParam String pageAfterLogin,
-			@RequestParam String state, @RequestParam String code) {
+	public String oauth2callback(HttpSession session,
+			@RequestParam String pageAfterLogin, @RequestParam String state,
+			@RequestParam String code) {
 		// CSRF 방지를 위한 상태 토큰 검증 검증
 		// 세션 또는 별도의 저장 공간에 저장된 상태 토큰과 콜백으로 전달받은 state 파라미터의 값이 일치해야 함
 		// 세션 또는 별도의 저장 공간에서 상태 토큰을 가져옴
@@ -71,31 +73,33 @@ public class LoginController {
 		if (!state.equals(storedState)) {
 			return "redirect:/";
 		} else {
-			String url = NAVER_OAUTH_URL + "/token?client_id=" + clientId + "&client_secret=" + clientSecret
-					+ "&grant_type=authorization_code&state=" + storedState + "&code=" + code;
+			String url = NAVER_OAUTH_URL + "/token?client_id=" + clientId
+					+ "&client_secret=" + clientSecret
+					+ "&grant_type=authorization_code&state=" + storedState
+					+ "&code=" + code;
 			RestTemplate restTemplate = new RestTemplate();
-			NaverLoginResponse loginResponse = restTemplate.getForObject(url, NaverLoginResponse.class);
+			NaverLoginResponse loginResponse = restTemplate.getForObject(url,
+					NaverLoginResponse.class);
 
 			HttpHeaders headers = new HttpHeaders();
-			headers.add("Authorization", loginResponse.getTokenType() + " " + loginResponse.getAccessToken());
+			headers.add("Authorization", loginResponse.getTokenType() + " "
+					+ loginResponse.getAccessToken());
 			HttpEntity<String> entity = new HttpEntity<String>(headers);
-			ResponseEntity<NaverProfileResponse> profileResponseEntity = 
-					restTemplate.exchange(
-						NAVER_GET_PROFILE_URL, 
-						HttpMethod.GET,
-						entity, 
-						NaverProfileResponse.class
-					);
-			NaverProfileResponse profileResponse = profileResponseEntity.getBody();
+			ResponseEntity<NaverProfileResponse> profileResponseEntity = restTemplate
+					.exchange(NAVER_GET_PROFILE_URL, HttpMethod.GET, entity,
+							NaverProfileResponse.class);
+			NaverProfileResponse profileResponse = profileResponseEntity
+					.getBody();
 			NaverProfile profile = profileResponse.getResponse();
 
 			User user = userService.add(profile);
 
 			session.setAttribute("accessToken", loginResponse.getAccessToken());
-			session.setAttribute("refreshToken", loginResponse.getRefreshToken());
+			session.setAttribute("refreshToken",
+					loginResponse.getRefreshToken());
 			session.setAttribute("login", true);
 			session.setAttribute("user", user);
-			
+
 			return "redirect:" + pageAfterLogin;
 		}
 	}

@@ -22,12 +22,12 @@ import com.yg.reservation.service.ImageService;
 @RequestMapping("/api/images")
 public class ImageApiController {
 	private ImageService imageService;
-	
+
 	@Autowired
 	public ImageApiController(ImageService imageService) {
 		this.imageService = imageService;
 	}
-	
+
 	@GetMapping("/{id:[\\d]+}")
 	public ModelAndView get(@PathVariable int id) {
 		Image image = imageService.get(id);
@@ -35,7 +35,9 @@ public class ImageApiController {
 	}
 
 	@PostMapping
-	public List<Integer> add(@AuthUser User user, @RequestBody MultipartFile[] files) throws IllegalStateException, IOException {
+	public List<Integer> add(@AuthUser User user,
+			@RequestBody MultipartFile[] files)
+			throws IllegalStateException, IOException {
 		return imageService.add(user.getId(), files);
 	}
 }

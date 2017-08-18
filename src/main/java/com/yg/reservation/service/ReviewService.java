@@ -77,7 +77,7 @@ public class ReviewService {
 		}
 
 		imageDao.updateDeleteFlagTo0(imageIds);
-		
+
 		return true;
 	}
 }

@@ -14,6 +14,6 @@ public class ProductReservationVo {
 	private String placeName;
 	private Date displayStart;
 	private Date displayEnd;
-	private String observationTime;	
+	private String observationTime;
 	private int mainImageId;
 }
