@@ -32,7 +32,8 @@ require([
 
     ajaxRequest("/api/reviews", "POST", data).done(function(data) {
       if (data) {
-        window.history.back();
+    	alert("리뷰를 등록하였습니다.");
+        window.location.href = "/my";
       } else {
         alert("리뷰 등록을 실패했습니다...");
       }

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yg.reservation.config.RootApplicationContextConfig;
 import com.yg.reservation.domain.Reservation;
+import com.yg.reservation.vo.MyReservationVo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RootApplicationContextConfig.class)
@@ -37,6 +38,13 @@ public class ReservationServiceTest {
 		reservation.setReservationEmail("dkanakf@naver.com");
 		
 		reservationService.add(reservation);
+	}
+	
+	@Test
+	public void shouldGet() {
+		MyReservationVo reservation = reservationService.getMy(2);
+		
+		logger.info(reservation.toString());
 	}
 
 }
