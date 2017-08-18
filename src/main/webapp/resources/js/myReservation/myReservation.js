@@ -9,13 +9,28 @@ require.config({
 require([
   "jquery", "asyncRequest", "../handlebarsWrapper", "../formatter"
 ], function($, ajaxRequest, HandlebarsWrapper, Formatter) {
-  var typeCounts = [];
   var RESERVATIONS_TYPE = {
     NOT_USED: 0,
     CONFIRMED: 1,
     USED: 2,
     CANCELED: 3
   };
+
+  var typeCounts = [];
+
+  var template = [{
+    "templateId": "#notused-template",
+    "targetTag": ".list_cards .unused"
+  }, {
+    "templateId": "#confirmed-template",
+    "targetTag": ".list_cards .confirmed"
+  }, {
+    "templateId": "#used-template",
+    "targetTag": ".list_cards .used:not(.canceled)"
+  }, {
+    "templateId": "#canceled-template",
+    "targetTag": ".list_cards .canceled"
+  }];
 
   function init() {
     ajaxRequest("/api/reservations/my", "GET").then(function(data) {
@@ -40,30 +55,19 @@ require([
       $(".err").removeClass("hide");
       return;
     }
-    dataReservations["0"].forEach(function(v, i) {
-      v.period = Formatter.getPeriod(v.displayStart, v.displayEnd);
-      v.ticketCounts = Formatter.getTicketCountString(v.generalTicketCount, v.youthTicketCount, v.childTicketCount);
-      v.totalPrice = v.totalPrice.toLocaleString();
+    $.map(dataReservations, function(v, i) {
+      if (v) {
+        v.forEach(addExValues);
+        $(template[i].targetTag).removeClass("hide");
+        HandlebarsWrapper(template[i].templateId, template[i].targetTag, v, "append");
+      }
     });
-    dataReservations["1"].forEach(function(v, i) {
-      v.period = Formatter.getPeriod(v.displayStart, v.displayEnd);
-      v.ticketCounts = Formatter.getTicketCountString(v.generalTicketCount, v.youthTicketCount, v.childTicketCount);
-      v.totalPrice = v.totalPrice.toLocaleString();
-    });
-    dataReservations["2"].forEach(function(v, i) {
-      v.period = Formatter.getPeriod(v.displayStart, v.displayEnd);
-      v.ticketCounts = Formatter.getTicketCountString(v.generalTicketCount, v.youthTicketCount, v.childTicketCount);
-      v.totalPrice = v.totalPrice.toLocaleString();
-    });
-    dataReservations["3"].forEach(function(v, i) {
-      v.period = Formatter.getPeriod(v.displayStart, v.displayEnd);
-      v.ticketCounts = Formatter.getTicketCountString(v.generalTicketCount, v.youthTicketCount, v.childTicketCount);
-      v.totalPrice = v.totalPrice.toLocaleString();
-    });
-    HandlebarsWrapper("#notused-template", ".list_cards .unused", dataReservations["0"], "append");
-    HandlebarsWrapper("#confirmed-template", ".list_cards .confirmed", dataReservations["1"], "append");
-    HandlebarsWrapper("#used-template", ".list_cards .used:not(.canceled)", dataReservations["2"], "append");
-    HandlebarsWrapper("#canceled-template", ".list_cards .canceled", dataReservations["3"], "append");
+  }
+
+  function addExValues(reservation) {
+    reservation.period = Formatter.getPeriod(reservation.displayStart, reservation.displayEnd);
+    reservation.ticketCounts = Formatter.getTicketCountString(reservation.generalTicketCount, reservation.youthTicketCount, reservation.childTicketCount);
+    reservation.totalPrice = reservation.totalPrice.toLocaleString();
   }
 
   $(init());

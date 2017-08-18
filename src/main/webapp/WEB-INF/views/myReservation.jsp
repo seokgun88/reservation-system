@@ -48,7 +48,7 @@
                 <!-- 내 예약 리스트 -->
                 <div class="wrap_mylist">
                   <ul class="list_cards" ng-if="bookedLists.length > 0">
-                    <li class="card unused">
+                    <li class="card unused hide">
                       <div class=link_booking_details>
                         <div class="card_header">
                           <div class="left"></div>
@@ -61,7 +61,7 @@
                         </div>
                       </div>
                     </li>
-                    <li class="card confirmed">
+                    <li class="card confirmed hide">
                       <div class="link_booking_details">
                         <div class="card_header">
                           <div class="left"></div>
@@ -74,7 +74,7 @@
                         </div>
                       </div>
                     </li>
-                    <li class="card used">
+                    <li class="card used hide">
                       <div class="link_booking_details">
                         <div class="card_header">
                           <div class="left"></div>
@@ -87,7 +87,7 @@
                         </div>
                       </div>
                     </li>
-                    <li class="card canceled used">
+                    <li class="card canceled used hide">
                       <div class="link_booking_details">
                         <div class="card_header">
                           <div class="left"></div>
