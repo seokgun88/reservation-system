@@ -1,4 +1,4 @@
-define(["util", "egComponent", "formatter", "priceType"],
+define(["util", "egComponent", "../formatter", "priceType"],
   function(Util, egComponent, Formatter, PriceType) {
     "use strict";
 

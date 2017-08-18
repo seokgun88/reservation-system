@@ -10,7 +10,5 @@ define(["jquery", "Handlebars"], function($, Handlebars) {
     $(parentTag)[type](templates[templateId](data));
   }
 
-  return {
-    drawHandlerbarsTemplate: drawHandlerbarsTemplate
-  };
+  return drawHandlerbarsTemplate;
 });
