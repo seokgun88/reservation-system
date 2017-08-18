@@ -27,5 +27,5 @@ public class ProductDetailVo {
 	private String email;
 	private int reviewCount;
 	private int reviewTotalScore;
-	
+
 }

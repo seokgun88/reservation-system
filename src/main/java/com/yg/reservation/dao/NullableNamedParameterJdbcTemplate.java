@@ -22,7 +22,7 @@ public class NullableNamedParameterJdbcTemplate
 			RowMapper<T> rowMapper) throws DataAccessException {
 		try {
 			return super.queryForObject(sql, paramSource, rowMapper);
-		} catch(EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}
@@ -32,7 +32,7 @@ public class NullableNamedParameterJdbcTemplate
 			RowMapper<T> rowMapper) throws DataAccessException {
 		try {
 			return super.queryForObject(sql, paramMap, rowMapper);
-		} catch(EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}
@@ -42,7 +42,7 @@ public class NullableNamedParameterJdbcTemplate
 			Class<T> requiredType) throws DataAccessException {
 		try {
 			return super.queryForObject(sql, paramSource, requiredType);
-		} catch(EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}
@@ -52,9 +52,9 @@ public class NullableNamedParameterJdbcTemplate
 			Class<T> requiredType) throws DataAccessException {
 		try {
 			return super.queryForObject(sql, paramMap, requiredType);
-		} catch(EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}
-	
+
 }

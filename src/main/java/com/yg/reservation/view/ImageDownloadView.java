@@ -14,19 +14,21 @@ import com.yg.reservation.domain.Image;
 
 public class ImageDownloadView extends AbstractView {
 	@Override
-	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	protected void renderMergedOutputModel(Map<String, Object> model,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		Image image = (Image) model.get("image");
-		if(image == null) {
+		if (image == null) {
 			return;
 		}
 		response.setContentLengthLong(image.getFileLength());
 		response.setContentType(image.getContentType());
-		response.setHeader("Content-Disposition", "inline; filename=\"" + image.getFileName() + "\";");
+		response.setHeader("Content-Disposition",
+				"inline; filename=\"" + image.getFileName() + "\";");
 		response.setHeader("Content-Transfer-Encoding", "binary");
 		response.setHeader("Pragma", "no-cache;");
 		response.setHeader("Expires", "-1;");
-		
+
 		File f = new File(image.getSaveFileName());
 		if (!f.exists()) {
 			throw new RuntimeException("file not found");

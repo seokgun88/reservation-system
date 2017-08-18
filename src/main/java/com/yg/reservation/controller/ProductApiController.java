@@ -34,7 +34,7 @@ public class ProductApiController {
 	public List<ProductSummaryVo> getPromotion() {
 		return productService.getPromotion();
 	}
-	
+
 	@GetMapping("/{id:[\\d]+}")
 	public ProductDetailVo getDetail(@PathVariable int id) {
 		return productService.getDetail(id);
@@ -50,12 +50,12 @@ public class ProductApiController {
 	}
 
 	@GetMapping("/{id:[\\d]+}/reservation")
-	public ProductReservationVo getReservation(@PathVariable int id){
+	public ProductReservationVo getReservation(@PathVariable int id) {
 		return productService.getReservation(id);
 	}
 
 	@GetMapping("/{id:[\\d]+}/prices")
-	public List<ProductPrice> getPrices(@PathVariable int id){
+	public List<ProductPrice> getPrices(@PathVariable int id) {
 		return productService.getPrices(id);
 	}
 

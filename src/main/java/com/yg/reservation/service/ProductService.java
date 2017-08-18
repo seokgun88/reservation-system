@@ -21,7 +21,8 @@ public class ProductService {
 	private ImageDao imageDao;
 
 	@Autowired
-	public ProductService(ProductDao productDao, ImageDao imageDao, ProductPriceDao productPriceDao) {
+	public ProductService(ProductDao productDao, ImageDao imageDao,
+			ProductPriceDao productPriceDao) {
 		this.productDao = productDao;
 		this.imageDao = imageDao;
 		this.productPriceDao = productPriceDao;
@@ -44,18 +45,19 @@ public class ProductService {
 		if (categoryId == 0) {
 			productSummaryVos = productDao.selectLimitedWithOffset(offset);
 		} else {
-			productSummaryVos = productDao.selectLimitedWithOffsetByCategoryId(categoryId, offset);
+			productSummaryVos = productDao
+					.selectLimitedWithOffsetByCategoryId(categoryId, offset);
 		}
 		return productSummaryVos;
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ProductDetailVo getDetail(int id) {
-		if(id < 1) {
+		if (id < 1) {
 			return null;
 		}
 		ProductDetailVo productDetailVo = productDao.selectDetail(id);
-		if(productDetailVo == null) {
+		if (productDetailVo == null) {
 			return null;
 		}
 		List<Integer> images = imageDao.selectIdsByProductId(id);

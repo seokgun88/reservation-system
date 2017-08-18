@@ -15,17 +15,19 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
 		AuthUser loginUser = parameter.getParameterAnnotation(AuthUser.class);
-		if(loginUser == null) {
+		if (loginUser == null) {
 			return false;
 		} else {
 			return true;
 		}
 	}
-	
+
 	@Override
-	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mvcContainer, 
-			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-		HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+	public Object resolveArgument(MethodParameter parameter,
+			ModelAndViewContainer mvcContainer, NativeWebRequest webRequest,
+			WebDataBinderFactory binderFactory) throws Exception {
+		HttpServletRequest request = (HttpServletRequest) webRequest
+				.getNativeRequest();
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		return user;

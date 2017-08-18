@@ -21,20 +21,22 @@ import com.yg.reservation.vo.ReviewVo;
 public class ReviewDao {
 	private NullableNamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
-	private RowMapper<ReviewVo> reviewRowMapper = BeanPropertyRowMapper.newInstance(ReviewVo.class);
-	
+	private RowMapper<ReviewVo> reviewRowMapper = BeanPropertyRowMapper
+			.newInstance(ReviewVo.class);
+
 	public ReviewDao(DataSource dataSource) {
 		this.jdbc = new NullableNamedParameterJdbcTemplate(dataSource);
 		this.insertAction = new SimpleJdbcInsert(dataSource)
 				.withTableName("reservation_user_reviews")
-				.usingGeneratedKeyColumns("id","create_date", "modify_date");
+				.usingGeneratedKeyColumns("id", "create_date", "modify_date");
 	}
 
 	public List<ReviewVo> selectLimitedByProductId(int productId, int limit) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("productId", productId);
 		params.put("limit", limit);
-		return jdbc.query(ReviewSqls.SELECT_LIMITED_BY_PRODUCT_ID, params, reviewRowMapper);
+		return jdbc.query(ReviewSqls.SELECT_LIMITED_BY_PRODUCT_ID, params,
+				reviewRowMapper);
 	}
 
 	public int insert(Review review) {
