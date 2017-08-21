@@ -39,6 +39,7 @@ public class ReservationDao {
 
 	public List<ReservationVo> selectMy(int userId) {
 		Map<String, ?> params = Collections.singletonMap("userId", userId);
-		return jdbc.query(ReservationSqls.SELECT_MY_BY_USER_ID, params, reservationVoRowMapper);
+		return jdbc.query(ReservationSqls.SELECT_MY_BY_USER_ID, params,
+				reservationVoRowMapper);
 	}
 }

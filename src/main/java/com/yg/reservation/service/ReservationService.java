@@ -37,8 +37,14 @@ public class ReservationService {
 
 		myReservation.setReservations(reservations.stream().collect(
 				Collectors.groupingBy(ReservationVo::getReservationType)));
-		myReservation.setTypeCounts(reservations.stream().collect(Collectors
-				.groupingBy(ReservationVo::getReservationType, Collectors.counting())));
+		myReservation.setTypeCounts(reservations.stream().collect(
+				Collectors.groupingBy(ReservationVo::getReservationType,
+						Collectors.counting())));
+		for(int i=0; i<4; i++) {
+			if(myReservation.getTypeCounts().get(i) == null) {
+				myReservation.getTypeCounts().put(i, 0l);
+			}
+		}
 
 		return myReservation;
 	}

@@ -1,6 +1,6 @@
 define(["jquery", "Handlebars"], function($, Handlebars) {
 
-  var templates = [];
+  var templates = {};
 
   function drawHandlerbarsTemplate(templateId, parentTag, data, type) {
     if (!templates[templateId]) {
@@ -10,7 +10,5 @@ define(["jquery", "Handlebars"], function($, Handlebars) {
     $(parentTag)[type](templates[templateId](data));
   }
 
-  return {
-    drawHandlerbarsTemplate: drawHandlerbarsTemplate
-  };
+  return drawHandlerbarsTemplate;
 });

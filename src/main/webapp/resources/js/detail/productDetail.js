@@ -29,7 +29,7 @@ define(["jquery", "Handlebars", "egComponent", "util", "asyncRequest", "formatte
     function popupReviewImageViewer(ids) {
       $("#imageviewer").removeClass("hide");
       $(".total_image").text(ids.length);
-      HandlebarsWrapper.drawHandlerbarsTemplate("#imageviewer-template", ".image_list", ids);
+      HandlebarsWrapper("#imageviewer-template", ".image_list", ids);
       if (_options.popupReviewImageViewerCallback) {
         _options.popupReviewImageViewerCallback();
       }

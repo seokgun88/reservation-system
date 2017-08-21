@@ -24,14 +24,15 @@ public class ReservationApiController {
 	}
 
 	@PostMapping
-	public boolean add(@RequestBody Reservation reservation, @AuthUser User user) {
+	public boolean add(@RequestBody Reservation reservation,
+			@AuthUser User user) {
 		reservation.setUserId(user.getId());
 		return reservationService.add(reservation);
 	}
-	
+
 	@GetMapping("/my")
 	public MyReservationVo getMy(@AuthUser User user) {
 		return reservationService.getMy(user.getId());
 	}
-	
+
 }

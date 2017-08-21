@@ -12,15 +12,16 @@ import com.yg.reservation.domain.ReviewImage;
 @Repository
 public class ReviewImageDao {
 	private SimpleJdbcInsert insertAction;
-	
+
 	public ReviewImageDao(DataSource dataSource) {
 		this.insertAction = new SimpleJdbcInsert(dataSource)
 				.withTableName("reservation_user_review_images")
 				.usingGeneratedKeyColumns("id");
 	}
-	
+
 	public int insert(ReviewImage reviewImage) {
-		SqlParameterSource params = new BeanPropertySqlParameterSource(reviewImage);
+		SqlParameterSource params = new BeanPropertySqlParameterSource(
+				reviewImage);
 		return insertAction.executeAndReturnKey(params).intValue();
 	}
 }

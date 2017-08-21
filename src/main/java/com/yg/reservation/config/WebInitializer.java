@@ -16,38 +16,42 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
 public class WebInitializer implements WebApplicationInitializer {
-    private static final String CONFIG_LOCATION = "com.yg.reservation.config";
-    private static final String MAPPING_URL = "/";
+	private static final String CONFIG_LOCATION = "com.yg.reservation.config";
+	private static final String MAPPING_URL = "/";
 
-    public WebInitializer(){
+	public WebInitializer() {
 
-    }
+	}
 
-    @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        WebApplicationContext context = getContext();
+	@Override
+	public void onStartup(ServletContext servletContext)
+			throws ServletException {
+		WebApplicationContext context = getContext();
 
-        // encoding filter 설정
-        EnumSet<DispatcherType> dispatcherTypes = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
+		// encoding filter 설정
+		EnumSet<DispatcherType> dispatcherTypes = EnumSet
+				.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
 
-        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-        characterEncodingFilter.setEncoding("UTF-8");
-        characterEncodingFilter.setForceEncoding(true);
+		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+		characterEncodingFilter.setEncoding("UTF-8");
+		characterEncodingFilter.setForceEncoding(true);
 
-        FilterRegistration.Dynamic characterEncoding = servletContext.addFilter("characterEncoding", characterEncodingFilter);
-        characterEncoding.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
+		FilterRegistration.Dynamic characterEncoding = servletContext
+				.addFilter("characterEncoding", characterEncodingFilter);
+		characterEncoding.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
 
-        // dispatchder servlet 설정
-        servletContext.addListener(new ContextLoaderListener(context));
-        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("DispatcherServlet", new DispatcherServlet(context));
-        dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping(MAPPING_URL);
-    }
-    
-    private AnnotationConfigWebApplicationContext getContext() {
-        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.setConfigLocation(CONFIG_LOCATION);
-        return context;
-    }
-    
+		// dispatchder servlet 설정
+		servletContext.addListener(new ContextLoaderListener(context));
+		ServletRegistration.Dynamic dispatcher = servletContext.addServlet(
+				"DispatcherServlet", new DispatcherServlet(context));
+		dispatcher.setLoadOnStartup(1);
+		dispatcher.addMapping(MAPPING_URL);
+	}
+
+	private AnnotationConfigWebApplicationContext getContext() {
+		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+		context.setConfigLocation(CONFIG_LOCATION);
+		return context;
+	}
+
 }
