@@ -22,7 +22,7 @@
         <div class="ct">
             <div class="ct_wrap">
               <div class="top_title">
-                  <a href="#" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
+                  <a href="javascript:history.go(-1)" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
                   <h2><span class="title">${name}</span></h2>
               </div>
               <div class="section_product_detail">
