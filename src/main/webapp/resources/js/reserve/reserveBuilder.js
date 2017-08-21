@@ -23,9 +23,9 @@ define(["productModel", "asyncRequest", "Handlebars", "../handlebarsWrapper"],
 
       product = new ProductModel(productDetail, productPrice);
 
-      HandlebarsWrapper.drawHandlerbarsTemplate("#product-detail-template", ".section_product_detail", product.getDetail());
-      HandlebarsWrapper.drawHandlerbarsTemplate("#booking-ticket-template", ".section_booking_ticket", product.getPrices());
-      HandlebarsWrapper.drawHandlerbarsTemplate("#booking-form-template", ".inline_form.last  .inline_control", product.getDetail());
+      HandlebarsWrapper("#product-detail-template", ".section_product_detail", product.getDetail());
+      HandlebarsWrapper("#booking-ticket-template", ".section_booking_ticket", product.getPrices());
+      HandlebarsWrapper("#booking-form-template", ".inline_form.last  .inline_control", product.getDetail());
     }
 
     function getProduct() {

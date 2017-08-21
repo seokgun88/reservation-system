@@ -6,7 +6,8 @@ require.config({
     "asyncRequest": "../asyncRequest",
     "util": "../util",
     "flicking": "../flicking",
-    "formatter": "../formatter"
+    "formatter": "../formatter",
+    "handlebarsWrapper": "../handlebarsWrapper"
   }
 });
 
