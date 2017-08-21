@@ -3,9 +3,7 @@ define(["jquery", "Handlebars", "egComponent", "util", "asyncRequest", "formatte
     "use strict";
 
     var reviewIdToImageIds = [],
-      _options = {},
-      salesEnd = new Date(),
-      salesFlag = false;
+      _options = {};
 
     function init(options) {
       _options = options;
@@ -59,12 +57,12 @@ define(["jquery", "Handlebars", "egComponent", "util", "asyncRequest", "formatte
     }
 
     function booking() {
-      if (new Date() > salesEnd) {
+      if (new Date() > _options.productData.salesEnd) {
         alert("판매기간 종료되었습니다.");
-      } else if (!salesFlag) {
+      } else if (!_options.productData.salesFlag) {
         alert("매진 되었습니다.");
       } else {
-        window.location.href = "/products/" + productId + "/reservation";
+        window.location.href = "/products/" + _options.productData.productId + "/reservation";
       }
     }
 

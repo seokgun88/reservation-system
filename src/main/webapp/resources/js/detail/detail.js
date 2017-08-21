@@ -20,7 +20,9 @@ require([
       popupReviewImageViewerCallback: initImageViewerFlicking
     };
     DetailBuilder.init()
-      .done(function() {
+      .done(function(data) {
+        options.productData = data;
+
         ProductDetail.init(options);
         initProductFlickings();
       });
