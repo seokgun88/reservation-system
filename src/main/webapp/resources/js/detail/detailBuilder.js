@@ -22,6 +22,11 @@ define(["jquery", "Handlebars", "egComponent", "util", "asyncRequest", "naverMap
       drawReviews(review[0]);
 
       NaverMap.init(detail[0]);
+      return {
+        productId: productId,
+        salesEnd: salesEnd,
+        salesFlag: salesFlag
+      };
     }
 
     function drawProductDetail(data) {
