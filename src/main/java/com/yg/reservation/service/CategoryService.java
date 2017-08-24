@@ -5,20 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yg.reservation.dao.CategoryDao;
 import com.yg.reservation.domain.Category;
+import com.yg.reservation.repository.CategoryRepository;
 
 @Service
 public class CategoryService {
-	private CategoryDao categoryDao;
+	private CategoryRepository categoryRepository;
 
 	@Autowired
-	public CategoryService(CategoryDao categoryDao) {
-		this.categoryDao = categoryDao;
+	public CategoryService(CategoryRepository categoryRepository) {
+		this.categoryRepository = categoryRepository;
 	}
 
 	public List<Category> getAll() {
-		List<Category> categories = categoryDao.selectAll();
+		List<Category> categories = categoryRepository.findAll();
 		if (categories == null || categories.isEmpty()) {
 			return null;
 		}

@@ -3,21 +3,21 @@ package com.yg.reservation.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yg.reservation.dao.UserDao;
 import com.yg.reservation.domain.NaverProfile;
 import com.yg.reservation.domain.User;
+import com.yg.reservation.repository.UserRepository;
 
 @Service
 public class UserService {
-	private UserDao userDao;
+	private UserRepository userRepository;
 
 	@Autowired
-	public UserService(UserDao userDao) {
-		this.userDao = userDao;
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 
 	public User add(NaverProfile profile) {
-		User user = userDao.select(profile.getId());
+		User user = userRepository.findBySnsId(profile.getId());
 		if (user == null) {
 			user = new User();
 			user.setAdminFlag(0);
@@ -26,7 +26,7 @@ public class UserService {
 			user.setSnsId(profile.getId());
 			user.setUsername(profile.getName());
 
-			return userDao.insert(user);
+			return userRepository.save(user);
 		}
 		return user;
 	}

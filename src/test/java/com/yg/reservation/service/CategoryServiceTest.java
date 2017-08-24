@@ -23,7 +23,6 @@ import com.yg.reservation.domain.Category;
 public class CategoryServiceTest {
 	@Autowired
 	private CategoryService categoryService;
-
 	private static Logger logger = LoggerFactory
 			.getLogger(CategoryServiceTest.class);
 
