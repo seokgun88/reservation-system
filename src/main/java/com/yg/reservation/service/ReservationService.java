@@ -6,42 +6,49 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yg.reservation.dao.ReservationDao;
+import com.yg.reservation.domain.Product;
 import com.yg.reservation.domain.Reservation;
+import com.yg.reservation.repository.ProductRepository;
+import com.yg.reservation.repository.ReservationRepository;
 import com.yg.reservation.vo.MyReservationVo;
-import com.yg.reservation.vo.ReservationVo;
 
 @Service
 public class ReservationService {
-	ReservationDao reservationDao;
+	private ReservationRepository reservationRepository;
+	private ProductRepository productRepository;
 
 	@Autowired
-	public ReservationService(ReservationDao reservationDao) {
-		this.reservationDao = reservationDao;
+	public ReservationService(ReservationRepository reservationRepository,
+			ProductRepository productRepository) {
+		this.reservationRepository = reservationRepository;
+		this.productRepository = productRepository;
 	}
 
-	public boolean add(Reservation reservation) {
-		if (!reservation.hasRequiredValues()) {
+	public boolean add(Reservation reservation, int productId) {
+		if (!reservation.hasRequiredValues() || productId < 1) {
 			return false;
 		}
-		reservationDao.insert(reservation);
+		Product product = productRepository.findOne(productId);
+		reservation.setProduct(product);
+		reservationRepository.save(reservation);
 		return true;
 	}
 
-	public MyReservationVo getMy(int userId) {
+	public MyReservationVo getByUserId(int userId) {
 		MyReservationVo myReservation = new MyReservationVo();
-		List<ReservationVo> reservations = reservationDao.selectMy(userId);
+		List<Reservation> reservations = reservationRepository
+				.findByUser_id(userId);
 		if (reservations == null) {
 			return null;
 		}
 
 		myReservation.setReservations(reservations.stream().collect(
-				Collectors.groupingBy(ReservationVo::getReservationType)));
-		myReservation.setTypeCounts(reservations.stream().collect(
-				Collectors.groupingBy(ReservationVo::getReservationType,
+				Collectors.groupingBy(Reservation::getReservationType)));
+		myReservation.setTypeCounts(reservations.stream()
+				.collect(Collectors.groupingBy(Reservation::getReservationType,
 						Collectors.counting())));
-		for(int i=0; i<4; i++) {
-			if(myReservation.getTypeCounts().get(i) == null) {
+		for (int i = 0; i < 4; i++) {
+			if (myReservation.getTypeCounts().get(i) == null) {
 				myReservation.getTypeCounts().put(i, 0l);
 			}
 		}

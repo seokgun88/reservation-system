@@ -116,7 +116,7 @@ require([
   }
 
   function addExValues(reservation) {
-    reservation.period = Formatter.getPeriod(reservation.displayStart, reservation.displayEnd);
+    reservation.period = Formatter.getPeriod(reservation.product.productDisplay.displayStart, reservation.product.productDisplay.displayEnd);
     reservation.ticketCounts = Formatter.getTicketCountString(reservation.generalTicketCount, reservation.youthTicketCount, reservation.childTicketCount);
     reservation.totalPrice = reservation.totalPrice.toLocaleString();
   }

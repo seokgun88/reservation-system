@@ -39,15 +39,17 @@ define(["jquery", "ticket", "bookingForm", "asyncRequest"],
       var bookingUser = bookingForm.getBookingUser();
       var data = JSON.stringify({
         productId: window.location.pathname.split("/")[2],
-        generalTicketCount: tickets[1].getCount(),
-        youthTicketCount: tickets[2].getCount(),
-        childTicketCount: tickets[3].getCount(),
-        reservationName: bookingUser.userName,
-        reservationTel: bookingUser.tel,
-        reservationEmail: bookingUser.email,
-        reservationType: 0,
-        totalPrice: totalPrice,
-        reservationDate: "2017-08-16"
+        reservation: {
+          generalTicketCount: tickets[1].getCount(),
+          youthTicketCount: tickets[2].getCount(),
+          childTicketCount: tickets[3].getCount(),
+          reservationName: bookingUser.userName,
+          reservationTel: bookingUser.tel,
+          reservationEmail: bookingUser.email,
+          reservationType: 0,
+          totalPrice: totalPrice,
+          reservationDate: "2017-08-16"
+        }
       });
       ajaxRequest("/api/reservations", "POST", data).done(function(e) {
         console.log(e);

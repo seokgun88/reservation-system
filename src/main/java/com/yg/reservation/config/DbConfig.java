@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -47,9 +46,10 @@ public class DbConfig {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
 		emf.setDataSource(dataSource());
-		emf.setPackagesToScan(new String[] { "com.yg.reservation.domain" });
+		emf.setPackagesToScan("com.yg.reservation.domain");
 
-		JpaVendorAdapter jpaVendorAdapterendorAdapter = new HibernateJpaVendorAdapter();
+		HibernateJpaVendorAdapter jpaVendorAdapterendorAdapter = new HibernateJpaVendorAdapter();
+		jpaVendorAdapterendorAdapter.setShowSql(true);
 		emf.setJpaVendorAdapter(jpaVendorAdapterendorAdapter);
 		emf.setJpaProperties(additionalProperties());
 

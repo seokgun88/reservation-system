@@ -158,7 +158,7 @@
           <div class="middle">
             <div class="card_detail">
               <em class="booking_number">No.{{id}}</em>
-              <h4 class="tit">{{productName}}</h4>
+              <h4 class="tit">{{product.name}}</h4>
               <ul class="detail">
                 <li class="item">
                   <span class="item_tit">일정</span>
@@ -175,7 +175,7 @@
                 <li class="item">
                   <span class="item_tit">상품</span>
                   <em class="item_dsc">
-                    {{productName}}
+                    {{product.name}}
                   </em>
                 </li>
               </ul>
@@ -215,7 +215,7 @@
           <div class="middle">
             <div class="card_detail">
               <em class="booking_number">No.{{id}}</em>
-              <h4 class="tit">{{productName}}</h4>
+              <h4 class="tit">{{product.name}}</h4>
               <ul class="detail">
                 <li class="item">
                   <span class="item_tit">일정</span>
@@ -232,7 +232,7 @@
                 <li class="item">
                   <span class="item_tit">상품</span>
                   <em class="item_dsc">
-                    {{productName}}
+                    {{product.name}}
                   </em>
                 </li>
               </ul>
@@ -272,7 +272,7 @@
           <div class="middle">
             <div class="card_detail">
               <em class="booking_number">No.{{id}}</em>
-              <h4 class="tit">{{productName}}</h4>
+              <h4 class="tit">{{product.name}}</h4>
               <ul class="detail">
                 <li class="item">
                   <span class="item_tit">일정</span>
@@ -289,7 +289,7 @@
                 <li class="item">
                   <span class="item_tit">상품</span>
                   <em class="item_dsc">
-                    {{productName}}
+                    {{product.name}}
                   </em>
                 </li>
               </ul>
@@ -327,7 +327,7 @@
           <div class="middle">
             <div class="card_detail">
               <em class="booking_number">No.{{id}}</em>
-              <h4 class="tit">{{productName}}</h4>
+              <h4 class="tit">{{product.name}}</h4>
               <ul class="detail">
                 <li class="item">
                   <span class="item_tit">일정</span>
@@ -344,7 +344,7 @@
                 <li class="item">
                   <span class="item_tit">상품</span>
                   <em class="item_dsc">
-                    {{productName}}
+                    {{product.name}}
                   </em>
                 </li>
               </ul>

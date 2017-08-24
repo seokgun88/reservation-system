@@ -12,6 +12,7 @@ import com.yg.reservation.domain.User;
 import com.yg.reservation.security.AuthUser;
 import com.yg.reservation.service.ReservationService;
 import com.yg.reservation.vo.MyReservationVo;
+import com.yg.reservation.vo.ReservationVo;
 
 @RestController
 @RequestMapping("/api/reservations")
@@ -24,15 +25,16 @@ public class ReservationApiController {
 	}
 
 	@PostMapping
-	public boolean add(@RequestBody Reservation reservation,
+	public boolean add(@RequestBody ReservationVo reservationVo,
 			@AuthUser User user) {
-		reservation.setUserId(user.getId());
-		return reservationService.add(reservation);
+		Reservation reservation = reservationVo.getReservation();
+		reservation.setUser(user);
+		return reservationService.add(reservation, reservationVo.getProductId());
 	}
 
 	@GetMapping("/my")
 	public MyReservationVo getMy(@AuthUser User user) {
-		return reservationService.getMy(user.getId());
+		return reservationService.getByUserId(user.getId());
 	}
 
 }
