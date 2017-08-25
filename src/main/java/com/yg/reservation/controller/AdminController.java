@@ -33,7 +33,7 @@ public class AdminController {
 	public String create(@AuthUser User user, @RequestParam MultipartFile file)
 			throws IllegalStateException, IOException {
 		MultipartFile[] files = { file };
-		imageService.add(user.getId(), files);
+		imageService.add(user, files);
 		return "redirect:/admin/images";
 	}
 }

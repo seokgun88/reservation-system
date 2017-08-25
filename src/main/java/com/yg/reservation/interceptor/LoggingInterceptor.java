@@ -36,7 +36,7 @@ public class LoggingInterceptor extends HandlerInterceptorAdapter {
 		stringBuilder.append("[").append(method).append("] ");
 		stringBuilder.append(uri).append(" ");
 		stringBuilder.append(System.currentTimeMillis() - beginTime);
-		stringBuilder.append(" ms");
+		stringBuilder.append("ms");
 
 		logger.info("메소드 실행 시간 {}", stringBuilder.toString());
 

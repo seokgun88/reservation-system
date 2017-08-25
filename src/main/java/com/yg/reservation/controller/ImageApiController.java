@@ -38,6 +38,6 @@ public class ImageApiController {
 	public List<Integer> add(@AuthUser User user,
 			@RequestBody MultipartFile[] files)
 			throws IllegalStateException, IOException {
-		return imageService.add(user.getId(), files);
+		return imageService.add(user, files);
 	}
 }

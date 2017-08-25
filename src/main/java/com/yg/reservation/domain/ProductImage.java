@@ -1,6 +1,5 @@
 package com.yg.reservation.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,26 +11,28 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name="product_prices")
+@Table(name="product_images")
 @Getter
 @Setter
-@ToString
-public class ProductPrice {
+@ToString(exclude="product")
+public class ProductImage {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
 	@GenericGenerator(name="native", strategy="native")
 	private int id;
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="product_id")
+	@JoinColumn(name = "product_id")
+	@JsonIgnore
 	private Product product;
-	@Column(name="price_type")
-	private int priceType;
-	private int price;
-	@Column(name="discount_rate")
-	private int discountRate;
+	@ManyToOne
+	@JoinColumn(name="file_id")
+	private Image image;
+	private int type;
 }

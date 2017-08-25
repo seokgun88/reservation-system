@@ -12,27 +12,33 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.yg.reservation.dao.ImageDao;
-import com.yg.reservation.dao.ReviewImageDao;
+import com.yg.reservation.domain.Image;
+import com.yg.reservation.domain.Product;
 import com.yg.reservation.domain.Review;
 import com.yg.reservation.domain.ReviewImage;
+import com.yg.reservation.repository.ImageRepository;
+import com.yg.reservation.repository.ProductRepository;
+import com.yg.reservation.repository.ReviewImageRepository;
 import com.yg.reservation.repository.ReviewRepository;
-import com.yg.reservation.vo.ReviewImageVo;
 import com.yg.reservation.vo.ReviewVo;
 import com.yg.reservation.vo.ReviewWriteVo;
 
 @Service
 public class ReviewService {
 	private ReviewRepository reviewRepository;
-	private ImageDao imageDao;
-	private ReviewImageDao reviewImageDao;
+	private ReviewImageRepository reviewImageRepository;
+	private ImageRepository imageRepository;
+	private ProductRepository productRepository;
 
 	@Autowired
-	public ReviewService(ReviewRepository reviewRepository, ImageDao imageDao,
-			ReviewImageDao reviewImageDao) {
+	public ReviewService(ReviewRepository reviewRepository,
+			ReviewImageRepository reviewImageRepository,
+			ImageRepository imageRepository,
+			ProductRepository productRepository) {
 		this.reviewRepository = reviewRepository;
-		this.imageDao = imageDao;
-		this.reviewImageDao = reviewImageDao;
+		this.reviewImageRepository = reviewImageRepository;
+		this.imageRepository = imageRepository;
+		this.productRepository = productRepository;
 	}
 
 	@Transactional(readOnly = true)
@@ -40,7 +46,7 @@ public class ReviewService {
 		if (productId < 1 || limit < 1) {
 			return null;
 		}
-		List<Review> reviews = reviewRepository.findByProductId(productId,
+		List<Review> reviews = reviewRepository.findByProduct_id(productId,
 				new PageRequest(0, limit,
 						new Sort(Direction.DESC, "modifyDate")));
 		if (reviews == null || reviews.isEmpty()) {
@@ -48,13 +54,15 @@ public class ReviewService {
 		}
 		List<Integer> ids = reviews.stream().map(Review::getId)
 				.collect(Collectors.toList());
-		List<ReviewImageVo> imageIds = imageDao.selectIdsByReviewIds(ids);
+		List<ReviewImage> imageIds = reviewImageRepository
+				.findByReview_idIn(ids);
 		if (imageIds == null || imageIds.isEmpty()) {
 			return null;
 		}
 		Map<Integer, List<Integer>> idToImageIds = imageIds.stream()
-				.collect(Collectors.groupingBy(ReviewImageVo::getReviewId,
-						Collectors.mapping(ReviewImageVo::getImageId,
+				.collect(Collectors.groupingBy(ReviewImage::getId,
+						Collectors.mapping(
+								(ReviewImage ri) -> ri.getImage().getId(),
 								Collectors.toList())));
 		List<ReviewVo> reviewVos = new ArrayList<>();
 		for (Review review : reviews) {
@@ -77,6 +85,9 @@ public class ReviewService {
 			return false;
 		}
 		Review review = reviewWriteVo.getReview();
+		Product product = productRepository
+				.findOne(reviewWriteVo.getProductId());
+		review.setProduct(product);
 		reviewRepository.save(review);
 
 		List<Integer> imageIds = reviewWriteVo.getImageIds();
@@ -86,12 +97,15 @@ public class ReviewService {
 
 		ReviewImage reviewImage = new ReviewImage();
 		for (int imageId : imageIds) {
-			reviewImage.setReservationUserReviewId(review.getId());
-			reviewImage.setFileId(imageId);
-			reviewImageDao.insert(reviewImage);
+			reviewImage.setReview(reviewRepository.findOne(review.getId()));
+			reviewImage.setImage(imageRepository.findOne(imageId));
+			reviewImageRepository.save(reviewImage);
 		}
 
-		imageDao.updateDeleteFlagTo0(imageIds);
+		List<Image> images = imageRepository.findByIdIn(imageIds);
+		for (Image image : images) {
+			image.setDeleteFlag(0);
+		}
 
 		return true;
 	}

@@ -8,5 +8,5 @@ import com.yg.reservation.domain.ProductPrice;
 
 public interface ProductPriceRepository
 		extends JpaRepository<ProductPrice, Integer> {
-	public List<ProductPrice> findByProductId(int productId);
+	public List<ProductPrice> findByProduct_id(int productId);
 }

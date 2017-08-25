@@ -23,10 +23,10 @@ require([
     });
     var data = JSON.stringify({
       review: {
-        productId: document.location.pathname.split("/")[2],
         score: ($(".rating_rdo:checked").length - 1) * 10,
         review: $("textarea.review_textarea").val()
       },
+      productId: document.location.pathname.split("/")[2],
       imageIds: imageIds
     });
 

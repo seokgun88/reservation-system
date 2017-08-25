@@ -13,5 +13,6 @@ import lombok.ToString;
 @ToString
 public class ReviewWriteVo {
 	private Review review;
+	private int productId;
 	private List<Integer> imageIds;
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,8 +31,9 @@ public class Review {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
 	@GenericGenerator(name = "native", strategy = "native")
 	private int id;
-	@Column(name = "product_id")
-	private int productId;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "product_id")
+	private Product product;
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -45,8 +47,7 @@ public class Review {
 	private Date modifyDate;
 
 	public boolean hasRequiredValues() {
-		if (productId < 1 || (score > 50 || score < 0)
-				|| StringUtils.isBlank(review)) {
+		if ((score > 50 || score < 0) || StringUtils.isBlank(review)) {
 			return false;
 		}
 		return true;

@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.yg.reservation.domain.Review;
 
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
-	public List<Review> findByProductId(int productId, Pageable pageable);
+	public List<Review> findByProduct_id(int productId, Pageable pageable);
 }

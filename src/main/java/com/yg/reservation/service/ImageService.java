@@ -14,29 +14,30 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.yg.reservation.dao.ImageDao;
 import com.yg.reservation.domain.Image;
+import com.yg.reservation.domain.User;
+import com.yg.reservation.repository.ImageRepository;
 
 @Service
 @PropertySource("classpath:/application.properties")
 public class ImageService {
-	private ImageDao imageDao;
+	private ImageRepository imageRepository;
 	@Value("${file.basedir}")
 	private String baseDir;
 
 	@Autowired
-	public ImageService(ImageDao imageDao) {
-		this.imageDao = imageDao;
+	public ImageService(ImageRepository imageRepository) {
+		this.imageRepository = imageRepository;
 	}
 
 	public Image get(int id) {
 		if (id < 1) {
 			return null;
 		}
-		return imageDao.select(id);
+		return imageRepository.findOne(id);
 	}
 
-	public List<Integer> add(int userId, MultipartFile[] files)
+	public List<Integer> add(User user, MultipartFile[] files)
 			throws IllegalStateException, IOException {
 		if (files == null || files.length < 1) {
 			return null;
@@ -62,12 +63,13 @@ public class ImageService {
 
 			Image image = new Image();
 			image.setFileName(originalFilename);
-			image.setUserId(userId);
+			image.setUser(user);
 			image.setSaveFileName(f.getCanonicalPath());
 			image.setFileLength(size);
 			image.setContentType(contentType);
 			image.setDeleteFlag(1);
-			ids.add(imageDao.insert(image));
+			imageRepository.save(image);
+			ids.add(image.getId());
 		}
 		return ids;
 	}
