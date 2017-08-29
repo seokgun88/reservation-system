@@ -3,7 +3,6 @@ package com.yg.reservation.domain;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,7 +23,7 @@ import lombok.ToString;
 @ToString(exclude="product")
 public class ProductImage {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
+	@GeneratedValue(generator = "native")
 	@GenericGenerator(name="native", strategy="native")
 	private int id;
 	@ManyToOne(fetch=FetchType.LAZY)

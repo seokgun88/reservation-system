@@ -69,7 +69,7 @@ public class ProductService {
 		if (categoryId == 0) {
 			products = productRepository.findAll(new PageRequest(page-1, 10)).getContent();
 		} else {
-			products = productRepository.findByCategory_id(categoryId,
+			products = productRepository.findByCategoryId(categoryId,
 					new PageRequest(page-1, 10));
 		}
 
@@ -154,6 +154,6 @@ public class ProductService {
 		if (id < 1) {
 			return null;
 		}
-		return productPriceRepository.findByProduct_id(id);
+		return productPriceRepository.findByProductId(id);
 	}
 }

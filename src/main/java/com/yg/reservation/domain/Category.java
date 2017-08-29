@@ -3,7 +3,6 @@ package com.yg.reservation.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -20,7 +19,7 @@ import lombok.ToString;
 @ToString
 public class Category {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
+	@GeneratedValue(generator = "native")
 	@GenericGenerator(name="native", strategy="native")
 	private int id;
 	private String name;

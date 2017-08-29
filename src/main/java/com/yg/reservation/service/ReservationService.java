@@ -37,7 +37,7 @@ public class ReservationService {
 	public MyReservationVo getByUserId(int userId) {
 		MyReservationVo myReservation = new MyReservationVo();
 		List<Reservation> reservations = reservationRepository
-				.findByUser_id(userId);
+				.findByUserId(userId);
 		if (reservations == null) {
 			return null;
 		}

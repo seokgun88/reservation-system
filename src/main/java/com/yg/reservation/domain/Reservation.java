@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,6 +16,8 @@ import javax.persistence.TemporalType;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,10 +26,10 @@ import lombok.ToString;
 @Table(name = "reservations")
 @Getter
 @Setter
-@ToString
+@ToString(exclude="user")
 public class Reservation {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+	@GeneratedValue(generator = "native")
 	@GenericGenerator(name = "native", strategy = "native")
 	private int id;
 	@ManyToOne
@@ -36,6 +37,7 @@ public class Reservation {
 	private Product product;
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "user_id")
+	@JsonIgnore
 	private User user;
 	@Column(name = "general_ticket_count")
 	private int generalTicketCount;
@@ -56,6 +58,14 @@ public class Reservation {
 	private int reservationType;
 	@Column(name = "total_price")
 	private int totalPrice;
+	@Column(name = "create_date", nullable = false, updatable = false, insertable = false, 
+			columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createDate;
+	@Column(name = "modify_date", nullable = false, updatable = false, insertable = false, 
+			columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifyDate;
 
 	public boolean hasRequiredValues() {
 		int totalCount = generalTicketCount + youthTicketCount

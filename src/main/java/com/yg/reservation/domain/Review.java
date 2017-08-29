@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,10 +27,10 @@ import lombok.ToString;
 @ToString
 public class Review {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+	@GeneratedValue(generator = "native")
 	@GenericGenerator(name = "native", strategy = "native")
 	private int id;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
 	private Product product;
 	@ManyToOne
@@ -39,10 +38,12 @@ public class Review {
 	private User user;
 	private int score;
 	private String review;
-	@Column(name = "create_date")
+	@Column(name = "create_date", nullable = false, updatable = false, insertable = false, 
+			columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
-	@Column(name = "modify_date")
+	@Column(name = "modify_date", nullable = false, updatable = false, insertable = false, 
+			columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifyDate;
 

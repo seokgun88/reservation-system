@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -29,7 +28,7 @@ import lombok.ToString;
 @ToString(exclude="product")
 public class ProductDisplay {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
+	@GeneratedValue(generator = "native")
 	@GenericGenerator(name="native", strategy="native")
 	private int id;
 	@OneToOne(fetch=FetchType.LAZY)
@@ -53,4 +52,12 @@ public class ProductDisplay {
 	private String tel;
 	private String homepage;
 	private String email;
+	@Column(name = "create_date", nullable = false, updatable = false, insertable = false, 
+			columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createDate;
+	@Column(name = "modify_date", nullable = false, updatable = false, insertable = false, 
+			columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifyDate;
 }

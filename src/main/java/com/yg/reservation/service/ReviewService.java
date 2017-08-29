@@ -46,7 +46,7 @@ public class ReviewService {
 		if (productId < 1 || limit < 1) {
 			return null;
 		}
-		List<Review> reviews = reviewRepository.findByProduct_id(productId,
+		List<Review> reviews = reviewRepository.findByProductId(productId,
 				new PageRequest(0, limit,
 						new Sort(Direction.DESC, "modifyDate")));
 		if (reviews == null || reviews.isEmpty()) {
@@ -55,7 +55,7 @@ public class ReviewService {
 		List<Integer> ids = reviews.stream().map(Review::getId)
 				.collect(Collectors.toList());
 		List<ReviewImage> imageIds = reviewImageRepository
-				.findByReview_idIn(ids);
+				.findByReviewIdIn(ids);
 		if (imageIds == null || imageIds.isEmpty()) {
 			return null;
 		}
