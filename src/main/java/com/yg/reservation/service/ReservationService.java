@@ -56,4 +56,14 @@ public class ReservationService {
 		return myReservation;
 	}
 
+	public boolean modifyReservationType(int id, Integer reservationType) {
+		Reservation reservation = reservationRepository.findOne(id);
+		if (reservation == null) {
+			return false;
+		}
+		reservation.setReservationType(reservationType);
+		reservationRepository.save(reservation);
+		return true;
+	}
+
 }
