@@ -117,7 +117,7 @@ require([
   }
 
   function drawReservations(dataReservations) {
-    if (!dataReservations) {
+    if (!dataReservations.hasOwnProperty()) {
       $(".wrap_mylist").addClass("hide");
       $(".err").removeClass("hide");
       return;
