@@ -1,5 +1,8 @@
 package com.yg.reservation.service;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import java.util.Date;
 
 import org.junit.Test;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yg.reservation.config.RootApplicationContextConfig;
 import com.yg.reservation.domain.Reservation;
 import com.yg.reservation.domain.User;
+import com.yg.reservation.repository.ReservationRepository;
 import com.yg.reservation.repository.UserRepository;
 import com.yg.reservation.vo.MyReservationVo;
 
@@ -23,6 +27,9 @@ import com.yg.reservation.vo.MyReservationVo;
 public class ReservationServiceTest {
 	@Autowired
 	private ReservationService reservationService;
+	@Autowired
+	private ReservationRepository reservationRepository;
+	
 	@Autowired
 	private UserRepository userRepository;
 	private Logger logger = LoggerFactory.getLogger(ReviewServiceTest.class);
@@ -44,6 +51,14 @@ public class ReservationServiceTest {
 		
 		MyReservationVo myReservation = reservationService.getByUserId(1);
 		logger.info(myReservation.toString());
+	}
+	
+	@Test
+	public void shouldModifyReservationType() {
+		reservationService.modifyReservationType(3, 3);
+		
+		assertThat(reservationRepository.findOne(3).getReservationType(), is(3));
+		logger.info(reservationRepository.findOne(3).toString());
 	}
 
 }
