@@ -30,7 +30,7 @@ public class ReservationService {
 		}
 		Product product = productRepository.findOne(productId);
 		reservation.setProduct(product);
-		reservationRepository.save(reservation);
+		System.out.println(reservationRepository.save(reservation));
 		return true;
 	}
 

@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yg.reservation.config.RootApplicationContextConfig;
 import com.yg.reservation.domain.Review;
 import com.yg.reservation.domain.User;
-import com.yg.reservation.repository.ProductRepository;
 import com.yg.reservation.repository.UserRepository;
 import com.yg.reservation.vo.ReviewVo;
 import com.yg.reservation.vo.ReviewWriteVo;
@@ -31,8 +30,6 @@ public class ReviewServiceTest {
 	private ReviewService reviewService;
 	@Autowired
 	private UserRepository userRepository;
-	@Autowired
-	private ProductRepository productRepository;
 	private Logger logger = LoggerFactory.getLogger(ReviewServiceTest.class);
 
 	@Test
@@ -49,11 +46,11 @@ public class ReviewServiceTest {
 		User user = userRepository.findOne(1);
 		ReviewWriteVo reviewWriteVo = new ReviewWriteVo();
 		Review review = new Review();
-		review.setProduct(productRepository.findOne(1));
 		review.setUser(user);
 		review.setScore(30);
 		review.setReview("good!");
 		reviewWriteVo.setReview(review);
+		reviewWriteVo.setProductId(1);
 		reviewService.addWithImageIds(reviewWriteVo);
 	}
 }

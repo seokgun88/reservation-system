@@ -103,7 +103,7 @@
             <span class="copyright">© NAVER Corp.</span>
         </div>
     </footer>
-  	<div id="imageviewer" class="hide" style="height:100vh; position:fixed; top:0px; left:0px; background:#000000; z-index:1000000;">
+  	<div id="imageviewer" class="hide" style="height:100vh; width:100vw; position:fixed; top:0px; left:0px; background:#000000; z-index:1000000;">
   		<button class="btn_close" type="button">닫기</button>
   		<span style="color:#ffffff; float:right"><span class="index_image">1</span>/<span class="total_image">1</span></span>
   		<ul class="image_list" style="overflow:visible; width:100%; height:100%; position:relative; white-space:nowrap; font-size:0;">
