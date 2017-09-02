@@ -73,9 +73,23 @@ require([
     $.each(typeCounts, function(i, v) {
       $(".summary_board li.item[data-bk-type='" + i + "'] .figure").text(v);
     });
+    $currentCard.find("div.booking_cancel").addClass("hide");
     $currentCard.appendTo(cards[STATE.CANCELED].targetTag);
     hideCancelPopup(e);
+
+    var id = $currentCard.data("id");
+    updateBookingState(id, STATE.CANCELED);
     e.preventDefault();
+  }
+
+  function updateBookingState(id, state) {
+    ajaxRequest("/api/reservations/" + id, "PUT", JSON.stringify({
+      "reservationType": state
+    })).then(function() {
+      console.log("success");
+    }, function() {
+      console.log("failed");
+    });
   }
 
   function isEmpty($target) {

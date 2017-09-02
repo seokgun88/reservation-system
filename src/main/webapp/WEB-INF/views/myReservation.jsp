@@ -151,7 +151,7 @@
   <script type="text/handlebars-template" id="notused-template">
   <!--[D] 예약확정: .confirmed, 취소된 예약&이용완료: .used 추가 card -->
     {{#each this}}
-    <article class="card_item">
+    <article class="card_item" data-id={{id}}>
       <a href="#" class="link_booking_details">
         <div class="card_body">
           <div class="left"></div>
@@ -208,7 +208,7 @@
   </script>
   <script type="text/handlebars-template" id="confirmed-template">
     {{#each this}}
-    <article class="card_item">
+    <article class="card_item" data-id={{id}}>
       <a href="#" class="link_booking_details">
         <div class="card_body">
           <div class="left"></div>
@@ -265,7 +265,7 @@
   </script>
   <script type="text/handlebars-template" id="used-template">
     {{#each this}}
-    <article class="card_item">
+    <article class="card_item" data-id={{id}}>
       <a href="#" class="link_booking_details">
         <div class="card_body">
           <div class="left"></div>
@@ -320,7 +320,7 @@
   </script>
   <script type="text/handlebars-template" id="canceled-template">
     {{#each this}}
-    <article class="card_item">
+    <article class="card_item" data-id={{id}}>
       <a href="#" class="link_booking_details">
         <div class="card_body">
           <div class="left"></div>
