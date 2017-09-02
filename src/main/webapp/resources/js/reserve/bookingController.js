@@ -52,7 +52,8 @@ define(["jquery", "ticket", "bookingForm", "asyncRequest"],
         }
       });
       ajaxRequest("/api/reservations", "POST", data).done(function(e) {
-        console.log(e);
+        alert("예약이 등록되었습니다.");
+        window.location.href = "/";
       });
     }
 
