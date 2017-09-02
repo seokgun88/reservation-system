@@ -100,7 +100,9 @@ require([
   }
 
   function moveReviewWrite(e) {
-    console.log("리뷰남기기");
+    $currentCard = $(e.currentTarget).closest("article");
+    var productId = $currentCard.data("productId");
+    window.location.href = "/products/" + productId + "/review";
     e.preventDefault();
   }
 
