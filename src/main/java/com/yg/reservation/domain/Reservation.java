@@ -55,7 +55,7 @@ public class Reservation {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date reservationDate;
 	@Column(name = "reservation_type")
-	private int reservationType;
+	private Integer reservationType;
 	@Column(name = "total_price")
 	private int totalPrice;
 	@Column(name = "create_date", nullable = false, updatable = false, insertable = false, 
