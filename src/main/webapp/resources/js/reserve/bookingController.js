@@ -40,9 +40,9 @@ define(["jquery", "ticket", "bookingForm", "asyncRequest"],
       var data = JSON.stringify({
         productId: window.location.pathname.split("/")[2],
         reservation: {
-          generalTicketCount: tickets[1].getCount(),
-          youthTicketCount: tickets[2].getCount(),
-          childTicketCount: tickets[3].getCount(),
+          generalTicketCount: tickets[1]? tickets[1].getCount() : 0,
+          youthTicketCount: tickets[2]? tickets[2].getCount() : 0,
+          childTicketCount: tickets[3]? tickets[3].getCount() : 0,
           reservationName: bookingUser.userName,
           reservationTel: bookingUser.tel,
           reservationEmail: bookingUser.email,
