@@ -117,10 +117,12 @@ require([
   }
 
   function drawReservations(dataReservations) {
-    if (!dataReservations.hasOwnProperty(0)) {
-      $(".wrap_mylist").addClass("hide");
-      $(".err").removeClass("hide");
-      return;
+    for ( var i in dataReservations ) {
+        if (!dataReservations.hasOwnProperty(i)) {
+          $(".wrap_mylist").addClass("hide");
+          $(".err").removeClass("hide");
+          return;
+        }
     }
     $.map(dataReservations, function(v, i) {
       if (v) {
