@@ -74,6 +74,9 @@ require([
       $(".summary_board li.item[data-bk-type='" + i + "'] .figure").text(v);
     });
     $currentCard.find("div.booking_cancel").addClass("hide");
+    if($(cards[STATE.CANCELED].targetTag).hasClass("hide")){
+      $(cards[STATE.CANCELED].targetTag).removeClass("hide");
+    }
     $currentCard.appendTo(cards[STATE.CANCELED].targetTag);
     hideCancelPopup(e);
 
